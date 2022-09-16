@@ -1,0 +1,194 @@
+body {
+  background-color: #202124;
+  background-size: cover;
+  background-position: center;
+  position: fixed;
+  font-family: "Noto Sans TC", sans-serif;
+  font-family: "Signika", sans-serif;
+  font-size: 2vh;
+  color: white;
+  margin: 0;
+}
+
+.mainframe,
+.master,
+.others,
+.tool {
+  display: flex;
+  background-color: #202124;
+  position: relative;
+}
+
+.mainframe {
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  flex-wrap: wrap;
+  gap: 1.5% 1.5%;
+}
+
+.master {
+  width: 68%;
+  height: 84%;
+  justify-content: center;
+  align-items: center;
+  margin: 2% 0 0 1%;
+}
+
+.others {
+  width: 28%;
+  height: 85.5%;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  /* gap: 10px 20px; */
+  align-content: space-around;
+}
+
+.tool {
+  /* background-color: #d54e2c; */
+  width: 100%;
+  height: 11%;
+  /* flex-wrap: wrap; */
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+}
+
+.master .microphone {
+  /* width: 3%; */
+  top: 0%;
+  right: 0%;
+  position: absolute;
+  display: block;
+}
+
+img.master_head {
+  width: 20%;
+  border-radius: 50%;
+}
+
+img.other_head {
+  width: 40%;
+  border-radius: 50%;
+}
+
+.member_background {
+  /* flex: 1 1 40%; */
+  width: 45%;
+  height: 25%;
+  background-color: #3d4043;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.material-symbols-outlined {
+  color: aliceblue;
+  font-variation-settings: "FILL" 0, "wght" 500, "GRAD" 200;
+  font-size: 1.25vw;
+}
+
+.microphone,
+.pin,
+.call {
+  font-variation-settings: "FILL" 1;
+}
+
+.master_name {
+  left: 0;
+  bottom: 0;
+  position: absolute;
+  /* font-size: 10; */
+}
+
+.microphone_background {
+  background-color: #202124;
+  width: 2vw;
+  height: 2vw;
+  border-radius: 50%;
+  top: 5%;
+  right: 5%;
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.other_name {
+  left: 0;
+  bottom: 0;
+  margin: 3% 5%;
+  position: absolute;
+  /* font-size: 1vw; */
+  font-family: "Signika", sans-serif;
+}
+
+.time {
+  position: absolute;
+  left: 1%;
+}
+
+.icon {
+  display: flex;
+  width: 20vw;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.icon_background {
+  background-color: red;
+  width: 2.5vw;
+  height: 2.5vw;
+  border-radius: 50%;
+  /* position: absolute; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+button:focus {
+  background-color: aqua;
+}
+
+.icon_background#last {
+  width: 3.5vw;
+  height: 2.5vw;
+  border-radius: 50px;
+}
+
+.setting {
+  display: flex;
+  width: 13vw;
+  align-items: baseline;
+  justify-content: space-around;
+  position: absolute;
+  right: 2%;
+}
+
+.lock,
+.Hdh4hc_cIGbvc_NMm5M {
+  filter: invert(1);
+  height: 1.5vw;
+}
+
+.group_background {
+  position: relative;
+  margin-top: 10px;
+}
+
+.notify-bubble {
+  position: absolute;
+  text-align: center;
+  top: -2vh;
+  right: -0.5vw;
+  height: 1vw;
+  width: 1vw;
+  background-color: #3d4043;
+  color: white;
+  font-size: 0.2vw;
+  border-radius: 50%;
+}
