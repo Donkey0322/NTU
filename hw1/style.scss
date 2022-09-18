@@ -68,10 +68,10 @@ body {
           opacity: 1;
         }
       }
-    }
-    &:hover .head_hover {
-      opacity: 0.7;
-      transition: opacity 0.4s;
+      &:hover {
+        opacity: 0.7;
+        transition: opacity 0.4s;
+      }
     }
   }
   &:hover .head_hover {

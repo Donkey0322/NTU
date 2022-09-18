@@ -1,3 +1,4 @@
+@charset "UTF-8";
 body {
   background-color: #202124;
   background-size: cover;
@@ -9,22 +10,21 @@ body {
   color: white;
   margin: 0;
 }
+body .material-symbols-outlined {
+  color: aliceblue;
+  font-variation-settings: "FILL" 0, "wght" 500, "GRAD" 200;
+  font-size: 1.25vw;
+}
+body .material-symbols-outlined.fill {
+  font-variation-settings: "FILL" 1;
+}
 
-.mainframe,
-.master,
-.others,
-.tool,
-.master_head,
-.master_name,
-.master_head .head_hover {
+.mainframe {
   display: flex;
   background-color: #202124;
   position: relative;
   justify-content: center;
   align-items: center;
-}
-
-.mainframe {
   width: 100vw;
   height: 100vh;
   margin: 0;
@@ -33,111 +33,114 @@ body {
 }
 
 .master {
+  display: flex;
+  background-color: #202124;
+  position: relative;
+  justify-content: center;
+  align-items: center;
   width: 68%;
   height: 84%;
   margin: 2% 0 0 1%;
 }
-
-.others {
-  width: 28%;
-  height: 85.5%;
-  flex-wrap: wrap;
-  justify-content: space-around;
-  /* gap: 10px 20px; */
-  align-content: space-around;
-}
-
-.tool {
-  width: 100%;
-  height: 11%;
-  margin: 0;
-}
-
 .master .microphone {
   top: 0%;
   right: 0%;
   position: absolute;
 }
-
-.master_head .head_hover {
-  position: absolute;
-  justify-content: space-around;
-  width: 80%;
-  height: 35%;
-  border-radius: 50px;
-  background-color: #3d4043;
-  opacity: 0;
-}
-
-.master:hover .head_hover {
-  opacity: 0.3;
-  transition: opacity 0.4s;
-}
-
-div.master_head:hover .head_hover {
-  opacity: 0.8;
-  transition: opacity 0.4s;
-}
-
-div.master_head {
+.master .master_head {
+  display: flex;
+  background-color: #202124;
+  position: relative;
+  justify-content: center;
+  align-items: center;
   background-image: url(./頭像.jpg);
   background-size: cover;
-  aspect-ratio: 1 / 1;
+  aspect-ratio: 1/1;
   width: 20%;
   border-radius: 50%;
 }
-
-img.other_head {
-  width: 40%;
-  border-radius: 50%;
-}
-
-.member_background {
-  /* flex: 1 1 40%; */
-  width: 45%;
-  height: 25%;
-  background-color: #3d4043;
-  border-radius: 10px;
+.master .master_head .head_hover {
   display: flex;
-  flex-direction: row;
+  background-color: #3d4043;
+  position: relative;
+  justify-content: space-around;
+  align-items: center;
+  position: absolute;
+  width: 80%;
+  height: 35%;
+  border-radius: 50px;
+  opacity: 0;
+}
+.master .master_head .head_hover .material-symbols-outlined {
+  cursor: pointer;
+}
+.master .master_head .head_hover .material-symbols-outlined:hover {
+  text-shadow: 0px 0px 5px white;
+  opacity: 1;
+}
+.master .master_head .head_hover:hover {
+  opacity: 0.7;
+  transition: opacity 0.4s;
+}
+.master:hover .head_hover {
+  opacity: 0.2;
+  transition: opacity 0.4s;
+}
+.master .master_name {
+  display: flex;
+  background-color: #202124;
+  position: relative;
   justify-content: center;
   align-items: center;
-  position: relative;
-}
-
-.material-symbols-outlined {
-  color: aliceblue;
-  font-variation-settings: "FILL" 0, "wght" 500, "GRAD" 200;
-  font-size: 1.25vw;
-}
-
-.microphone,
-.pin,
-.call {
-  font-variation-settings: "FILL" 1;
-}
-
-.master_name {
   left: 0;
   bottom: 0;
   position: absolute;
-  /* font-size: 10; */
+}
+.master .master_name .font {
+  margin-left: 1vw;
 }
 
-.microphone_background {
+.others {
+  display: flex;
   background-color: #202124;
+  position: relative;
+  justify-content: space-around;
+  align-items: center;
+  width: 28%;
+  height: 85.5%;
+  flex-wrap: wrap;
+  /* gap: 10px 20px; */
+  align-content: space-around;
+}
+.others .member_background {
+  /* flex: 1 1 40%; */
+  display: flex;
+  background-color: #3d4043;
+  position: relative;
+  justify-content: center;
+  align-items: center;
+  width: 45%;
+  height: 25%;
+  border-radius: 10px;
+}
+.others .member_background .microphone_background {
+  display: flex;
+  background-color: #202124;
+  position: relative;
+  justify-content: center;
+  align-items: center;
   width: 2vw;
-  height: 2vw;
+  aspect-ratio: 1/1;
   border-radius: 50%;
   top: 5%;
   right: 5%;
   position: absolute;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
-
-.other_name {
+.others .member_background .other_head {
+  width: 40%;
+  border-radius: 50%;
+}
+.others .member_background .other_name {
   left: 0;
   bottom: 0;
   margin: 3% 5%;
@@ -146,116 +149,141 @@ img.other_head {
   font-family: "Signika", sans-serif;
 }
 
-.time {
+.tool {
+  display: flex;
+  background-color: #202124;
+  position: relative;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 11%;
+  margin: 0;
+}
+.tool .time {
   position: absolute;
   left: 1%;
 }
-
-.icon {
+.tool .icon {
   display: flex;
-  width: 20vw;
-  align-items: center;
+  background-color: #202124;
+  position: relative;
   justify-content: space-around;
+  align-items: center;
+  width: 20vw;
 }
-
-.icon_background {
-  background-color: red;
+.tool .icon > * {
   width: 2.5vw;
-  height: 2.5vw;
-  border-radius: 50%;
-  /* position: absolute; */
+  aspect-ratio: 1/1;
+}
+.tool .icon .microphone {
+  padding: 0;
+  position: relative;
+}
+.tool .icon .microphone input[type=checkbox] {
+  display: none;
+  margin: 0;
+  width: 0;
+}
+.tool .icon .microphone input[type=checkbox] + label {
   display: flex;
+  background-color: #3d4043;
+  position: relative;
   justify-content: center;
   align-items: center;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  transition: content 1s, background-color 0.3s;
+  cursor: pointer;
+  position: absolute;
+}
+.tool .icon .microphone input[type=checkbox] + label div {
+  width: 50%;
+  height: 50%;
+  position: absolute;
+  background-image: url(./microphone_on.svg);
+  background-size: cover;
+}
+.tool .icon .microphone input[type=checkbox]:checked + label {
+  background: red;
+}
+.tool .icon .microphone input[type=checkbox]:checked + label div {
+  background-image: url(./microphone_off.svg);
+  background-size: cover;
+}
+.tool .icon .icon_background {
+  display: flex;
+  background-color: red;
+  position: relative;
+  justify-content: center;
+  align-items: center;
+  background-color: red;
+  border-radius: 50%;
   cursor: pointer;
 }
-
-button:focus {
-  background-color: aqua;
-}
-
-.icon_background#last {
+.tool .icon .icon_background#last {
   width: 3.5vw;
   height: 2.5vw;
   border-radius: 50px;
 }
-
-.setting {
+.tool .setting {
   display: flex;
-  width: 13vw;
-  align-items: baseline;
+  background-color: #202124;
+  position: relative;
   justify-content: space-around;
+  align-items: baseline;
+  width: 13vw;
   position: absolute;
   right: 2%;
 }
-
-.lock,
-.Hdh4hc_cIGbvc_NMm5M {
-  filter: invert(1);
-  height: 1.5vw;
-}
-
-.group_background {
+.tool .setting .setting_background {
+  display: flex;
+  background-color: #202124;
   position: relative;
-  margin-top: 0px;
+  justify-content: center;
+  align-items: center;
 }
-
-.notify-bubble {
+.tool .setting .setting_background.group .notify-bubble {
   position: absolute;
   text-align: center;
   top: -2vh;
   right: -0.5vw;
-  height: 1vw;
   width: 1vw;
+  aspect-ratio: 1/1;
   background-color: #3d4043;
   color: white;
   font-size: 0.2vw;
   border-radius: 50%;
 }
-
-input[type="checkbox"] {
-  display: none;
-  margin: 0;
-  width: 0;
-}
-
-.icon .microphone {
-  width: 2.5vw;
-  height: 2.5vw;
-  padding: 0;
-  position: relative;
-}
-
-.icon .microphone label {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 2.5vw;
-  height: 2.5vw;
-  border-radius: 50%;
-  transition: content 1s, background-color 0.3s;
+.tool .setting .setting_background .material-symbols-outlined {
   cursor: pointer;
+  border-radius: 50%;
+  z-index: 2;
+}
+.tool .setting .setting_background .material-symbols-outlined + .symbol_background {
+  background-color: #3d4043;
+  width: 2vw;
+  aspect-ratio: 1/1;
+  border-radius: 50%;
+  position: absolute;
+  opacity: 0;
+  z-index: 0;
+}
+.tool .setting .setting_background .material-symbols-outlined:hover ~ .information, .tool .setting .setting_background .material-symbols-outlined:hover ~ .symbol_background {
+  opacity: 1;
+  transition: opacity 0.3s;
+}
+.tool .setting .setting_background .information {
+  font-size: smaller;
+  text-align: center;
+  bottom: 100%;
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+  margin: 1.5vh;
+  padding: 0.5vh 0.5vw;
+  border-radius: 5px;
   position: absolute;
   background: #3d4043;
-}
-
-.icon .microphone input[type="checkbox"]:checked + label {
-  background: red;
-}
-
-input[type="checkbox"] + label div {
-  vertical-align: middle;
-  width: 1.25vw;
-  height: 1.25vw;
-  position: absolute;
-  background-image: url(./microphone_on.svg);
-  background-size: cover;
-}
-
-input[type="checkbox"]:checked + label div {
-  background-image: url(./microphone_off.svg);
-}
-
-.setting .material-symbols-outlined {
-  cursor: pointer;
-}
+  opacity: 0;
+}/*# sourceMappingURL=try.css.map */
