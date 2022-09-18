@@ -1,0 +1,237 @@
+@mixin div_scale($width, $length) {
+  width: $width;
+  height: $length;
+}
+
+@mixin flex($color, $justify, $align) {
+  display: flex;
+  background-color: $color;
+  position: relative;
+  justify-content: $justify;
+  align-items: $align;
+}
+
+body {
+  background-color: #202124;
+  background-size: cover;
+  background-position: center;
+  position: fixed;
+  font-family: "Noto Sans TC", sans-serif;
+  font-family: "Signika", sans-serif;
+  font-size: 2vh;
+  color: white;
+  margin: 0;
+  .material-symbols-outlined {
+    color: aliceblue;
+    font-variation-settings: "FILL" 0, "wght" 500, "GRAD" 200;
+    font-size: 1.25vw;
+    &.fill {
+      font-variation-settings: "FILL" 1;
+    }
+  }
+}
+
+.mainframe {
+  @include flex(#202124, center, center);
+  @include div_scale(100vw, 100vh);
+  margin: 0;
+  flex-wrap: wrap;
+  gap: 1.5% 1.5%;
+}
+
+.master {
+  @include flex(#202124, center, center);
+  @include div_scale(68%, 84%);
+  margin: 2% 0 0 1%;
+  .microphone {
+    top: 0%;
+    right: 0%;
+    position: absolute;
+  }
+  .master_head {
+    @include flex(#202124, center, center);
+    background-image: url(./頭像.jpg);
+    background-size: cover;
+    aspect-ratio: 1 / 1;
+    width: 20%;
+    border-radius: 50%;
+    .head_hover {
+      @include flex(#3d4043, space-around, center);
+      position: absolute;
+      @include div_scale(80%, 35%);
+      border-radius: 50px;
+      opacity: 0;
+      .material-symbols-outlined {
+        cursor: pointer;
+        &:hover {
+          text-shadow: 0px 0px 5px white;
+          opacity: 1;
+        }
+      }
+    }
+    &:hover .head_hover {
+      opacity: 0.7;
+      transition: opacity 0.4s;
+    }
+  }
+  &:hover .head_hover {
+    opacity: 0.2;
+    transition: opacity 0.4s;
+  }
+  .master_name {
+    @include flex(#202124, center, center);
+    left: 0;
+    bottom: 0;
+    position: absolute;
+    .font {
+      margin-left: 1vw;
+    }
+  }
+}
+
+.others {
+  @include flex(#202124, space-around, center);
+  @include div_scale(28%, 85.5%);
+  flex-wrap: wrap;
+  /* gap: 10px 20px; */
+  align-content: space-around;
+  .member_background {
+    /* flex: 1 1 40%; */
+    @include flex(#3d4043, center, center);
+    @include div_scale(45%, 25%);
+    border-radius: 10px;
+    .microphone_background {
+      @include flex(#202124, center, center);
+      width: 2vw;
+      aspect-ratio: 1 / 1;
+      border-radius: 50%;
+      top: 5%;
+      right: 5%;
+      position: absolute;
+    }
+    .other_head {
+      width: 40%;
+      border-radius: 50%;
+    }
+    .other_name {
+      left: 0;
+      bottom: 0;
+      margin: 3% 5%;
+      position: absolute;
+      /* font-size: 1vw; */
+      font-family: "Signika", sans-serif;
+    }
+  }
+}
+
+.tool {
+  @include flex(#202124, center, center);
+  @include div_scale(100%, 11%);
+  margin: 0;
+  .time {
+    position: absolute;
+    left: 1%;
+  }
+  .icon {
+    @include flex(#202124, space-around, center);
+    width: 20vw;
+    > * {
+      width: 2.5vw;
+      aspect-ratio: 1 / 1;
+    }
+    .microphone {
+      padding: 0;
+      position: relative;
+      input[type="checkbox"] {
+        display: none;
+        margin: 0;
+        width: 0;
+        & + label {
+          @include flex(#3d4043, center, center);
+          @include div_scale(100%, 100%);
+          border-radius: 50%;
+          transition: content 1s, background-color 0.3s;
+          cursor: pointer;
+          position: absolute;
+          div {
+            @include div_scale(50%, 50%);
+            position: absolute;
+            background-image: url(./microphone_on.svg);
+            background-size: cover;
+          }
+        }
+        &:checked + label {
+          background: red;
+          div {
+            background-image: url(./microphone_off.svg);
+            background-size: cover;
+          }
+        }
+      }
+    }
+    .icon_background {
+      @include flex(red, center, center);
+      background-color: red;
+      border-radius: 50%;
+      cursor: pointer;
+      &#last {
+        @include div_scale(3.5vw, 2.5vw);
+        border-radius: 50px;
+      }
+    }
+  }
+  .setting {
+    @include flex(#202124, space-around, baseline);
+    width: 13vw;
+    position: absolute;
+    right: 2%;
+    .setting_background {
+      @include flex(#202124, center, center);
+      &.group .notify-bubble {
+        position: absolute;
+        text-align: center;
+        top: -2vh;
+        right: -0.5vw;
+        width: 1vw;
+        aspect-ratio: 1 / 1;
+        background-color: #3d4043;
+        color: white;
+        font-size: 0.2vw;
+        border-radius: 50%;
+      }
+      .material-symbols-outlined {
+        cursor: pointer;
+        border-radius: 50%;
+        z-index: 2;
+        & + .symbol_background {
+          background-color: #3d4043;
+          width: 2vw;
+          aspect-ratio: 1/1;
+          border-radius: 50%;
+          position: absolute;
+          opacity: 0;
+          z-index: 0;
+        }
+        &:hover {
+          & ~ .information,
+          & ~ .symbol_background {
+            opacity: 1;
+            transition: opacity 0.3s;
+          }
+        }
+      }
+      .information {
+        font-size: smaller;
+        text-align: center;
+        bottom: 100%;
+        width: max-content;
+        margin: 1.5vh;
+        padding: 0.5vh 0.5vw;
+        border-radius: 5px;
+        position: absolute;
+        background: #3d4043;
+        opacity: 0;
+      }
+    }
+  }
+}

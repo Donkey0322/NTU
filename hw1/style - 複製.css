@@ -197,7 +197,7 @@ button:focus {
 
 .group_background {
   position: relative;
-  margin-top: 0px;
+  margin-top: 10px;
 }
 
 .notify-bubble {

@@ -24,50 +24,56 @@
     />
     <title>GOOGLE MEET</title>
     <link rel="shortcut icon" href="./google meet.png" />
-    <link rel="stylesheet" href="./style.css" />
+    <link rel="stylesheet" href="./try.css" />
   </head>
   <body>
     <div class="mainframe">
       <div class="master">
-        <span class="material-symbols-outlined microphone"> mic_off </span>
-        <img src="./頭像.jpg" alt="頭像" class="master_head" />
+        <span class="material-symbols-outlined fill microphone"> mic_off </span>
+        <div class="master_head">
+          <div class="head_hover">
+            <span class="material-symbols-outlined fill">push_pin</span>
+            <span class="material-symbols-outlined"> grid_view </span>
+            <span class="material-symbols-outlined"> close_fullscreen </span>
+          </div>
+        </div>
         <div class="master_name">
-          <span class="material-symbols-outlined pin">push_pin</span>
+          <span class="material-symbols-outlined fill">push_pin</span>
           <span class="font">你</span>
         </div>
       </div>
       <div class="others">
         <div class="member_background">
           <div class="microphone_background">
-            <span class="material-symbols-outlined microphone"> mic_off </span>
+            <span class="material-symbols-outlined fill"> mic_off </span>
           </div>
           <img src="./人物1.jpg" alt="頭像" class="other_head" />
           <span class="other_name">Charlie</span>
         </div>
         <div class="member_background">
           <div class="microphone_background">
-            <span class="material-symbols-outlined microphone"> mic_off </span>
+            <span class="material-symbols-outlined fill"> mic_off </span>
           </div>
           <img src="./人物2.jpg" alt="頭像" class="other_head" />
           <span class="other_name">Nelson</span>
         </div>
         <div class="member_background">
           <div class="microphone_background">
-            <span class="material-symbols-outlined microphone"> mic_off </span>
+            <span class="material-symbols-outlined fill"> mic_off </span>
           </div>
           <img src="./人物3.jpg" alt="頭像" class="other_head" />
           <span class="other_name">Nellie</span>
         </div>
         <div class="member_background">
           <div class="microphone_background">
-            <span class="material-symbols-outlined microphone"> mic_off </span>
+            <span class="material-symbols-outlined fill"> mic_off </span>
           </div>
           <img src="./人物4.jpg" alt="頭像" class="other_head" />
           <span class="other_name">Anonymous</span>
         </div>
         <div class="member_background">
           <div class="microphone_background">
-            <span class="material-symbols-outlined microphone"> mic_off </span>
+            <span class="material-symbols-outlined fill"> mic_off </span>
           </div>
           <img src="./人物5.jpg" alt="頭像" class="other_head" />
           <span class="other_name">Ally</span>
@@ -77,12 +83,19 @@
       <div class="tool">
         <span class="time">凌晨12:43 | Web Programming</span>
         <div class="icon">
-          <button class="icon_background">
-            <span class="material-symbols-outlined"> mic_off </span>
-          </button>
-          <button class="icon_background">
+          <div class="microphone">
+            <input
+              type="checkbox"
+              name="microphone_background"
+              id="microphone_background"
+            />
+            <label for="microphone_background">
+              <div class="microphone_icon"></div>
+            </label>
+          </div>
+          <div class="icon_background">
             <span class="material-symbols-outlined"> videocam_off </span>
-          </button>
+          </div>
           <div class="icon_background">
             <span class="material-symbols-outlined"> back_hand </span>
           </div>
@@ -93,40 +106,36 @@
             <span class="material-symbols-outlined"> more_vert </span>
           </div>
           <div class="icon_background" id="last">
-            <span class="material-symbols-outlined call"> call_end </span>
+            <span class="material-symbols-outlined fill"> call_end </span>
           </div>
         </div>
         <div class="setting">
-          <span class="material-symbols-outlined" title="會議詳細資訊">
-            info
-          </span>
-          <div class="group_background">
+          <div class="setting_background">
+            <span class="material-symbols-outlined"> info </span>
+            <span class="symbol_background"></span>
+            <span class="information">會議詳細資料 </span>
+          </div>
+          <div class="setting_background group">
             <span class="material-symbols-outlined"> group </span>
+            <span class="symbol_background"></span>
+            <span class="information">顯示所有參與者</span>
             <span class="notify-bubble">6</span>
           </div>
-          <span class="material-symbols-outlined"> chat </span>
-          <svg
-            enable-background="new 0 0 24 24"
-            focusable="false"
-            viewBox="0 0 24 24"
-            class="Hdh4hc_cIGbvc_NMm5M"
-          >
-            <g><rect fill="none" height="24" width="24"></rect></g>
-            <g>
-              <g>
-                <g>
-                  <polygon points="12,2 6.5,11 17.5,11"></polygon>
-                  <circle cx="17.5" cy="17.5" r="4.5"></circle>
-                  <rect height="8" width="8" x="3" y="13.5"></rect>
-                </g>
-              </g>
-            </g>
-          </svg>
-          <img
-            class="lock"
-            src="https://fonts.gstatic.com/s/i/short-term/release/googlesymbols/lock_person/default/24px.svg"
-            alt="event"
-          />
+          <div class="setting_background">
+            <span class="material-symbols-outlined"> chat </span>
+            <span class="symbol_background"></span>
+            <span class="information">與所有參與者進行即時通訊</span>
+          </div>
+          <div class="setting_background">
+            <span class="material-symbols-outlined"> category </span>
+            <span class="symbol_background"></span>
+            <span class="information">活動</span>
+          </div>
+          <div class="setting_background">
+            <span class="material-symbols-outlined"> lock_person </span>
+            <span class="symbol_background"></span>
+            <span class="information">主辦人控制項</span>
+          </div>
         </div>
       </div>
     </div>
