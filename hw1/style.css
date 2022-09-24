@@ -1,4 +1,8 @@
 @charset "UTF-8";
+* {
+  box-sizing: border-box;
+}
+
 body {
   background-color: #202124;
   background-size: cover;
@@ -9,6 +13,7 @@ body {
   font-size: 2vh;
   color: white;
   margin: 0;
+  cursor: default;
 }
 body .material-symbols-outlined {
   color: aliceblue;
@@ -176,6 +181,11 @@ body .material-symbols-outlined.fill {
   aspect-ratio: 1/1;
 }
 .tool .icon .microphone {
+  display: flex;
+  background-color: #202124;
+  position: relative;
+  justify-content: center;
+  align-items: center;
   padding: 0;
   position: relative;
 }
@@ -211,20 +221,67 @@ body .material-symbols-outlined.fill {
   background-image: url(./microphone_off.svg);
   background-size: cover;
 }
+.tool .icon .microphone input[type=checkbox]:hover ~ .on {
+  opacity: 1;
+  transition: opacity 0.3s;
+}
+.tool .icon .microphone input[type=checkbox]:checked:hover ~ .off {
+  opacity: 1;
+  transition: opacity 0.3s;
+}
+.tool .icon .microphone .information {
+  font-size: smaller;
+  text-align: center;
+  bottom: 100%;
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+  margin: 1.5vh;
+  padding: 0.5vh 0.5vw;
+  border-radius: 5px;
+  position: absolute;
+  background: #3d4043;
+  opacity: 0;
+  transition-duration: 0.3s;
+}
 .tool .icon .icon_background {
+  display: flex;
+  background-color: #3d4043;
+  position: relative;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  cursor: pointer;
+}
+.tool .icon .icon_background.red {
   display: flex;
   background-color: red;
   position: relative;
   justify-content: center;
   align-items: center;
-  background-color: red;
-  border-radius: 50%;
-  cursor: pointer;
 }
 .tool .icon .icon_background#last {
   width: 3.5vw;
   height: 2.5vw;
   border-radius: 50px;
+}
+.tool .icon .icon_background .information {
+  font-size: smaller;
+  text-align: center;
+  bottom: 100%;
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+  margin: 1.5vh;
+  padding: 0.5vh 0.5vw;
+  border-radius: 5px;
+  position: absolute;
+  background: #3d4043;
+  opacity: 0;
+}
+.tool .icon .icon_background:hover .information {
+  opacity: 1;
+  transition: opacity 0.3s;
 }
 .tool .setting {
   display: flex;
@@ -249,7 +306,7 @@ body .material-symbols-outlined.fill {
   top: -2vh;
   right: -0.5vw;
   width: 1vw;
-  aspect-ratio: 1/1;
+  height: 1vw;
   background-color: #3d4043;
   color: white;
   font-size: 0.2vw;
@@ -286,4 +343,4 @@ body .material-symbols-outlined.fill {
   position: absolute;
   background: #3d4043;
   opacity: 0;
-}/*# sourceMappingURL=try.css.map */
+}/*# sourceMappingURL=style.css.map */
