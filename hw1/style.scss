@@ -12,6 +12,8 @@
 }
 
 * {
+  padding: 0;
+  margin: 0;
   box-sizing: border-box;
 }
 
@@ -98,13 +100,14 @@ body {
   @include flex(#202124, space-around, center);
   @include div_scale(28%, 85.5%);
   flex-wrap: wrap;
-  /* gap: 10px 20px; */
-  align-content: space-around;
+  gap: 3% 5%;
+  align-content: center;
   .member_background {
-    /* flex: 1 1 40%; */
     @include flex(#3d4043, center, center);
     @include div_scale(45%, 25%);
+    flex: 1 1 45%;
     border-radius: 10px;
+    max-width: 60%;
     .microphone_background {
       @include flex(#202124, center, center);
       width: 2vw;
@@ -115,7 +118,7 @@ body {
       position: absolute;
     }
     .other_head {
-      width: 40%;
+      height: 50%;
       border-radius: 50%;
     }
     .other_name {
@@ -277,6 +280,36 @@ body {
         position: absolute;
         background: #3d4043;
         opacity: 0;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 420px) {
+  .master {
+    @include div_scale(90%, 80%);
+    margin: 0;
+    margin-top: 10px;
+  }
+  .others {
+    display: none;
+  }
+  .tool {
+    @include div_scale(100%, 15%);
+    .time,
+    .setting {
+      display: none;
+    }
+    .icon {
+      width: 100vw;
+      .icon_background,
+      .microphone {
+        width: 10vw;
+        aspect-ratio: 1 / 1;
+        &#last {
+          width: 10vw;
+          height: 7vw;
+        }
       }
     }
   }

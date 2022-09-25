@@ -1,5 +1,7 @@
 @charset "UTF-8";
 * {
+  padding: 0;
+  margin: 0;
   box-sizing: border-box;
 }
 
@@ -114,11 +116,10 @@ body .material-symbols-outlined.fill {
   width: 28%;
   height: 85.5%;
   flex-wrap: wrap;
-  /* gap: 10px 20px; */
-  align-content: space-around;
+  gap: 3% 5%;
+  align-content: center;
 }
 .others .member_background {
-  /* flex: 1 1 40%; */
   display: flex;
   background-color: #3d4043;
   position: relative;
@@ -126,7 +127,9 @@ body .material-symbols-outlined.fill {
   align-items: center;
   width: 45%;
   height: 25%;
+  flex: 1 1 45%;
   border-radius: 10px;
+  max-width: 60%;
 }
 .others .member_background .microphone_background {
   display: flex;
@@ -142,7 +145,7 @@ body .material-symbols-outlined.fill {
   position: absolute;
 }
 .others .member_background .other_head {
-  width: 40%;
+  height: 50%;
   border-radius: 50%;
 }
 .others .member_background .other_name {
@@ -343,4 +346,37 @@ body .material-symbols-outlined.fill {
   position: absolute;
   background: #3d4043;
   opacity: 0;
+}
+
+@media screen and (max-width: 420px) {
+  .master {
+    width: 90%;
+    height: 80%;
+    margin: 0;
+    margin-top: 10px;
+  }
+  .others {
+    display: none;
+  }
+  .tool {
+    width: 100%;
+    height: 15%;
+  }
+  .tool .time,
+.tool .setting {
+    display: none;
+  }
+  .tool .icon {
+    width: 100vw;
+  }
+  .tool .icon .icon_background,
+.tool .icon .microphone {
+    width: 10vw;
+    aspect-ratio: 1/1;
+  }
+  .tool .icon .icon_background#last,
+.tool .icon .microphone#last {
+    width: 10vw;
+    height: 7vw;
+  }
 }/*# sourceMappingURL=style.css.map */
