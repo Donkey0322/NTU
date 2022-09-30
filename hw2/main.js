@@ -30,8 +30,10 @@ function member_observer() {
     let num = Number(mutations[0].target.cloneNode(true).innerHTML);
     if (num > 1) {
       document.querySelector(".others").style.display = "flex";
+      document.querySelector(".master_name").style.display = "flex";
     } else {
       document.querySelector(".others").style.display = "none";
+      document.querySelector(".master_name").style.display = "none";
     }
     if (pinning) {
       fit_in(num - 1);
@@ -47,8 +49,8 @@ function member_observer() {
 }
 member_observer();
 
-function initialize() {
-  let initial_member = null;
+function initialize(initial = null) {
+  let initial_member = initial;
   while (!initial_member) {
     initial_member = Number(prompt("請輸入起始使用者人數（1~15）"));
     if (isNaN(initial_member)) {
@@ -74,32 +76,55 @@ function fit_in(number) {
   let row = 0;
   let column = 0;
   if (pinning) {
-    if (number < 9) {
+    if (number == 3) {
+      row = 3;
+      column = 1;
+    } else if (number < 3) {
+      row = 2;
+      column = 1;
+    } else {
+      if (number < 9) {
+        column = 2;
+      } else {
+        column = 3;
+      }
+      row = Math.floor((number + column - 1) / column);
+    }
+  } else {
+    if (number < 3) {
+      row = 1;
       column = 2;
     } else {
-      column = 3;
+      if (number < 9) {
+        row = 2;
+      } else {
+        row = 3;
+      }
+      column = Math.floor((number + row - 1) / row);
     }
-    row = Math.floor((number + column - 1) / column);
-  } else {
-    if (number < 9) {
-      row = 2;
-    } else {
-      row = 3;
-    }
-    column = Math.floor((number + row - 1) / row);
   }
   let width = 90 / column;
   let height = 90 / row;
-  console.log(number, document.querySelectorAll(".member_background").length);
   document.querySelectorAll(".member_background").forEach((n) => {
     n.style.width = `${width}%`;
     n.style.height = `${height}%`;
     n.style.maxWidth = `${1.5 * width}%`;
     n.style.flex = `1 1 ${width}%`;
   });
+  // console.log(typeof document.querySelector(".member_background").style.width);
   let row_gap = 5 / (row - 1);
   let column_gap = 5 / (column - 1);
   document.querySelector(".others").style.gap = `${row_gap}% ${column_gap}%`;
+}
+
+// animation = null
+function animation(target, way) {
+  function animation_stop() {
+    this.style.animation = "null";
+    this.removeEventListener("animationend", animation_stop);
+  }
+  target.style.animation = `${way} 0.5s`;
+  target.addEventListener("animationend", animation_stop);
 }
 
 //選取名字
@@ -127,10 +152,14 @@ function now() {
     } else {
       hour = String(currentDate.getHours());
     }
-  } else if (currentDate.getHours() >= 5 && currentDate.getHours() < 12) {
-    period = "早上";
+  } else if (currentDate.getHours() >= 5 && currentDate.getHours() <= 12) {
+    if (currentDate.getHours() == 12) {
+      period = "中午";
+    } else {
+      period = "早上";
+    }
     hour = String(currentDate.getHours());
-  } else if (currentDate.getHours() >= 12 && currentDate.getHours() < 18) {
+  } else if (currentDate.getHours() > 12 && currentDate.getHours() < 18) {
     period = "下午";
     hour = String(currentDate.getHours() - 12);
   } else {
@@ -162,42 +191,95 @@ function close(n, pin_close = false) {
       });
     });
   } else {
-    n.addEventListener("click", (e) => {
-      pinning = false;
-      document.querySelector(".master").style.animation =
-        "scaleDown 0.3s forwards";
+    function closing_master() {
+      if (pinning == false) {
+        if (pin_close == false) {
+          let member_number = document.querySelector(".notify-bubble");
+          pinning = true;
+          member_number.innerHTML = Number(member_number.innerHTML) - 1;
+          pinning = false;
+          name_moving(document.querySelector(".master_name .font").innerHTML);
+        } else {
+          pinning = true;
+          fit_in(Number(document.querySelector(".notify-bubble").innerHTML));
+          pinning = false;
+        }
+      }
       document
         .querySelector(".master")
-        .addEventListener("animationstart", () => {
-          if (pinning == false) {
-            if (pin_close == false) {
-              let member_number = document.querySelector(".notify-bubble");
-              member_number.innerHTML = Number(member_number.innerHTML) - 1;
-              name_moving(
-                document.querySelector(".master_name .font").innerHTML
-              );
-            } else {
-              fit_in(
-                Number(document.querySelector(".notify-bubble").innerHTML)
-              );
-            }
-          }
-        });
-      document.querySelector(".master").addEventListener("animationend", () => {
-        document.querySelector(".master").style.animation = null;
-        if (pinning == false) {
+        .removeEventListener("animationstart", closing_master);
+    }
+    function hiding_master() {
+      let nn = Number(document.querySelector(".notify-bubble").innerHTML);
+      fit_in(nn);
+      if (pinning == false) {
+        if (nn != 1) {
           document.querySelector(".master").style.display = "none";
           document.querySelector(".others").style.width = "90%";
-          // if (pin_close == false) {
-          //   //純粹的叉叉
-          //   let member_number = document.querySelector(".notify-bubble");
-          //   member_number.innerHTML = Number(member_number.innerHTML) - 1;
-          //   name_moving(document.querySelector(".master_name .font").innerHTML);
-          // } else {
-          //   fit_in(Number(document.querySelector(".notify-bubble").innerHTML));
-          // }
+          document
+            .querySelector(".master")
+            .removeEventListener("animationend", hiding_master);
+        } else {
+          pinning = true;
+          let n = document.querySelectorAll(".others .head_hover");
+          n = n[n.length - 1];
+          let to_pin = n.parentElement;
+          let to_pin_head = to_pin
+            .querySelector("img.other_head")
+            .getAttribute("src");
+          let to_pin_name = to_pin.querySelector(".other_name").innerHTML;
+          let talker = document.querySelector(".master");
+          let talker_head = talker
+            .querySelector("img.master_head")
+            .getAttribute("src");
+          let talker_name =
+            talker.querySelector(".master_name .font").innerHTML;
+          function swap(target) {
+            if (target == "talker") {
+              talker
+                .querySelector("img.master_head")
+                .setAttribute("src", to_pin_head);
+              talker.querySelector(".master_name .font").innerHTML =
+                to_pin_name;
+              if (to_pin_name.includes("你")) {
+                talker.querySelector(".close").classList.add("self");
+              } else {
+                talker.querySelector(".close").classList.remove("self");
+              }
+              talker.removeEventListener("animationstart", swap);
+            } else if (target == "pin") {
+              to_pin
+                .querySelector("img.other_head")
+                .setAttribute("src", talker_head);
+              to_pin.querySelector(".other_name").innerHTML = talker_name;
+              if (talker_name.includes("你")) {
+                to_pin.querySelector(".close").classList.add("self");
+              } else {
+                to_pin.querySelector(".close").classList.remove("self");
+              }
+              to_pin.removeEventListener("animationstart", swap);
+            }
+          }
+          swap("talker");
+          swap("pin");
+          document.querySelector(".member_background").remove();
+          name_moving(
+            document.parentElement.querySelector(
+              ".member_background .other_name"
+            ).innerHTML
+          );
         }
-      });
+      }
+    }
+    n.addEventListener("click", (e) => {
+      pinning = false;
+      animation(document.querySelector(".master"), "scaleDown");
+      document
+        .querySelector(".master")
+        .addEventListener("animationstart", closing_master);
+      document
+        .querySelector(".master")
+        .addEventListener("animationend", hiding_master);
     });
   }
 }
@@ -205,7 +287,7 @@ function close(n, pin_close = false) {
 // pin listener
 function pin(n) {
   n.addEventListener("click", (e) => {
-    let to_pin = n.parentElement.parentElement;
+    let to_pin = n.parentElement;
     let to_pin_head = to_pin
       .querySelector("img.other_head")
       .getAttribute("src");
@@ -215,22 +297,19 @@ function pin(n) {
       .querySelector("img.master_head")
       .getAttribute("src");
     let talker_name = talker.querySelector(".master_name .font").innerHTML;
-    talker.querySelector("img.master_head").style.animation = "scaleUp 0.5s";
-    talker.addEventListener("animationstart", () => {
-      talker.querySelector("img.master_head").setAttribute("src", to_pin_head);
-      talker.querySelector(".master_name .font").innerHTML = to_pin_name;
-      if (to_pin_name.includes("你")) {
-        talker.querySelector(".close").classList.add("self");
-      } else {
-        talker.querySelector(".close").classList.remove("self");
-      }
-    });
-    talker.addEventListener("animationend", () => {
-      talker.querySelector("img.master_head").style.animation = null;
-    });
-    if (pinning) {
-      to_pin.style.animation = "scaleUp 0.5s";
-      to_pin.addEventListener("animationstart", () => {
+    function swap(target) {
+      if (target == "talker") {
+        talker
+          .querySelector("img.master_head")
+          .setAttribute("src", to_pin_head);
+        talker.querySelector(".master_name .font").innerHTML = to_pin_name;
+        if (to_pin_name.includes("你")) {
+          talker.querySelector(".close").classList.add("self");
+        } else {
+          talker.querySelector(".close").classList.remove("self");
+        }
+        talker.removeEventListener("animationstart", swap);
+      } else if (target == "pin") {
         to_pin.querySelector("img.other_head").setAttribute("src", talker_head);
         to_pin.querySelector(".other_name").innerHTML = talker_name;
         if (talker_name.includes("你")) {
@@ -238,21 +317,29 @@ function pin(n) {
         } else {
           to_pin.querySelector(".close").classList.remove("self");
         }
-      });
-      to_pin.addEventListener("animationend", () => {
-        to_pin.style.animation = null;
-      });
+        to_pin.removeEventListener("animationstart", swap);
+      }
+    }
+    animation(talker.querySelector("img.master_head"), "scaleUp");
+    talker
+      .querySelector("img.master_head")
+      .addEventListener("animationstart", swap("talker"));
+
+    if (pinning) {
+      animation(to_pin, "scaleUp");
+      to_pin.addEventListener("animationstart", swap("pin"));
     } else {
-      to_pin.style.animation = "scaleDown 0.5s";
-      to_pin.addEventListener("animationstart", () => {
+      function pin_pin() {
         pinning = true;
-      });
+        to_pin.removeEventListener("animationstart", pin_pin);
+      }
+      to_pin.style.animation = "scaleDown 0.5s";
+      to_pin.addEventListener("animationstart", pin_pin);
       to_pin.addEventListener("animationend", () => {
         to_pin.remove();
         document.querySelector(".master").style.display = "flex";
         document.querySelector(".others").style.width = "30%";
         fit_in(Number(document.querySelector(".notify-bubble").innerHTML) - 1);
-        to_pin.style.animation = null;
       });
     }
   });
@@ -286,27 +373,19 @@ function add(talker = false) {
   }
   document.querySelector(".others").appendChild(new_member);
   close(new_member.querySelector(".close"));
-  pin(new_member.querySelector(".pin"));
-  new_member.style.animation = "scaleUp 0.5s";
-  new_member.addEventListener("animationstart", () => {});
-  new_member.addEventListener("animationend", () => {
-    new_member.style.animation = null;
-  });
+  pin(new_member.querySelector(".head_hover"));
+  animation(new_member, "scaleUp");
 }
 
 // 叉叉
 close(document.querySelector(".master .icon_background.red.close"));
-let member_close = document.querySelectorAll(
-  ".member_background .icon_background.red.close"
-);
-member_close.forEach(close);
 
 // 釘選
-let member_pin = document.querySelectorAll(".member_background .pin");
+let member_pin = document.querySelectorAll(".member_background .head_hover");
 member_pin.forEach(pin);
-let talker_pin = document.querySelector(".master .pin");
+let talker_pin = document.querySelector(".master .head_hover");
 talker_pin.addEventListener("click", (e) => {
-  add(talker_pin.parentElement.parentElement.parentElement);
+  add(talker_pin.parentElement.parentElement);
 });
 close(talker_pin, true);
 
