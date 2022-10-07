@@ -35,6 +35,7 @@ function member_observer() {
       document.querySelector(".others").style.display = "none";
       document.querySelector(".master_name").style.display = "none";
     }
+    console.log("OB");
     if (pinning) {
       fit_in(num - 1);
     } else {
@@ -73,6 +74,7 @@ function initialize(initial = null) {
 
 // 調整版面
 function fit_in(number) {
+  console.log(pinning);
   let row = 0;
   let column = 0;
   if (pinning) {
@@ -111,7 +113,6 @@ function fit_in(number) {
     n.style.maxWidth = `${1.5 * width}%`;
     n.style.flex = `1 1 ${width}%`;
   });
-  // console.log(typeof document.querySelector(".member_background").style.width);
   let row_gap = 5 / (row - 1);
   let column_gap = 5 / (column - 1);
   document.querySelector(".others").style.gap = `${row_gap}% ${column_gap}%`;
@@ -125,6 +126,40 @@ function animation(target, way) {
   }
   target.style.animation = `${way} 0.5s`;
   target.addEventListener("animationend", animation_stop);
+}
+
+function swap() {
+  let to_pin = this;
+  let to_pin_head = to_pin.querySelector("img.other_head").getAttribute("src");
+  let to_pin_name = to_pin.querySelector(".other_name").innerHTML;
+  let talker = document.querySelector(".master");
+  let talker_head = talker.querySelector("img.master_head").getAttribute("src");
+  let talker_name = talker.querySelector(".master_name .font").innerHTML;
+  talker.querySelector("img.master_head").setAttribute("src", to_pin_head);
+  talker.querySelector(".master_name .font").innerHTML = to_pin_name;
+  if (to_pin_name.includes("你")) {
+    talker.querySelector(".close").classList.add("self");
+  } else {
+    talker.querySelector(".close").classList.remove("self");
+  }
+  if (pinning) {
+    to_pin.querySelector("img.other_head").setAttribute("src", talker_head);
+    to_pin.querySelector(".other_name").innerHTML = talker_name;
+    if (talker_name.includes("你")) {
+      to_pin.querySelector(".close").classList.add("self");
+    } else {
+      to_pin.querySelector(".close").classList.remove("self");
+    }
+    this.removeEventListener("animationend", swap);
+  } else {
+    pinning = true;
+    to_pin.addEventListener("animationend", () => {
+      to_pin.remove();
+      document.querySelector(".master").style.display = "flex";
+      document.querySelector(".others").style.width = "30%";
+      fit_in(Number(document.querySelector(".notify-bubble").innerHTML) - 1);
+    });
+  }
 }
 
 //選取名字
@@ -195,9 +230,7 @@ function close(n, pin_close = false) {
       if (pinning == false) {
         if (pin_close == false) {
           let member_number = document.querySelector(".notify-bubble");
-          pinning = true;
           member_number.innerHTML = Number(member_number.innerHTML) - 1;
-          pinning = false;
           name_moving(document.querySelector(".master_name .font").innerHTML);
         } else {
           pinning = true;
@@ -216,60 +249,23 @@ function close(n, pin_close = false) {
         if (nn != 1) {
           document.querySelector(".master").style.display = "none";
           document.querySelector(".others").style.width = "90%";
-          document
-            .querySelector(".master")
-            .removeEventListener("animationend", hiding_master);
         } else {
           pinning = true;
           let n = document.querySelectorAll(".others .head_hover");
           n = n[n.length - 1];
           let to_pin = n.parentElement;
-          let to_pin_head = to_pin
-            .querySelector("img.other_head")
-            .getAttribute("src");
-          let to_pin_name = to_pin.querySelector(".other_name").innerHTML;
           let talker = document.querySelector(".master");
-          let talker_head = talker
-            .querySelector("img.master_head")
-            .getAttribute("src");
-          let talker_name =
-            talker.querySelector(".master_name .font").innerHTML;
-          function swap(target) {
-            if (target == "talker") {
-              talker
-                .querySelector("img.master_head")
-                .setAttribute("src", to_pin_head);
-              talker.querySelector(".master_name .font").innerHTML =
-                to_pin_name;
-              if (to_pin_name.includes("你")) {
-                talker.querySelector(".close").classList.add("self");
-              } else {
-                talker.querySelector(".close").classList.remove("self");
-              }
-              talker.removeEventListener("animationstart", swap);
-            } else if (target == "pin") {
-              to_pin
-                .querySelector("img.other_head")
-                .setAttribute("src", talker_head);
-              to_pin.querySelector(".other_name").innerHTML = talker_name;
-              if (talker_name.includes("你")) {
-                to_pin.querySelector(".close").classList.add("self");
-              } else {
-                to_pin.querySelector(".close").classList.remove("self");
-              }
-              to_pin.removeEventListener("animationstart", swap);
-            }
-          }
-          swap("talker");
-          swap("pin");
-          document.querySelector(".member_background").remove();
+          swap.call(to_pin);
+          animation(talker.querySelector("img.master_head"), "scaleUp");
           name_moving(
-            document.parentElement.querySelector(
-              ".member_background .other_name"
-            ).innerHTML
+            document.querySelector(".member_background .other_name").innerHTML
           );
+          to_pin.remove();
         }
       }
+      document
+        .querySelector(".master")
+        .removeEventListener("animationend", hiding_master);
     }
     n.addEventListener("click", (e) => {
       pinning = false;
@@ -287,64 +283,18 @@ function close(n, pin_close = false) {
 // pin listener
 function pin(n) {
   n.addEventListener("click", (e) => {
+    n.parentElement.addEventListener("animationstart", swap);
     let to_pin = n.parentElement;
-    let to_pin_head = to_pin
-      .querySelector("img.other_head")
-      .getAttribute("src");
-    let to_pin_name = to_pin.querySelector(".other_name").innerHTML;
     let talker = document.querySelector(".master");
-    let talker_head = talker
-      .querySelector("img.master_head")
-      .getAttribute("src");
-    let talker_name = talker.querySelector(".master_name .font").innerHTML;
-    function swap(target) {
-      if (target == "talker") {
-        talker
-          .querySelector("img.master_head")
-          .setAttribute("src", to_pin_head);
-        talker.querySelector(".master_name .font").innerHTML = to_pin_name;
-        if (to_pin_name.includes("你")) {
-          talker.querySelector(".close").classList.add("self");
-        } else {
-          talker.querySelector(".close").classList.remove("self");
-        }
-        talker.removeEventListener("animationstart", swap);
-      } else if (target == "pin") {
-        to_pin.querySelector("img.other_head").setAttribute("src", talker_head);
-        to_pin.querySelector(".other_name").innerHTML = talker_name;
-        if (talker_name.includes("你")) {
-          to_pin.querySelector(".close").classList.add("self");
-        } else {
-          to_pin.querySelector(".close").classList.remove("self");
-        }
-        to_pin.removeEventListener("animationstart", swap);
-      }
-    }
-    animation(talker.querySelector("img.master_head"), "scaleUp");
-    talker
-      .querySelector("img.master_head")
-      .addEventListener("animationstart", swap("talker"));
-
     if (pinning) {
       animation(to_pin, "scaleUp");
-      to_pin.addEventListener("animationstart", swap("pin"));
     } else {
-      function pin_pin() {
-        pinning = true;
-        to_pin.removeEventListener("animationstart", pin_pin);
-      }
-      to_pin.style.animation = "scaleDown 0.5s";
-      to_pin.addEventListener("animationstart", pin_pin);
-      to_pin.addEventListener("animationend", () => {
-        to_pin.remove();
-        document.querySelector(".master").style.display = "flex";
-        document.querySelector(".others").style.width = "30%";
-        fit_in(Number(document.querySelector(".notify-bubble").innerHTML) - 1);
-      });
+      animation(to_pin, "scaleDown");
     }
+    animation(talker.querySelector("img.master_head"), "scaleUp");
+    n.parentElement.removeEventListener("animationend", swap);
   });
 }
-
 function add(talker = false) {
   let new_member = new_member_template.cloneNode(true);
   new_member.classList.add("member_background");
