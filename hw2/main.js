@@ -32,10 +32,11 @@ function member_observer() {
       document.querySelector(".others").style.display = "flex";
       document.querySelector(".master_name").style.display = "flex";
     } else {
+      console.log(num);
+      document.querySelector(".master").style.display = "flex";
       document.querySelector(".others").style.display = "none";
       document.querySelector(".master_name").style.display = "none";
     }
-    console.log("OB");
     if (pinning) {
       fit_in(num - 1);
     } else {
@@ -74,7 +75,6 @@ function initialize(initial = null) {
 
 // 調整版面
 function fit_in(number) {
-  console.log(pinning);
   let row = 0;
   let column = 0;
   if (pinning) {
@@ -245,6 +245,7 @@ function close(n, pin_close = false) {
     function hiding_master() {
       let nn = Number(document.querySelector(".notify-bubble").innerHTML);
       fit_in(nn);
+      console.log(nn);
       if (pinning == false) {
         if (nn != 1) {
           document.querySelector(".master").style.display = "none";
