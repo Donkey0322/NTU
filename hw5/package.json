@@ -5,7 +5,7 @@
   "license": "MIT",
   "scripts": {
     "start": "cd frontend && yarn install && yarn add axios && yarn start",
-    "server": "cd backend && yarn add cors express nodemon && yarn add -D @babel/cli @babel/core @babel/node @babel/preset-envyarn server"
+    "server": "cd backend && yarn add cors express nodemon && yarn add -D @babel/cli @babel/core @babel/node @babel/preset-env && yarn server"
   },
   "dependencies": {
     "axios": "^1.1.3"
