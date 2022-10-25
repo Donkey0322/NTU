@@ -1,0 +1,115 @@
+body {
+  background-color: #202124;
+  background-size: cover;
+  background-position: center;
+  position: fixed;
+  font-size: 2vh;
+  color: white;
+  margin: 0;
+}
+
+.startMenu {
+  display: flex;
+  background-color: #202124;
+  position: relative;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+}
+.startMenu button {
+  width: 10vw;
+  height: 10vw;
+  border-radius: 50%;
+  font-size: 1.5vw;
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+.startMenu button:hover {
+  transform: scale(1.25);
+}
+
+.gameMode {
+  display: flex;
+  background-color: #202124;
+  position: relative;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+}
+.gameMode .status {
+  position: absolute;
+  top: 15vh;
+  font-size: 5vh;
+}
+.gameMode input {
+  width: 80%;
+  height: 20%;
+  text-align: center;
+  font-size: 1.25vw;
+  border-radius: 25px;
+  background-color: rgb(217, 206, 206);
+}
+.gameMode button {
+  position: absolute;
+  bottom: 15vh;
+  background-color: red;
+  width: 4vw;
+  height: 4vw;
+  min-width: 50px;
+  min-height: 50px;
+  border-radius: 50%;
+  font-size: 1vw;
+  color: blanchedalmond;
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+.gameMode button:hover {
+  transform: scale(1.4);
+}
+
+.winningMode {
+  display: flex;
+  background-color: #202124;
+  position: relative;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+}
+.winningMode p {
+  width: 100%;
+  height: 20%;
+  text-align: center;
+  color: gold;
+  font-size: 5vw;
+  font-weight: 700;
+  font-family: "Courier New", Courier, monospace;
+  display: block;
+}
+.winningMode button {
+  position: absolute;
+  bottom: 15vh;
+  display: block;
+  background-color: darkorange;
+  border-color: blueviolet;
+  width: 4vw;
+  height: 4vw;
+  min-width: 50px;
+  min-height: 50px;
+  border-radius: 50%;
+  font-size: 1vw;
+  color: blanchedalmond;
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+.winningMode button:hover {
+  transform: scale(1.4);
+} /*# sourceMappingURL=App.css.map */
