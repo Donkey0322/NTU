@@ -38,8 +38,8 @@ const useWordle = (solution) => {
       console.log("Error: Only ", curGuess.length, " characters are entered!");
       return;
     }
-
     let solutionSet = [];
+    let tempSolution = JSON.parse(JSON.stringify(solution));
     for (const c of curGuess) {
       solutionSet.push({
         char: c,
@@ -47,14 +47,29 @@ const useWordle = (solution) => {
       });
     }
     for (let index = 0; index < 5; index++) {
-      if (curGuess[index] === solution[index]) {
+      console.log(tempSolution.indexOf(curGuess[index]));
+      if (curGuess[index] === tempSolution[index]) {
         solutionSet[index].color = "green";
+        tempSolution =
+          tempSolution.substring(0, index) +
+          "_" +
+          tempSolution.substring(index + 1);
+      }
+    }
+    for (let index = 0; index < 5; index++) {
+      if (tempSolution.indexOf(curGuess[index]) != -1) {
+        if (solutionSet[index].color !== "green") {
+          solutionSet[index].color = "yellow";
+          tempSolution =
+            tempSolution.substring(0, tempSolution.indexOf(curGuess[index])) +
+            "_" +
+            tempSolution.substring(tempSolution.indexOf(curGuess[index]) + 1);
+        }
       }
     }
 
     let newGuesses = JSON.parse(JSON.stringify(guesses));
     newGuesses[turn] = solutionSet;
-    console.log(newGuesses);
     setGuesses(newGuesses);
     setTurn(turn + 1);
     setCurGuess("");

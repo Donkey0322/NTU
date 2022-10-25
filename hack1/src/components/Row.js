@@ -22,7 +22,7 @@ const Row = ({ guess, rowIdx }) => {
           id={rowIdx[rowIdx.length - 1] + "-0"}
           key={rowIdx[rowIdx.length - 1] + "-0"}
         >
-          {guess == undefined ? null : ` ${guess[0].char}`}
+          {guess == undefined ? null : `${guess[0].char}`}
         </div>
         <div
           className={
@@ -31,7 +31,7 @@ const Row = ({ guess, rowIdx }) => {
           id={rowIdx[rowIdx.length - 1] + "-1"}
           key={rowIdx[rowIdx.length - 1] + "-1"}
         >
-          {guess == undefined ? null : ` ${guess[1].char}`}
+          {guess == undefined ? null : `${guess[1].char}`}
         </div>
         <div
           className={
@@ -40,7 +40,7 @@ const Row = ({ guess, rowIdx }) => {
           id={rowIdx[rowIdx.length - 1] + "-2"}
           key={rowIdx[rowIdx.length - 1] + "-2"}
         >
-          {guess == undefined ? null : ` ${guess[2].char}`}
+          {guess == undefined ? null : `${guess[2].char}`}
         </div>
         <div
           className={
@@ -49,7 +49,7 @@ const Row = ({ guess, rowIdx }) => {
           id={rowIdx[rowIdx.length - 1] + "-3"}
           key={rowIdx[rowIdx.length - 1] + "-3"}
         >
-          {guess == undefined ? null : ` ${guess[3].char}`}
+          {guess == undefined ? null : `${guess[3].char}`}
         </div>
         <div
           className={
@@ -58,7 +58,7 @@ const Row = ({ guess, rowIdx }) => {
           id={rowIdx[rowIdx.length - 1] + "-4"}
           key={rowIdx[rowIdx.length - 1] + "-4"}
         >
-          {guess == undefined ? null : ` ${guess[4].char}`}
+          {guess == undefined ? null : `${guess[4].char}`}
         </div>
       </div>
       {/* ↑ Default row, you should modify it. ↑ */}
