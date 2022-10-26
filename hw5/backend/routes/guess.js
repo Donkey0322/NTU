@@ -10,7 +10,6 @@ router.post("/start", (_, res) => {
 router.get("/guess", (req, res) => {
   let answer = getNumber();
   let input = req.query.number;
-  console.log(answer, input);
   if (
     isNaN(input) ||
     (!isNaN(input) && (Number(input) < 1 || Number(input) > 100))

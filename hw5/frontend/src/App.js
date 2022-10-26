@@ -12,6 +12,8 @@ function App() {
   const [larger, setLarger] = useState(100);
   const [error, setError] = useState("");
   const [counter, setCounter] = useState(0);
+  const [robotMode, setRobotMode] = useState("");
+  const [robotNumber, setRobotNumber] = useState(0);
 
   useEffect(() => {
     const handleError = async (func, counter) => {
@@ -40,20 +42,43 @@ function App() {
 
   const handleGuess = async () => {
     try {
-      const response = await guess(number);
+      const response = await guess(number ? number : robotNumber);
       if (response === "Equal") setHasWon(true);
       else {
+        setRobotMode(!robotMode);
         setStatus(response);
         response === "Bigger"
-          ? setSmaller(Number(number))
-          : setLarger(Number(number));
+          ? setSmaller(Number(number ? number : robotNumber))
+          : setLarger(Number(number ? number : robotNumber));
         setNumber("");
+        let a = document.querySelector(".gameMode .status");
+        a.style.animation = "scaleUp 0.3s forwards";
+        a.addEventListener("animationend", () => (a.style.animation = null));
       }
     } catch (e) {
       e.message.includes("500") ? setError(e.name + e.message) : setNumber("");
       return;
     }
   };
+
+  useEffect(() => {
+    const robotGuess = async () => {
+      let robotNum = Math.floor(Math.random() * (larger - smaller)) + smaller;
+      if (robotNum == smaller) robotNum += 1;
+      setRobotNumber(robotNum);
+      let a = document.querySelector(".robotAppear p");
+      a.style.animation = "scaleUp 0.3s forwards";
+      a.addEventListener("animationend", () => (a.style.animation = null));
+    };
+    if (robotMode) {
+      setTimeout(robotGuess, 1000);
+    }
+  }, [number]);
+
+  useEffect(() => {
+    if (robotNumber) handleGuess();
+  }, [robotNumber]);
+
   // Define three different views
   const errorAppear = (
     <div className="winningMode">
@@ -70,7 +95,6 @@ function App() {
             setHasStarted(true);
           } catch (e) {
             setError(e.name + e.message);
-            // setHasStarted(true);
           }
         }}
       >
@@ -79,50 +103,77 @@ function App() {
     </div>
   );
 
+  const robotAppear = (
+    <div className="robotAppear">
+      <p>{robotNumber && !hasWon ? robotNumber : null}</p>
+      <img
+        src={
+          robotMode && hasWon
+            ? "robot_win.jpg"
+            : !robotMode && hasWon
+            ? "robot_wrong.png"
+            : "robot.jpg"
+        }
+        style={{ position: hasWon ? "relative" : "absolute" }}
+      />
+    </div>
+  );
+
   const gameMode = (
     <div className="gameMode">
-      <p className="status">{status}</p>
-      <input
-        onChange={(e) => {
-          setNumber(e.target.value);
-        }}
-        onKeyDown={(e) => {
-          if (e.key === "Enter") {
-            handleGuess();
-          }
-        }}
-        value={number}
-        placeholder={`Guess a number between ${smaller} to ${larger}`}
-      ></input>
-      <br />
-      <button // Send number to backend
-        onClick={handleGuess}
-        disabled={!number}
-      >
-        guess!
-      </button>
+      <div className="playAppear">
+        <p className="status">{status}</p>
+        <input
+          onChange={(e) => {
+            setNumber(e.target.value);
+          }}
+          onKeyDown={(e) => {
+            if (e.key === "Enter" && number) {
+              handleGuess();
+            }
+          }}
+          disabled={robotMode}
+          value={number}
+          placeholder={`Guess a number between ${smaller} to ${larger}`}
+        ></input>
+        <button // Send number to backend
+          onClick={handleGuess}
+          disabled={!number}
+        >
+          guess!
+        </button>
+      </div>
+      {robotAppear}
     </div>
   );
 
   const winningMode = (
-    <div className="winningMode">
-      <p>You won! The number was {Number(number)}.</p>
-      <button
-        onClick={async () => {
-          try {
-            await restart();
-            setHasWon(false);
-            setNumber("");
-            setStatus("");
-            setSmaller(1);
-            setLarger(100);
-          } catch (e) {
-            setError(e.name + e.message);
-          }
-        }}
-      >
-        restart
-      </button>
+    <div className="gameMode">
+      <div className="winningMode">
+        <p>
+          {robotMode ? "The robot" : "You"} won! The number was{" "}
+          {number ? Number(number) : robotNumber}.
+        </p>
+        <button
+          onClick={async () => {
+            try {
+              await restart();
+              setHasWon(false);
+              setNumber("");
+              setStatus("");
+              setSmaller(1);
+              setLarger(100);
+              setRobotMode(false);
+              setRobotNumber(0);
+            } catch (e) {
+              setError(e.name + e.message);
+            }
+          }}
+        >
+          restart
+        </button>
+      </div>
+      {robotAppear}
     </div>
   );
   const game = <div>{hasWon ? winningMode : gameMode}</div>;

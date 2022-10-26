@@ -1,3 +1,19 @@
+@-webkit-keyframes scaleUp {
+  from {
+    transform: scale(0.75);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+@keyframes scaleUp {
+  from {
+    transform: scale(0.75);
+  }
+  to {
+    transform: scale(1);
+  }
+}
 body {
   background-color: #202124;
   background-size: cover;
@@ -35,18 +51,29 @@ body {
   display: flex;
   background-color: #202124;
   position: relative;
-  justify-content: center;
+  justify-content: row;
   align-items: center;
   width: 100vw;
   height: 100vh;
+}
+
+.playAppear {
+  display: flex;
+  background-color: #202124;
+  position: relative;
+  justify-content: center;
+  align-items: center;
+  width: 80vw;
+  height: 100vh;
   margin: 0;
 }
-.gameMode .status {
+.playAppear .status {
   position: absolute;
   top: 15vh;
   font-size: 5vh;
+  transition: all 0.3s ease;
 }
-.gameMode input {
+.playAppear input {
   width: 80%;
   height: 20%;
   text-align: center;
@@ -54,7 +81,7 @@ body {
   border-radius: 25px;
   background-color: rgb(217, 206, 206);
 }
-.gameMode button {
+.playAppear button {
   position: absolute;
   bottom: 15vh;
   background-color: red;
@@ -69,8 +96,35 @@ body {
   transition: all 0.3s ease;
   cursor: pointer;
 }
-.gameMode button:hover {
+.playAppear button:hover {
   transform: scale(1.4);
+}
+
+.robotAppear {
+  display: flex;
+  background-color: #f7f2d5;
+  position: relative;
+  justify-content: center;
+  align-items: center;
+  width: 20vw;
+  height: 100vh;
+  margin: 0;
+}
+.robotAppear p {
+  color: white;
+  text-align: center;
+  font-size: 5vw;
+  position: absolute;
+  font-family: "Courier New", Courier, monospace;
+  font-weight: 700;
+  top: 15vh;
+  background-color: grey;
+  border-radius: 50%;
+}
+.robotAppear img {
+  position: absolute;
+  width: 15vw;
+  bottom: 5vh;
 }
 
 .winningMode {
@@ -79,7 +133,7 @@ body {
   position: relative;
   justify-content: center;
   align-items: center;
-  width: 100vw;
+  width: 80vw;
   height: 100vh;
   margin: 0;
 }
@@ -88,7 +142,7 @@ body {
   height: 20%;
   text-align: center;
   color: gold;
-  font-size: 5vw;
+  font-size: 4vw;
   font-weight: 700;
   font-family: "Courier New", Courier, monospace;
   display: block;
@@ -112,4 +166,4 @@ body {
 }
 .winningMode button:hover {
   transform: scale(1.4);
-} /*# sourceMappingURL=App.css.map */
+}/*# sourceMappingURL=App.css.map */
