@@ -4,8 +4,8 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "start": "cd frontend && yarn start",
-    "server": "cd backend && yarn server"
+    "start": "cd frontend && yarn add axios @material-ui/core styled-components && yarn start",
+    "server": "cd backend && yarn && yarn server"
   },
   "dependencies": {
     "@material-ui/core": "^4.12.4",
