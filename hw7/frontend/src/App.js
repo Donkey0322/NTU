@@ -4,6 +4,7 @@ import { useChat } from "./containers/hook/useChat";
 import ChatRoom from "./containers/ChatRoom";
 import SignIn from "./containers/SignIn";
 import styled from "styled-components";
+import { Button } from "antd";
 
 const Wrapper = styled.div`
   display: flex;
@@ -15,16 +16,46 @@ const Wrapper = styled.div`
   margin: auto;
 `;
 
+const ButtonWrapper = styled.div`
+  width: 80%;
+  overflow: auto;
+  /* margin: 20px; */
+  padding: 20px;
+  display: flex;
+  position: absolute;
+  right: 0;
+  top: 0;
+  justify-content: space-around;
+  align-items: center;
+`;
+
 const App = () => {
-  const { status, signedIn, displayStatus } = useChat();
+  const { status, signedIn, displayStatus, clearDB } = useChat();
   useEffect(() => {
     displayStatus(status);
   }, [status]);
-  return <Wrapper> {signedIn ? <ChatRoom /> : <SignIn />} </Wrapper>;
+  return (
+    <Wrapper>
+      <ButtonWrapper>
+        <Button
+          type="primary"
+          size="large"
+          danger
+          disabled={false}
+          onClick={() => {
+            clearDB();
+          }}
+        >
+          Clear Database
+        </Button>
+      </ButtonWrapper>
+      {signedIn ? <ChatRoom /> : <SignIn />}{" "}
+    </Wrapper>
+  );
 };
 
 // function App() {
-//   const { status, messages, sendMessage, clearMessages } = useChat();
+//   const { status, messages, sendMessage, clearDB } = useChat();
 //   const [username, setUsername] = useState("");
 //   const [body, setBody] = useState("");
 //   const bodyRef = useRef(null);
@@ -57,7 +88,7 @@ const App = () => {
 //     <div className="App">
 //       <div className="App-title">
 //         <h1>Simple Chat</h1>
-//         <Button type="primary" danger onClick={clearMessages}>
+//         <Button type="primary" danger onClick={clearDB}>
 //           Clear
 //         </Button>
 //       </div>

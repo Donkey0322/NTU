@@ -4,11 +4,11 @@ const sendData = (data, ws) => {
 const sendStatus = (payload, ws) => {
   sendData(["status", payload], ws);
 };
-const broadcastMessage = (wss, ws, data, status) => {
+const broadcastMessage = (wss, ws, data, status, limit = true) => {
   wss.clients.forEach((client) => {
-    if (client.box === ws.box) {
-      console.log(client.box);
+    if (client.box === ws.box || !limit) {
       sendData(data, client);
+      console.log(status);
       sendStatus(status, client);
     }
   });

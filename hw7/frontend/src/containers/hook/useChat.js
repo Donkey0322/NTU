@@ -8,7 +8,7 @@ const savedMe = localStorage.getItem(LOCALSTORAGE_KEY);
 const sendData = async (data) => {
   try {
     client.send(JSON.stringify(data));
-    console.log(JSON.stringify(data));
+    // console.log(JSON.stringify(data));
   } catch {
     console.log("fail");
   }
@@ -19,9 +19,10 @@ const ChatContext = createContext({
   me: "",
   signedIn: false,
   messages: [],
+  resetDB: false,
   startChat: () => {},
   sendMessage: () => {},
-  clearMessages: () => {},
+  clearDB: () => {},
   displayStatus: () => {},
 });
 
@@ -30,11 +31,19 @@ const ChatProvider = (props) => {
   const [signedIn, setSignedIn] = useState(false);
   const [messages, setMessages] = useState([]);
   const [me, setMe] = useState(savedMe || "");
+  const [resetDB, setResetDB] = useState(false);
+
   useEffect(() => {
     if (signedIn) {
       localStorage.setItem(LOCALSTORAGE_KEY, me);
     }
   }, [me, signedIn]);
+
+  useEffect(() => {
+    // setStatus({});
+    setMessages([]);
+    setResetDB(false);
+  }, [resetDB]);
 
   //接收後端
   client.onmessage = async (byteString) => {
@@ -50,11 +59,12 @@ const ChatProvider = (props) => {
         break;
       }
       case "status": {
+        console.log(payload);
         setStatus(payload);
         break;
       }
       case "cleared": {
-        setMessages([]);
+        setResetDB(true);
         break;
       }
       default:
@@ -62,8 +72,11 @@ const ChatProvider = (props) => {
     }
   };
 
-  const clearMessages = () => {
-    sendData(["clear"]);
+  const clearDB = () => {
+    sendData({
+      type: "CLEARDB",
+      payload: {},
+    });
   };
 
   const sendMessage = (name, to, body) => {
@@ -111,11 +124,13 @@ const ChatProvider = (props) => {
         me,
         signedIn,
         messages,
+        resetDB,
         setMe,
         startChat,
         setSignedIn,
+        setResetDB,
         sendMessage,
-        clearMessages,
+        clearDB,
         displayStatus,
       }}
       {...props}

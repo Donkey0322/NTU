@@ -26,7 +26,22 @@ const messageHandler = async (sender, body, name) => {
   let box = await ChatBoxModel.findOne({ name });
   let messages = box.messages;
   messages.push(message);
-  box = await ChatBoxModel.findOneAndUpdate({ name }, { messages });
+  await ChatBoxModel.findOneAndUpdate({ name }, { messages });
+};
+
+const clearHandler = async (name) => {
+  let box = await ChatBoxModel.findOne({ name });
+  for (const message of box.messages) {
+    await MessageModel.findOneAndDelete({ _id: message });
+  }
+  await ChatBoxModel.findOneAndUpdate({ name }, { messages: [] });
+  return [];
+};
+
+const clearDBHandler = async () => {
+  await ChatBoxModel.deleteMany({});
+  await MessageModel.deleteMany({});
+  return [];
 };
 
 export default {
@@ -62,38 +77,25 @@ export default {
         }
         break;
       }
+      case "CLEARDB": {
+        try {
+          const msg = await clearDBHandler();
+          broadcastMessage(
+            wss,
+            ws,
+            ["cleared", msg],
+            {
+              type: "info",
+              msg: "DATABASE CLEARED!",
+            },
+            false
+          );
+        } catch (e) {
+          throw new Error("clear error: " + e);
+        }
+      }
       default:
         break;
     }
-    // switch (task) {
-    //   case "input": {
-    //     const { name, body } = payload;
-    //     // Save payload to DB
-    //     const message = new Message({ name, body });
-    //     try {
-    //       await message.save();
-    //       console.log("Success");
-    //     } catch (e) {
-    //       throw new Error("Message DB save error: " + e);
-    //     }
-    //     broadcastMessage(wss, ["output", [payload]], {
-    //       type: "success",
-    //       msg: "Message sent.",
-    //     });
-    //     break;
-    //   }
-    //   case "clear": {
-    //     Message.deleteMany({}, () => {
-    //       broadcastMessage(wss, ["cleared"], {
-    //         type: "info",
-    //         msg: "Message cache cleared.",
-    //       });
-    //     });
-    //     break;
-    //   }
-
-    //   default:
-    //     break;
-    // }
   },
 };

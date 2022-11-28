@@ -1,10 +1,10 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import Title from "../components/Title";
-import Message from "../components/Message";
 import ChatModal from "../components/ChatModal";
 import { useChat } from "./hook/useChat";
 import { Input, Tabs } from "antd";
+import useRoom from "./hook/useRoom";
 
 const ChatBoxesWrapper = styled(Tabs)`
   width: 100%;
@@ -16,84 +16,13 @@ const ChatBoxesWrapper = styled(Tabs)`
   overflow: auto;
 `;
 
-const ChatBoxWrapper = styled.div`
-  height: calc(240px - 36px);
-  display: flex;
-  flex-direction: column;
-  overflow: auto;
-`;
-
-const FootRef = styled.div`
-  height: 20px;
-`;
-
 const ChatRoom = () => {
-  const { me, messages, sendMessage, clearMessages, displayStatus, startChat } =
-    useChat();
+  const { me, sendMessage, displayStatus, startChat } = useChat();
+  const { chatBoxes, activeKey, setActiveKey, createChatBox, removeChatBox } =
+    useRoom();
   const [modalOpen, setModalOpen] = useState(false);
   const [body, setBody] = useState("");
-  const [chatBoxes, setChatBoxes] = useState([]);
-  const [activeKey, setActiveKey] = useState("");
-  const [msgSent, setMsgSent] = useState(false);
-  const bodyRef = useRef(null);
-  const msgFooter = useRef(null);
 
-  const renderChat = () =>
-    messages.length === 0 ? (
-      <p style={{ color: "#ccc" }}> No messages... </p>
-    ) : (
-      <ChatBoxWrapper>
-        {messages.map(({ name, body }, i) => (
-          <Message isMe={name === me} message={body} key={i}></Message>
-        ))}
-        <FootRef ref={msgFooter} />
-      </ChatBoxWrapper>
-    ); // 產⽣ messages 的 DOM nodes
-
-  const scrollToBottom = () => {
-    msgFooter.current?.scrollIntoView({ behavior: "smooth", block: "start" });
-  };
-  useEffect(() => {
-    scrollToBottom();
-    setMsgSent(false);
-  }, [msgSent]);
-
-  const createChatBox = (friend) => {
-    if (chatBoxes.some(({ key }) => key === friend)) {
-      throw new Error(friend + "'s chat box has already opened.");
-    }
-    startChat(me, friend);
-    setChatBoxes([...chatBoxes, { label: friend, children: [], key: friend }]);
-    setMsgSent(true);
-    return friend;
-  };
-  useEffect(() => {
-    if (chatBoxes.length !== 0) {
-      let ID = chatBoxes.findIndex(({ key }) => key === activeKey);
-      let newChatBox = chatBoxes[ID];
-      newChatBox.children = renderChat();
-      setMsgSent(true);
-    }
-  }, [messages]);
-
-  const removeChatBox = (targetKey, activeKey) => {
-    const index = chatBoxes.findIndex(({ key }) => key === activeKey);
-    const newChatBoxes = chatBoxes.filter(({ key }) => key !== targetKey);
-    setChatBoxes(newChatBoxes);
-    let newKey = activeKey
-      ? activeKey === targetKey
-        ? index === 0
-          ? chatBoxes.length > 1
-            ? chatBoxes[1].key
-            : ""
-          : chatBoxes[index - 1].key
-        : activeKey
-      : "";
-    if (activeKey !== newKey) {
-      startChat(me, newKey);
-    }
-    return newKey;
-  };
   return (
     <>
       <Title name={me}></Title>
@@ -105,7 +34,6 @@ const ChatRoom = () => {
           onChange={(key) => {
             setActiveKey(key);
             startChat(me, key);
-            renderChat();
           }}
           onEdit={(targetKey, action) => {
             if (action === "add") setModalOpen(true);
@@ -119,7 +47,6 @@ const ChatRoom = () => {
           open={modalOpen}
           onCreate={({ name }) => {
             setActiveKey(createChatBox(name));
-            renderChat();
             setModalOpen(false);
           }}
           onCancel={() => {
@@ -128,7 +55,6 @@ const ChatRoom = () => {
         />
       </>
       <Input.Search
-        ref={bodyRef}
         value={body}
         onChange={(e) => setBody(e.target.value)}
         enterButton="Send"
@@ -150,7 +76,6 @@ const ChatRoom = () => {
           }
           sendMessage(me, activeKey, msg);
           setBody("");
-          setMsgSent(true);
         }}
       ></Input.Search>
     </>
