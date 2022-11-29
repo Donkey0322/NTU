@@ -16,11 +16,24 @@ exports.GetSearch = async (req, res) => {
   const mealFilter = req.query.mealFilter;
   const typeFilter = req.query.typeFilter;
   const sortBy = req.query.sortBy;
+  console.log(priceFilter, mealFilter, typeFilter, sortBy);
   /****************************************/
-  Info.find({}).exec((err, data) => {
+  const filter = [];
+
+  if (mealFilter) filter.push({ tag: { $elemMatch: { $in: mealFilter } } });
+  if (typeFilter) filter.push({ tag: { $elemMatch: { $in: typeFilter } } });
+  if (priceFilter) {
+    const pricenumFilter = priceFilter.map((p) => p.length);
+    filter.push({ price: { $in: pricenumFilter } });
+  }
+
+  Info.find(filter.length !== 0 ? { $and: filter } : {}).exec((err, data) => {
     if (err) {
+      console.log(err);
       res.status(403).json({ message: "error", contents: "Error!!!" });
     } else {
+      console.log(data.length);
+      data.sort((a, b) => a[sortBy] - b[sortBy]);
       res.status(200).json({ message: "success", contents: data });
     }
   });

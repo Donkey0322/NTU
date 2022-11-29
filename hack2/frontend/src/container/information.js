@@ -36,19 +36,14 @@ const Information = ({ info, rating }) => {
     const week = ["Mon", "Tue", "Wed", "Thr", "Fri", "Sat", "Sun"];
     return (
       <div className="businessTime">
-        {time.All
-          ? week.map((w) => (
-              <div className="singleDay" key={w}>
-                <div className="day">{w}</div>
-                <div className="time">{time.All}</div>
-              </div>
-            ))
-          : week.map((w) => (
-              <div className="singleDay" key={w}>
-                <div className="day">{w}</div>
-                <div className="time">{time[w] ? time[w] : "Closed"}</div>
-              </div>
-            ))}
+        {week.map((w) => (
+          <div className="singleDay" key={w}>
+            <div className="day">{w}</div>
+            <div className="time">
+              {time.All ? time.All : time[w] ? time[w] : "Closed"}
+            </div>
+          </div>
+        ))}
       </div>
     );
   };

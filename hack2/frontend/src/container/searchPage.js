@@ -27,7 +27,7 @@ const SearchPage = () => {
       } = await instance.get("/getSearch", {
         params: { priceFilter, mealFilter, typeFilter, sortBy },
       });
-      console.log(contents);
+      // console.log(contents);
       setRestaurant(contents);
       return contents;
     } catch (error) {
@@ -40,7 +40,12 @@ const SearchPage = () => {
 
   useEffect(() => {
     getRestaurant();
-    // console.log(state);
+    console.log(
+      state.priceFilter,
+      state.mealFilter,
+      state.typeFilter,
+      state.sortBy
+    );
   }, [state.priceFilter, state.mealFilter, state.typeFilter, state.sortBy]);
 
   const navigate = useNavigate();

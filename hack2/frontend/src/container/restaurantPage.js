@@ -21,7 +21,8 @@ const RestaurantPage = () => {
   const { id } = useParams();
   const [info, setInfo] = useState({});
   const [comments, setComments] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [avgRating, setAvgRating] = useState(0);
+
   const getInfo = async () => {
     // TODO Part III-2: get a restaurant's info
     console.log(id);
@@ -35,39 +36,56 @@ const RestaurantPage = () => {
       console.log(message);
     } catch (error) {
       const errorMessage = "500: Internal Server Error";
-      return new Promise((resolve, reject) => {
+      return new Promise((_, reject) => {
         reject(new Error(errorMessage));
       });
     }
   };
   const getComments = async () => {
-    // TODO Part III-3: get a restaurant's comments
+    console.log(id);
+    try {
+      const {
+        data: { message, contents },
+      } = await instance.get("/getCommentsByRestaurantId", {
+        params: { restaurantId: id },
+      });
+      setComments(contents);
+      console.log(message);
+    } catch (error) {
+      const errorMessage = "500: Internal Server Error";
+      return new Promise((_, reject) => {
+        reject(new Error(errorMessage));
+      });
+    }
   };
   useEffect(() => {
     if (Object.keys(info).length === 0) {
       getInfo();
+      getComments();
     }
   }, []);
 
   useEffect(() => {
-    // TODO Part III-3-c: update the comment display immediately after submission
+    let rating = 0;
+    for (const comment of comments) {
+      rating += comment.rating;
+    }
+    rating /= comments.length;
+    console.log(`Rating: ${rating}`);
+    setAvgRating(rating);
   }, [comments]);
-
-  /* TODO Part III-2-b: calculate the average rating of the restaurant */
-  let rating = 0;
 
   return (
     <div className="restaurantPageContainer">
       {Object.keys(info).length === 0 ? (
         <></>
       ) : (
-        <Information info={info} rating={rating} />
+        <Information info={info} rating={avgRating} />
       )}
       <Comment
         restaurantId={id}
         comments={comments}
         setComments={setComments}
-        setLoad={setLoading}
       />
     </div>
   );
