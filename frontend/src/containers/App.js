@@ -1,11 +1,13 @@
 import './App.css'
 import { useState, useEffect, useRef } from 'react'
 import { Button, Input, message, Tag } from 'antd'
-import {useChat} from './hooks/useChat'
+import {useGame} from './hooks/useGame'
 import styled from "styled-components";
 import Title from '../components/Title';
-import ChatRoom from './ChatRoom';
+import GameRoom from './GameRoom';
 import SignIn from './SignIn';
+import EndPage from './EndPage';
+import Wait from './Wait';
 
 const Wrapper = styled.div`
   display: flex;
@@ -18,11 +20,11 @@ const Wrapper = styled.div`
 `;
 
 const App = () => {
-  const{ status, me, signedIn, displayStatus } = useChat();
+  const{ signedIn, over, participant} = useGame();
 
   return (
     <Wrapper>
-      {signedIn ? <ChatRoom />: <SignIn me={me}/>}
+      {signedIn ? over ? <EndPage/> : participant ? <GameRoom /> : <Wait/> : <SignIn/>}
     </Wrapper>
   )
 }

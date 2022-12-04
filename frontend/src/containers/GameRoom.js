@@ -1,7 +1,7 @@
 import './App.css'
 import { useState, useEffect, useRef } from 'react'
 import { Input, Tabs} from 'antd';
-import {useChat} from './hooks/useChat'
+import {useGame} from './hooks/useGame'
 import styled from "styled-components";
 import Title from '../components/Title';
 import Message from '../components/Message';
@@ -37,7 +37,7 @@ const FootRef = styled.div`
 
 const ChatRoom = () => {
 
-    const { status, messages, me, sendMessage, displayStatus, startChat } = useChat();  
+    const { status, messages, me, sendMessage, displayStatus, startChat } = useGame();  
     const [body, setBody] = useState('');
     const bodyRef = useRef(null);
     const [msgSent, setMsgSent] = useState(false);

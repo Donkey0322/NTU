@@ -10,7 +10,7 @@ const LogIn = ({me, setName, onLogin}) => {
         placeholder="Enter your name"
         value={me}
         onChange={(e) => setName(e.target.value)}
-        enterButton="Sign In"
+        enterButton="Start Game"
         onSearch={(name) => onLogin(name)}
     /> 
 );}
