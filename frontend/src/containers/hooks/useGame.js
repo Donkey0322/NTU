@@ -17,6 +17,7 @@ const GameContext = createContext({
     Img: "", //存這輪猜的照片
     winner: "",
     over: false,
+    myPoint: 0,
     sendGuess: () => {}, //把玩家猜的送至後端
     startGame: () => {} //sign in的按鈕
 });
@@ -29,6 +30,7 @@ const GameProvider = (props) => {
     const [Img, setImg] = useState("");
     const [winner, setWinner] = useState("");
     const [over, setOver] = useState(false);
+    const [myPoint, setMyPoint] = useState(0);
 
     // const displayStatus = (s) => {
     //     if (s.msg) {
@@ -99,9 +101,9 @@ const GameProvider = (props) => {
     }
 
     return (
-      <ChatContext.Provider
+      <GameContext.Provider
         value={{
-          status, me, signedIn, participant, Img, winner, over, setStatus, setMe, setSignedIn, setParticipant,
+          status, me, signedIn, participant, Img, winner, over, myPoint, setMyPoint, setStatus, setMe, setSignedIn, setParticipant,
           setImg, setOver, setWinner, sendGuess, startGame }}
         {...props}
       />

@@ -3,12 +3,12 @@ import ReactDOM from "react-dom/client";
 import App from "./containers/App";
 import reportWebVitals from "./reportWebVitals";
 import "antd/dist/antd.css";
-import {ChatProvider} from "./containers/hooks/useChat";
+import {GameProvider} from "./containers/hooks/useGame";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <ChatProvider><App /></ChatProvider>
+    <GameProvider><App /></GameProvider>
   </React.StrictMode>
 );
 

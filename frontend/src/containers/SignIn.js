@@ -1,17 +1,20 @@
 import AppTitle from '../components/Title';
 import LogIn from '../components/LogIn';
-import {useChat} from './hooks/useChat'
+import {useGame} from './hooks/useGame'
 
 
 const SignIn = () => {
-    const { me, setMe, setSignedIn, displayStatus } = useChat();
+    const { me, setMe, setSignedIn, displayStatus, startGame } = useGame();
     const handleLogin = (name) => {
     if (!name)
         displayStatus({
             type: "error",
             msg: "Missing user name",
         });
-    else setSignedIn(true);
+    else{
+        setSignedIn(true);
+        startGame(name)
+    } 
   }
   return ( 
     <>
