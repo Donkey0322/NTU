@@ -1,4 +1,5 @@
-import {QuestionModel, PlayerModel} from './models/chatbox.js';
+import {QuestionModel, PlayerModel} from './models/gamebox';
+console.log(QuestionModel, PlayerModel);
 const GameBoxes= {};
 const round = {};
 let waiting_ws = '';
@@ -14,8 +15,10 @@ const sendStatus = (payload, ws) => {
     sendData({'task':"status", payload}, ws); 
 };
 
-const random = (GameBoxName) => {
-    random_list[GameBoxName] = QuestionModel.aggregate([ { $sample: { size: 5 } } ])
+const random = async (GameBoxName) => {
+    
+    random_list[GameBoxName] = await QuestionModel.aggregate([ { $sample: { size: 5 } } ])
+    console.log(random_list[GameBoxName]);
 }
 
 const makeName = (name, to) => { return [name, to].sort().join('_'); };
@@ -28,13 +31,16 @@ export default {
             switch (type) {
                 case 'start': {
                     const { name } = payload;
+                    console.log(typeof name);
                     let me = await PlayerModel.findOne({name});
+                    console.log(me);
                     let player = await PlayerModel.findOne({'waiting': true});
+                    console.log(player);
                     if(!me){
                         me = await new PlayerModel({ name }).save();
                     }
                     if(player){
-                        const GameBoxName = makeName(name, player);
+                        const GameBoxName = makeName(name, player.name);
                         if (!GameBoxes[GameBoxName])
                             GameBoxes[GameBoxName] = new Set();
                         GameBoxes[GameBoxName].add(ws);
@@ -42,9 +48,9 @@ export default {
                         ws.box = GameBoxName;
                         waiting_ws.box = GameBoxName;
                         await PlayerModel.updateOne({'name':name }, {'name':name, 'waiting':false, 'group': GameBoxName});
-                        await PlayerModel.updateOne({'name':player }, {'name':player, 'waiting':false, 'group': GameBoxName});
+                        await PlayerModel.updateOne({'name':player.name }, {'name':player.name, 'waiting':false, 'group': GameBoxName});
                         round[GameBoxName] = 1;
-                        random(GameBoxName);
+                        await random(GameBoxName);
                         sendData({'task': 'start', 'payload': {'participant': true, 'Img': random_list[GameBoxName][0].Img}}, GameBoxes[GameBoxName]);
                     }else{
                         waiting_ws = ws
