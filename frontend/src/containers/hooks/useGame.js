@@ -65,7 +65,9 @@ const GameProvider = (props) => {
                 if(payload.Img){
                     setImg(payload.Img)
                 }
-                setParticipant(payload); break; }
+                setParticipant(payload.participant); 
+                break; 
+            }
             case "guess": {
                 console.log('Guess output:', payload);
                 if(payload){

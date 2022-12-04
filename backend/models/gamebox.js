@@ -5,9 +5,9 @@ const Schema = mongoose.Schema
 const QuestionSchema = new Schema({
     id: {type: Number},
     img: { type: String},
-    answer: { type: String}
+    answer: [{ type: String }]
 })
-const Question = mongoose.model('question', QuestionSchema)
+const QuestionModel = mongoose.model('question', QuestionSchema)
 
 const PlayerSchema = new Schema({
     name: {
@@ -19,7 +19,7 @@ const PlayerSchema = new Schema({
         type: String
     }
 })
-const Player = mongoose.model('player', PlayerSchema)
+const PlayerModel = mongoose.model('player', PlayerSchema)
 
-export {Question, Player};
+export {QuestionModel, PlayerModel};
 
