@@ -57,11 +57,14 @@ const GameProvider = (props) => {
 
     client.onmessage = (byteString) => {
         const {data} = byteString;
-        const [task, payload] = JSON.parse(data);
+        const {task, payload} = JSON.parse(data);
         // console.log('task: ', task, 'payload: ', payload);
         switch (task) {
             case "start": {
-                console.log('Two participants found:', payload);
+                console.log('Two participants found:', payload.participant);
+                if(payload.Img){
+                    setImg(payload.Img)
+                }
                 setParticipant(payload); break; }
             case "guess": {
                 console.log('Guess output:', payload);
@@ -74,7 +77,7 @@ const GameProvider = (props) => {
                     }
                 } break; }
             case "status": {
-                setStatus(payload); break; }
+                setStatus(payload.type); break; }
             default: break;
         }
     }
