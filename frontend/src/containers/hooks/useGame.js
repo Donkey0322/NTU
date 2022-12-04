@@ -18,6 +18,7 @@ const GameContext = createContext({
     winner: "",
     over: false,
     myPoint: 0,
+    yourPoint: 0,
     sendGuess: () => {}, //把玩家猜的送至後端
     startGame: () => {} //sign in的按鈕
 });
@@ -31,6 +32,7 @@ const GameProvider = (props) => {
     const [winner, setWinner] = useState("");
     const [over, setOver] = useState(false);
     const [myPoint, setMyPoint] = useState(0);
+    const [yourPoint, setYourPoint] = useState(0);
 
     // const displayStatus = (s) => {
     //     if (s.msg) {
@@ -64,6 +66,7 @@ const GameProvider = (props) => {
                 console.log('Two participants found:', payload.participant);
                 if(payload.Img){
                     setImg(payload.Img)
+                    console.log(Img)
                 }
                 setParticipant(payload.participant); 
                 break; 
@@ -71,12 +74,16 @@ const GameProvider = (props) => {
             case "guess": {
                 console.log('Guess output:', payload);
                 if(payload){
-                    if(payload.over){
-                        setOver(payload.over)
+                    setWinner(payload.winner)
+                    setImg(payload.Img)
+                    if(payload.winner === me){
+                        setMyPoint(myPoint+1)
+                        console.log(myPoint)
                     }else{
-                        setWinner(payload.winner)
-                        setImg(payload.Img)
+                        setYourPoint(yourPoint+1)
                     }
+                    if(payload.over)
+                        setOver(payload.over)
                 } break; }
             case "status": {
                 setStatus(payload.type); break; }
@@ -108,7 +115,7 @@ const GameProvider = (props) => {
     return (
       <GameContext.Provider
         value={{
-          status, me, signedIn, participant, Img, winner, over, myPoint, setMyPoint, setStatus, setMe, setSignedIn, setParticipant,
+          status, me, signedIn, participant, Img, winner, over, myPoint, yourPoint, setMyPoint, setYourPoint, setStatus, setMe, setSignedIn, setParticipant,
           setImg, setOver, setWinner, sendGuess, startGame }}
         {...props}
       />

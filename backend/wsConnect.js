@@ -16,9 +16,7 @@ const sendStatus = (payload, ws) => {
 };
 
 const random = async (GameBoxName) => {
-    
     random_list[GameBoxName] = await QuestionModel.aggregate([ { $sample: { size: 5 } } ])
-    console.log(random_list[GameBoxName]);
 }
 
 const makeName = (name, to) => { return [name, to].sort().join('_'); };
@@ -61,18 +59,19 @@ export default {
                 }
                 case 'guess': {
                     const { name, body } = payload;
+                    console.log(name, body)
                     const me = await PlayerModel.findOne({'name': name});
                     const GameBoxName = me.group;
                     const answer = random_list[GameBoxName][round[GameBoxName] - 1].answer;
                     if(answer.includes(body)){
                         round[GameBoxName] += 1
                         if(round[GameBoxName] === 6){
-                            sendData({'task':'guess', 'payload': {'winner': name, 'Img': random_list[GameBoxName][0].Img, 'over': true}}, chatBoxes[chatBoxName]);
+                            sendData({'task':'guess', 'payload': {'winner': name, 'Img': random_list[GameBoxName][0].Img, 'over': true}}, GameBoxes[GameBoxName]);
                             sendStatus({'type' : true}, [ws]);
                             if (ws.box !== "" && GameBoxes[ws.box])
                                 GameBoxes[ws.box].clear();
                         }else{
-                            sendData({'task':'guess', 'payload': {'winner': name, 'Img': random_list[GameBoxName][round[GameBoxName] - 1].Img}}, chatBoxes[chatBoxName]);
+                            sendData({'task':'guess', 'payload': {'winner': name, 'Img': random_list[GameBoxName][round[GameBoxName] - 1].Img}}, GameBoxes[GameBoxName]);
                             sendStatus({'type' : true}, [ws]);
                         }
                     }else{

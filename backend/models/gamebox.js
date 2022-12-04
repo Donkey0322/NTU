@@ -4,7 +4,7 @@ const Schema = mongoose.Schema
 
 const QuestionSchema = new Schema({
     id: {type: Number},
-    img: { type: String},
+    Img: { type: String},
     answer: [{ type: String }]
 })
 const QuestionModel = mongoose.model('question', QuestionSchema)

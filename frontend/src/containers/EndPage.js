@@ -5,6 +5,7 @@ import {useGame} from './hooks/useGame'
 
 const EndPage = () => {
     const {me, myPoint, setMyPoint, setOver, setParticipant, setWin,  startGame} = useGame();
+
     const restartGame = () => {
         setOver(false)
         setWin(false);
@@ -12,6 +13,7 @@ const EndPage = () => {
         setParticipant(false);
         startGame(me);
     }
+    
   return ( 
     <>
         <AppTitle /><Result win={myPoint >= 3} onLogin={restartGame} />

@@ -1,0 +1,92 @@
+.game{
+    width: 100vw;
+    height: 100vh;
+    flex-direction: row;
+    display: flex;
+    position: relative;
+  }
+  
+  .game .user{
+    width:50%;
+    height: 100%;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
+  
+  .game .computer{
+    width:50%;
+    height: 100%;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    text-align: center;
+  }
+  .game .gameBoard{
+    position: absolute;
+    top:30%;
+    left:34.5%;
+    font-size: 25px;
+    font-family: fantasy;
+    letter-spacing: 2px;
+  }
+  .gameBoard input{
+    font-size: 25px;
+    border-radius: 5px;
+    height: 50%;
+  }
+  
+  .gameBoard button{
+    font-size: 25px;
+    border-radius: 5px;
+    margin: 20px;
+    font-family: fantasy;
+    letter-spacing: 2px;
+  }
+  
+  .Img{
+    top:20%;
+    left:48.5%;
+    transform: translate(-50%, -50%);
+    font-size: 60px;
+    position:absolute;
+    margin: 20px;
+    font-family: fantasy;
+    letter-spacing: 2px;
+  }
+  
+  .computer .tag{
+    background: #888888;
+    height: 90px;
+    margin: 0 40px;
+    width: 150px;
+    border-radius: 5px;
+    position: absolute;
+    top:20%;
+    left:82%;
+  }
+
+.tag::before {
+    border-color: transparent #888888 #888888 transparent; 
+    border-style: solid; 
+    border-width: 20px;
+    content: '';
+    height: 0px;
+    position: absolute;
+    top: 35px;
+    left: 20px;
+    width: 0px;
+  }
+  
+  .tag::after {
+    border-color: transparent#888888 #888888 transparent; 
+    border-style: solid solid solid solid; 
+    border-width: 8px 20px;
+    content: "";
+    height: 0px;
+    position: absolute;
+    top: 59px;
+    left: -40px;
+    width: 0px;
+  }
+  
