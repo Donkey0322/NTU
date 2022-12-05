@@ -2,8 +2,9 @@ import '../components/css/Modal.css'
 import {useGame} from './hooks/useGame'
 
 const Wait = () => {
-    const {setSignedIn, setMe} = useGame();
+    const {me, setSignedIn, setMe, stopWait} = useGame();
     const EndGame = () => {
+        stopWait(me);
         setMe('');
         setSignedIn(false);
     }
@@ -17,7 +18,7 @@ const Wait = () => {
                 <div className="modalBtnWrapper">
                     <div className="modalBtn"
                          onClick={EndGame}>
-                         End Game
+                         Stop Waiting
                     </div>
                 </div>
             </div>

@@ -20,7 +20,8 @@ const GameContext = createContext({
     myPoint: 0,
     yourPoint: 0,
     sendGuess: () => {}, //把玩家猜的送至後端
-    startGame: () => {} //sign in的按鈕
+    startGame: () => {}, //sign in的按鈕
+    stopWait: () => {} //等到不想等了
 });
 
 const GameProvider = (props) => {
@@ -109,14 +110,22 @@ const GameProvider = (props) => {
             type: "start",
             payload: {name}
         });
-
+    }
+    const stopWait = (name) => {
+        if(!name){
+            throw new Error('Name required!')
+        }
+        sendData({
+            type: "stopWait",
+            payload: {name}
+        });
     }
 
     return (
       <GameContext.Provider
         value={{
           status, me, signedIn, participant, Img, winner, over, myPoint, yourPoint, setMyPoint, setYourPoint, setStatus, setMe, setSignedIn, setParticipant,
-          setImg, setOver, setWinner, sendGuess, startGame }}
+          setImg, setOver, setWinner, sendGuess, startGame, stopWait }}
         {...props}
       />
 ); };
