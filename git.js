@@ -17,7 +17,7 @@ async function a() {
       }
       console.log("pushing...");
       await git.add("./*");
-      await git.commit("-m", args[3]);
+      await git.commit(["-m"], args[3]);
       await git.push();
       break;
     case "pull":
