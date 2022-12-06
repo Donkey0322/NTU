@@ -9,7 +9,7 @@ import user_pic from "../img/user.png";
 // import win from "./img/win.jpg";
 
 const GameRoom = () => {
-  const { status, me, Img, myPoint, yourPoint, sendGuess } = useGame();
+  const { status, me, Img, myPoint, sendGuess } = useGame();
   const [guess, setGuess] = useState("");
   const [inputVal, setInputVal] = useState("");
   const [pictureAbove, setPictureAbove] = useState("");
