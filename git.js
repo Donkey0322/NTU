@@ -3,7 +3,10 @@ const git = simpleGit.default();
 let args = process.argv;
 async function a() {
   const branch = await git.branch();
-  console.log(branch.current);
+  //   console.log(branch.current);
+  //   console.log(branch.current == "main");
+  //   return;
+
   if (branch.current == "main") {
     console.log(new Error('You are pushing on the branch "main"'));
     return;
@@ -14,14 +17,13 @@ async function a() {
         console.log(new Error("Enter your commit message"));
         return;
       }
-      console.log("pushing...");
-      let status = await git.status();
-      console.log(status);
+      console.log("adding...");
       await git.add(".");
-      status = await git.status();
-      console.log(status);
+      console.log("committing");
       await git.commit([args[3], "-m"]);
+      console.log("pushing...");
       await git.push();
+      console.log(done);
       break;
     case "pull":
       console.log("pulling...");
