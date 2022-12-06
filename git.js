@@ -3,10 +3,6 @@ const git = simpleGit.default();
 let args = process.argv;
 async function a() {
   const branch = await git.branch();
-  //   console.log(branch.current);
-  //   console.log(branch.current == "main");
-  //   return;
-
   if (branch.current == "main") {
     console.log(new Error('You are pushing on the branch "main"'));
     return;
@@ -31,6 +27,7 @@ async function a() {
       await git.pull();
       await git.checkout(branch.current);
       await git.merge("main");
+      console.log("Done!");
       break;
     case undefined:
       let error = new Error("Please enter a way.");
