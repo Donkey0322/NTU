@@ -21,7 +21,7 @@ async function a() {
       await git.add(".");
       status = await git.status();
       console.log(status);
-      await git.commit(["-m", args[3]]);
+      await git.commit([args[3], "-m"]);
       await git.push();
       break;
     case "pull":
