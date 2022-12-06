@@ -19,11 +19,11 @@ async function a() {
       }
       console.log("adding...");
       await git.add(".");
-      console.log("committing");
+      console.log("committing...");
       await git.commit([args[3], "-m"]);
       console.log("pushing...");
       await git.push();
-      console.log(done);
+      console.log("Done!");
       break;
     case "pull":
       console.log("pulling...");
