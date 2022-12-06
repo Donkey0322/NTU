@@ -1,4 +1,6 @@
 # Logs
+/node_modules
+desktop.ini
 logs
 *.log
 npm-debug.log*

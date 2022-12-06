@@ -8,5 +8,8 @@
     "server": "cd backend && yarn server",
     "push": "node git.js push",
     "pull": "node git.js pull"
+  },
+  "dependencies": {
+    "simple-git": "^3.15.1"
   }
 }

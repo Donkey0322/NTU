@@ -1,75 +1,40 @@
-const { exec } = require("child_process");
+const simpleGit = require("simple-git");
+const git = simpleGit.default();
 let args = process.argv;
-// console.log(args);
-// return;
-
-switch (args[2]) {
-  case "push":
-    let currentDate = new Date();
-    let date =
-      String(currentDate.getMonth()) + "/" + String(currentDate.getDate());
-    console.log("pushing...");
-    console.log(date);
-    exec("git add .", (err) => {
-      if (err) {
-        console.log(err);
+async function a() {
+  const branch = await git.branch();
+  if (branch.current == "main") {
+    console.log(new Error('You are pushing on the branch "main"'));
+    return;
+  }
+  switch (args[2]) {
+    case "push":
+      if (!args[3]) {
+        console.log(new Error("Enter your commit message"));
         return;
       }
-      exec(`git commit -m "${date}"`, (err) => {
-        if (err) {
-          console.log(err);
-          return;
-        }
-        //it worked
-        exec("git push", (err) => {
-          if (err) {
-            console.log(err);
-            return;
-          }
-          console.log("done");
-        });
-      });
-    });
-    break;
-  case "pull":
-    console.log("pulling...");
-    args.splice(0, 3);
-    if (!args.length) {
-      let error = new Error("Please enter your branch.");
+      console.log("adding...");
+      await git.add(".");
+      console.log("committing...");
+      await git.commit([args[3], "-m"]);
+      console.log("pushing...");
+      await git.push();
+      console.log("Done!");
+      break;
+    case "pull":
+      console.log("pulling...");
+      await git.checkout("main");
+      await git.pull();
+      await git.checkout(branch.current);
+      await git.merge("main");
+      console.log("Done!");
+      break;
+    case undefined:
+      let error = new Error("Please enter a way.");
       console.log(error);
-    } else {
-      let branch = args.join(" ");
-      exec("git checkout main .", (err) => {
-        if (err) {
-          console.log(err);
-          return;
-        }
-        exec("git pull", (err) => {
-          if (err) {
-            console.log(err);
-            return;
-          }
-          exec(`git checkout ${branch}`, (err) => {
-            if (err) {
-              console.log(err);
-              return;
-            }
-            exec("git merge main", (err) => {
-              if (err) {
-                console.log(err);
-                return;
-              }
-              console.log("done");
-            });
-          });
-        });
-      });
-    }
-    break;
-  case undefined:
-    let error = new Error("Please enter a way.");
-    console.log(error);
-    break;
-  default:
-    console.log(new Error("Wrong Input."));
+      break;
+    default:
+      console.log(new Error("Wrong Input."));
+  }
 }
+a();
