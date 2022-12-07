@@ -1,5 +1,5 @@
-import '../components/css/Modal.css'
-import {useGame} from './hooks/useGame'
+import "../components/css/Modal.css";
+import { useGame } from "./hooks/useGame";
 
 const Wait = () => {
     const {me, setSignedIn, setMe, stopWait} = useGame();
@@ -23,9 +23,8 @@ const Wait = () => {
                 </div>
             </div>
             <div className="modalWrapper"></div>
-        </div>
-        
-    );
-}
+      </div>
+  );
+};
 
-export default Wait
+export default Wait;

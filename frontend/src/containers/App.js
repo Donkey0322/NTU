@@ -1,13 +1,13 @@
-import './App.css'
-import { useState, useEffect, useRef } from 'react'
-import { Button, Input, message, Tag } from 'antd'
-import {useGame} from './hooks/useGame'
+import "./App.css";
+import { useState, useEffect, useRef } from "react";
+import { Button, Input, message, Tag } from "antd";
+import { useGame } from "./hooks/useGame";
 import styled from "styled-components";
-import Title from '../components/Title';
-import GameRoom from './GameRoom';
-import SignIn from './SignIn';
-import EndPage from './EndPage';
-import Wait from './Wait';
+import Title from "../components/Title";
+import GameRoom from "./GameRoom";
+import SignIn from "./SignIn";
+import EndPage from "./EndPage";
+import Wait from "./Wait";
 
 const Wrapper = styled.div`
   display: flex;
@@ -20,12 +20,22 @@ const Wrapper = styled.div`
 `;
 
 const App = () => {
-  const{ signedIn, over, participant} = useGame();
+  const { signedIn, over, participant } = useGame();
 
   return (
     <Wrapper>
-      {signedIn ? over ? <EndPage/> : participant ? <GameRoom /> : <Wait/> : <SignIn/>}
+      {signedIn ? (
+        over ? (
+          <EndPage />
+        ) : participant ? (
+          <GameRoom />
+        ) : (
+          <Wait />
+        )
+      ) : (
+        <SignIn />
+      )}
     </Wrapper>
-  )
-}
-export default App
+  );
+};
+export default App;

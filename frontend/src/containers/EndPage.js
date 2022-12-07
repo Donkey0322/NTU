@@ -1,9 +1,9 @@
-import AppTitle from '../components/Title';
-import Result from '../components/Result';
-import {useGame} from './hooks/useGame'
-
+import AppTitle from "../components/Title";
+import Result from "../components/Result";
+import { useGame } from "./hooks/useGame";
 
 const EndPage = () => {
+
     const {me, myPoint, setMyPoint, setOver, setParticipant, startGame} = useGame();
 
     const restartGame = () => {
@@ -19,6 +19,6 @@ const EndPage = () => {
         <AppTitle /><Result win={myPoint >= 3} restartGame={restartGame} />
     </>
   );
-}
+};
 
-export default EndPage
+export default EndPage;

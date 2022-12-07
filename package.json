@@ -2,9 +2,14 @@
   "name": "hw6",
   "version": "1.0.0",
   "main": "index.js",
-  "license": "MIT", 
+  "license": "MIT",
   "scripts": {
     "start": "cd frontend && yarn start",
-    "server": "cd backend && yarn server"
+    "server": "cd backend && yarn server",
+    "push": "node git.js push",
+    "pull": "node git.js pull"
+  },
+  "dependencies": {
+    "simple-git": "^3.15.1"
   }
 }
