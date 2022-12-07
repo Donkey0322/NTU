@@ -29,12 +29,9 @@ export default {
             const {type, payload}  = JSON.parse(data);
             switch (type) {
                 case 'start': {
-                    const { name, option } = payload;
-                    console.log(typeof name);
+                    const { name } = payload;
                     let me = await PlayerModel.findOne({name});
-                    console.log(me);
                     let player = await PlayerModel.findOne({'waiting': true});
-                    console.log(player);
                     if(!me){
                         me = await new PlayerModel({ name }).save();
                     }
@@ -65,10 +62,7 @@ export default {
                     if(answer === body){
                         round[GameBoxName] += 1
                         if(round[GameBoxName] === 6){
-
-                            await PlayerModel.updateMany({'group':GameBoxName }, {$set: {'group': ''}});
                             sendData({'task':'guess', 'payload': {'winner': name, 'Img': "", 'over': true}}, GameBoxes[GameBoxName]);
-
                             sendStatus({'type' : true}, [ws]);
                             if (ws.box !== "" && GameBoxes[ws.box])
                                 GameBoxes[ws.box].clear();
@@ -83,7 +77,6 @@ export default {
                         sendStatus({'type' : false}, [ws]);
                     }
                 }
-
                 case "option": {
                     const {name, option} = payload
                     const me = await PlayerModel.findOne({'name': name});
@@ -91,14 +84,10 @@ export default {
                     round[GameBoxName] = 1;
                     await random(GameBoxName, option);
                     let choices = random_list[GameBoxName][0].choices;
+                    console.log(choices)
                     shuffle(choices);
+                    console.log(choices)
                     sendData({'task': 'option', 'payload': {'Img': random_list[GameBoxName][0].Img, 'choices': choices}}, GameBoxes[GameBoxName]);
-
-                case 'stopWait': {
-                    const {name} = payload;
-                    const me = await PlayerModel.findOne({'name': name});
-                    await PlayerModel.updateOne({'name': name}, {$set: {'waiting': false}});
-
                 }
                 default: 
                     break;
