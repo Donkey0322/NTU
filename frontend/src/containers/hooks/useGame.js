@@ -19,21 +19,24 @@ const GameContext = createContext({
     over: false,
     myPoint: 0,
     yourPoint: 0,
+    option: [],
     sendGuess: () => {}, //把玩家猜的送至後端
     startGame: () => {}, //sign in的按鈕
     stopWait: () => {} //等到不想等了
 });
 
 const GameProvider = (props) => {
-  const [status, setStatus] = useState(false);
-  const [me, setMe] = useState("");
-  const [signedIn, setSignedIn] = useState(false);
-  const [participant, setParticipant] = useState(false);
-  const [Img, setImg] = useState("");
-  const [winner, setWinner] = useState("");
-  const [over, setOver] = useState(false);
-  const [myPoint, setMyPoint] = useState(0);
-  const [yourPoint, setYourPoint] = useState(0);
+    const [status, setStatus] = useState(false);
+    const [me, setMe] = useState("");
+    const [signedIn, setSignedIn] = useState(false);
+    const [participant, setParticipant] = useState(false);
+    const [Img, setImg] = useState("");
+    const [winner, setWinner] = useState("");
+    const [over, setOver] = useState(false);
+    const [myPoint, setMyPoint] = useState(0);
+    const [yourPoint, setYourPoint] = useState(0);
+    const [option, setOption] = useState([])
+
 
   // const displayStatus = (s) => {
   //     if (s.msg) {
@@ -58,41 +61,38 @@ const GameProvider = (props) => {
   //     }
   // }, [me, signedIn]);
 
-  client.onmessage = (byteString) => {
-    const { data } = byteString;
-    const { task, payload } = JSON.parse(data);
-    // console.log('task: ', task, 'payload: ', payload);
-    switch (task) {
-      case "start": {
-        console.log("Two participants found:", payload.participant);
-        if (payload.Img) {
-          setImg(payload.Img);
-          console.log(Img);
-        }
-        setParticipant(payload.participant);
-        break;
-      }
-      case "guess": {
-        console.log("Guess output:", payload);
-        if (payload) {
-          setWinner(payload.winner);
-          setImg(payload.Img);
-          if (payload.winner === me) {
-            setMyPoint(myPoint + 1);
-            console.log(myPoint);
-          } else {
-            setYourPoint(yourPoint + 1);
-          }
-          if (payload.over) setOver(payload.over);
-        }
-        break;
-      }
-      case "status": {
-        setStatus(payload.type);
-        break;
-      }
-      default:
-        break;
+
+    client.onmessage = (byteString) => {
+        const {data} = byteString;
+        const {task, payload} = JSON.parse(data);
+        // console.log('task: ', task, 'payload: ', payload);
+        switch (task) {
+            case "start": {
+                console.log('Two participants found:', payload.participant);
+                setParticipant(payload.participant); 
+                break; 
+            }
+            case "guess": {
+                console.log('Guess output:', payload);
+                if(payload){
+                    setWinner(payload.winner)
+                    setImg(payload.Img)
+                    setOption(payload.choices)
+                    if(payload.winner === me){
+                        setMyPoint(myPoint+1)
+                    }else{
+                        setYourPoint(yourPoint+1)
+                    }
+                    if(payload.over)
+                        setOver(payload.over)
+                } break; }
+            case "status": {
+                setStatus(payload.type); break; }
+            case "option":{
+                setImg(payload.Img)
+                setOption(payload.choices)
+            }
+            default: break;
     }
   };
 
@@ -115,20 +115,31 @@ const GameProvider = (props) => {
     });
   };
 
-  const startGame = (name) => {
-    if (!name) {
-      throw new Error("Name required!");
-    }
-    sendData({
-      type: "start",
-      payload: { name },
-    });
-  };
+
+    const sendOption = (name, option) => {
+        if(!option || !name){
+            throw Error('option required!')
+        }
+        sendData({
+            type: "option",
+            payload: {name, option}
+        })
+    };
+    const startGame = (name) => {
+      if (!name) {
+        throw new Error("Name required!");
+      }
+      sendData({
+        type: "start",
+        payload: { name },
+      });
+    };
+
     return (
       <GameContext.Provider
         value={{
-          status, me, signedIn, participant, Img, winner, over, myPoint, yourPoint, setMyPoint, setYourPoint, setStatus, setMe, setSignedIn, setParticipant,
-          setImg, setOver, setWinner, sendGuess, startGame, stopWait }}
+          status, me, signedIn, participant, Img, winner, over, myPoint, yourPoint, option, setOption, setMyPoint, setYourPoint, setStatus, setMe, setSignedIn, setParticipant,
+          setImg, setOver, setWinner, sendGuess, startGame, sendOption }}
         {...props}
       />
 );};
