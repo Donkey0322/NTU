@@ -3,28 +3,20 @@ import Result from "../components/Result";
 import { useGame } from "./hooks/useGame";
 
 const EndPage = () => {
-  const {
-    me,
-    myPoint,
-    setMyPoint,
-    setOver,
-    setParticipant,
-    setWin,
-    startGame,
-  } = useGame();
 
-  const restartGame = () => {
-    setOver(false);
-    setWin(false);
-    setMyPoint(0);
-    setParticipant(false);
-    startGame(me);
-  };
+    const {me, myPoint, setMyPoint, setOver, setParticipant, startGame} = useGame();
 
-  return (
+    const restartGame = () => {
+        console.log('here restart')
+        setOver(false);
+        setMyPoint(0);
+        setParticipant(false);
+        startGame(me);
+    }
+    
+  return ( 
     <>
-      <AppTitle />
-      <Result win={myPoint >= 3} onLogin={restartGame} />
+        <AppTitle /><Result win={myPoint >= 3} restartGame={restartGame} />
     </>
   );
 };

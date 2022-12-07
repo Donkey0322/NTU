@@ -12,10 +12,10 @@ const Wrapper = styled.div`
   }
 `;
 
-const Title = ({ name }) => (
-  <Wrapper>
-    <h1>{name ? `${name}'s ` : "My "}Chat Room</h1>
-  </Wrapper>
+const Title = ({name}) => (
+    <Wrapper>
+        <h1>{name? `${name}'s `: "My "}Game Room</h1>
+    </Wrapper>
 );
 
 export default Title;

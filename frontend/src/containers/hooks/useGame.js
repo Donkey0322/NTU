@@ -9,17 +9,19 @@ const sendData = async (data) => {
 // const savedMe = localStorage.getItem(LOCALSTORAGE_KEY);
 
 const GameContext = createContext({
-  status: false, //判斷玩家是否猜對
-  me: "", //紀錄本機玩家
-  signedIn: false, //從登錄頁面切換到waiting page或game page
-  participant: false, //broadcast 判斷是否從waiting page切到game page
-  Img: "", //存這輪猜的照片
-  winner: "",
-  over: false,
-  myPoint: 0,
-  yourPoint: 0,
-  sendGuess: () => {}, //把玩家猜的送至後端
-  startGame: () => {}, //sign in的按鈕
+
+    status: false, //判斷玩家是否猜對
+    me: "", //紀錄本機玩家
+    signedIn: false, //從登錄頁面切換到waiting page或game page
+    participant: false, //broadcast 判斷是否從waiting page切到game page
+    Img: "", //存這輪猜的照片
+    winner: "",
+    over: false,
+    myPoint: 0,
+    yourPoint: 0,
+    sendGuess: () => {}, //把玩家猜的送至後端
+    startGame: () => {}, //sign in的按鈕
+    stopWait: () => {} //等到不想等了
 });
 
 const GameProvider = (props) => {
@@ -94,6 +96,15 @@ const GameProvider = (props) => {
     }
   };
 
+
+  const stopWait = (name) => {
+        if(!name){
+            throw new Error('Name required!')
+        }
+        sendData({
+            type: "stopWait",
+            payload: {name}
+        });
   const sendGuess = (name, body) => {
     if (!name || !body) {
       throw new Error("User or Guess required!");
@@ -114,34 +125,15 @@ const GameProvider = (props) => {
     });
   };
 
-  return (
-    <GameContext.Provider
-      value={{
-        status,
-        me,
-        signedIn,
-        participant,
-        Img,
-        winner,
-        over,
-        myPoint,
-        yourPoint,
-        setMyPoint,
-        setYourPoint,
-        setStatus,
-        setMe,
-        setSignedIn,
-        setParticipant,
-        setImg,
-        setOver,
-        setWinner,
-        sendGuess,
-        startGame,
-      }}
-      {...props}
-    />
-  );
-};
+
+    return (
+      <GameContext.Provider
+        value={{
+          status, me, signedIn, participant, Img, winner, over, myPoint, yourPoint, setMyPoint, setYourPoint, setStatus, setMe, setSignedIn, setParticipant,
+          setImg, setOver, setWinner, sendGuess, startGame, stopWait }}
+        {...props}
+      />
+); };
 
 const useGame = () => useContext(GameContext);
 

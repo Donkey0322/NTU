@@ -59,13 +59,13 @@ export default {
                 }
                 case 'guess': {
                     const { name, body } = payload;
-                    console.log(name, body)
                     const me = await PlayerModel.findOne({'name': name});
                     const GameBoxName = me.group;
                     const answer = random_list[GameBoxName][round[GameBoxName] - 1].answer;
                     if(answer.includes(body)){
                         round[GameBoxName] += 1
                         if(round[GameBoxName] === 6){
+                            await PlayerModel.updateMany({'group':GameBoxName }, {$set: {'group': ''}});
                             sendData({'task':'guess', 'payload': {'winner': name, 'Img': random_list[GameBoxName][0].Img, 'over': true}}, GameBoxes[GameBoxName]);
                             sendStatus({'type' : true}, [ws]);
                             if (ws.box !== "" && GameBoxes[ws.box])
@@ -77,6 +77,11 @@ export default {
                     }else{
                         sendStatus({'type' : false}, [ws]);
                     }
+                }
+                case 'stopWait': {
+                    const {name} = payload;
+                    const me = await PlayerModel.findOne({'name': name});
+                    await PlayerModel.updateOne({'name': name}, {$set: {'waiting': false}});
                 }
                 default: 
                     break;
