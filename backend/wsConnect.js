@@ -1,5 +1,4 @@
 import {QuestionModel, PlayerModel} from './models/gamebox';
-console.log(QuestionModel, PlayerModel);
 const GameBoxes= {};
 const round = {};
 let waiting_ws = '';
@@ -15,8 +14,10 @@ const sendStatus = (payload, ws) => {
     sendData({'task':"status", payload}, ws); 
 };
 
-const random = async (GameBoxName) => {
-    random_list[GameBoxName] = await QuestionModel.aggregate([ { $sample: { size: 5 } } ])
+const random = async (GameBoxName, option) => {
+    random_list[GameBoxName] = await QuestionModel.aggregate([
+                                                            { $match: { theme: option } },
+                                                            { $sample: { size: 5 } } ])
 }
 
 const makeName = (name, to) => { return [name, to].sort().join('_'); };
@@ -28,7 +29,7 @@ export default {
             const {type, payload}  = JSON.parse(data);
             switch (type) {
                 case 'start': {
-                    const { name } = payload;
+                    const { name, option } = payload;
                     console.log(typeof name);
                     let me = await PlayerModel.findOne({name});
                     console.log(me);
@@ -47,9 +48,8 @@ export default {
                         waiting_ws.box = GameBoxName;
                         await PlayerModel.updateOne({'name':name }, {'name':name, 'waiting':false, 'group': GameBoxName});
                         await PlayerModel.updateOne({'name':player.name }, {'name':player.name, 'waiting':false, 'group': GameBoxName});
-                        round[GameBoxName] = 1;
-                        await random(GameBoxName);
-                        sendData({'task': 'start', 'payload': {'participant': true, 'Img': random_list[GameBoxName][0].Img}}, GameBoxes[GameBoxName]);
+                        sendData({'task': 'start', 'payload': {'participant': true}}, GameBoxes[GameBoxName]);
+
                     }else{
                         waiting_ws = ws
                         await PlayerModel.updateOne({'name':name }, {'name':name, 'waiting':true});
@@ -63,20 +63,33 @@ export default {
                     const me = await PlayerModel.findOne({'name': name});
                     const GameBoxName = me.group;
                     const answer = random_list[GameBoxName][round[GameBoxName] - 1].answer;
-                    if(answer.includes(body)){
+                    if(answer === body){
                         round[GameBoxName] += 1
                         if(round[GameBoxName] === 6){
-                            sendData({'task':'guess', 'payload': {'winner': name, 'Img': random_list[GameBoxName][0].Img, 'over': true}}, GameBoxes[GameBoxName]);
+                            sendData({'task':'guess', 'payload': {'winner': name, 'Img': "", 'over': true}}, GameBoxes[GameBoxName]);
                             sendStatus({'type' : true}, [ws]);
                             if (ws.box !== "" && GameBoxes[ws.box])
                                 GameBoxes[ws.box].clear();
                         }else{
-                            sendData({'task':'guess', 'payload': {'winner': name, 'Img': random_list[GameBoxName][round[GameBoxName] - 1].Img}}, GameBoxes[GameBoxName]);
+                            let Img =  random_list[GameBoxName][round[GameBoxName] - 1].Img;
+                            let choices = random_list[GameBoxName][round[GameBoxName] - 1].choices;
+                            shuffle(choices);
+                            sendData({'task':'guess', 'payload': {'winner': name, 'Img': Img, 'choices': choices}}, GameBoxes[GameBoxName]);
                             sendStatus({'type' : true}, [ws]);
                         }
                     }else{
                         sendStatus({'type' : false}, [ws]);
                     }
+                }
+                case "option": {
+                    const {name, option} = payload
+                    const me = await PlayerModel.findOne({'name': name});
+                    const GameBoxName = me.group;
+                    round[GameBoxName] = 1;
+                    await random(GameBoxName, option);
+                    let choices = random_list[GameBoxName][0].choices;
+                    shuffle(choices);
+                    sendData({'task': 'option', 'payload': {'Img': random_list[GameBoxName][0].Img, 'choices': choices}}, GameBoxes[GameBoxName]);
                 }
                 default: 
                     break;

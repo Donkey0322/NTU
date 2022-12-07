@@ -35,8 +35,7 @@ const GameRoom = () => {
        }
     }, [status]);
 
-    
-
+    console.log(myPoint, yourPoint)
     return (<>
         <div className = 'game'>
             <img  className="Img"  src={Img} /> 
