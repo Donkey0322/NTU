@@ -104,7 +104,7 @@ const GameProvider = (props) => {
         sendData({
             type: "stopWait",
             payload: {name}
-        });
+        });}
   const sendGuess = (name, body) => {
     if (!name || !body) {
       throw new Error("User or Guess required!");
@@ -124,8 +124,6 @@ const GameProvider = (props) => {
       payload: { name },
     });
   };
-
-
     return (
       <GameContext.Provider
         value={{
@@ -133,7 +131,7 @@ const GameProvider = (props) => {
           setImg, setOver, setWinner, sendGuess, startGame, stopWait }}
         {...props}
       />
-); };
+);};
 
 const useGame = () => useContext(GameContext);
 
