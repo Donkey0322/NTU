@@ -1,11 +1,11 @@
 [
     {
         "Img": "https://media.vogue.com.tw/photos/60589c2f8f7f3bd1b893e656/2:3/w_2560%2Cc_limit/a.jpeg",
-        "answer": ["甄嬛"]
+        "answer": ["甄嬛", "嬛嬛"]
     }, 
     {
         "Img": "https://imgur.dcard.tw/I0vMiNAh.jpg",
-        "answer": ["華妃"]
+        "answer": ["華妃", "年世蘭"]
     },
     {
         "Img": "https://a.ksd-i.com/a/2020-10-30/131299-882706.jpg",
@@ -13,7 +13,7 @@
     },
     {
         "Img": "https://imgur.dcard.tw/6S5HnKwh.jpg",
-        "answer": ["鄭在玹", "在玹"]
+        "answer": ["鄭在玹", "在玹", "jaehyun"]
     },
     {
         "Img": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1c/2021Kunda.jpg/1200px-2021Kunda.jpg",
@@ -33,7 +33,7 @@
     },
     {
         "Img": "https://pic.pimg.tw/rainbowh/1599007443-2736704413-g_wn.jpg",
-        "answer": ["銀赫"]
+        "answer": ["銀赫", "李赫宰"]
     },
     {
         "Img": "https://upload.wikimedia.org/wikipedia/commons/6/6f/Baekhyun_at_EXplOration_in_Taipei_in_28_September_2019.jpg",
@@ -65,7 +65,7 @@
     },
     {
         "Img": "https://cdn.hk01.com/di/media/images/dw/20200910/380840754773364736.jpeg/H5QNRT-klAH34vPHWhcC9zlGGiXG8UZiPkGxOj5BsTo?v=w1920",
-        "answer": ["迪麗熱巴"]
+        "answer": ["迪麗熱巴", "熱巴"]
     },
     {
         "Img": "https://s.yimg.com/ny/api/res/1.2/oRAl7JVHLUNDuHfNYtg.ZA--/YXBwaWQ9aGlnaGxhbmRlcjt3PTY0MA--/https://media.zenfs.com/en/tagsis_com_142/e3ede1c169f11075b4c5994af6cf51a2",

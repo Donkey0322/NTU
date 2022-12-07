@@ -1,15 +1,15 @@
 import { useState, useContext, createContext } from "react";
 
-const client = new WebSocket ('ws://localhost:4000');
+const client = new WebSocket("ws://localhost:4000");
 const sendData = async (data) => {
-    await client.send(JSON.stringify(data));
+  client.send(JSON.stringify(data));
 };
-
 
 // const LOCALSTORAGE_KEY = "save-me";
 // const savedMe = localStorage.getItem(LOCALSTORAGE_KEY);
 
 const GameContext = createContext({
+
     status: false, //判斷玩家是否猜對
     me: "", //紀錄本機玩家
     signedIn: false, //從登錄頁面切換到waiting page或game page
@@ -21,7 +21,8 @@ const GameContext = createContext({
     yourPoint: 0,
     option: [],
     sendGuess: () => {}, //把玩家猜的送至後端
-    startGame: () => {} //sign in的按鈕
+    startGame: () => {}, //sign in的按鈕
+    stopWait: () => {} //等到不想等了
 });
 
 const GameProvider = (props) => {
@@ -36,28 +37,30 @@ const GameProvider = (props) => {
     const [yourPoint, setYourPoint] = useState(0);
     const [option, setOption] = useState([])
 
-    // const displayStatus = (s) => {
-    //     if (s.msg) {
-    //         const { type, msg } = s;
-    //         const content = {
-    //             content: msg, duration: 0.5 }
-    //         switch (type) {
-    //             case 'success':
-    //                 message.success(content);
-    //                 break;
-    //             case 'error':
-    //                 message.error(content);
-    //             default:
-    //                 break;
-    //         }
-    //     }
-    // }
 
-    // useEffect(() => {
-    //     if (signedIn) {
-    //       localStorage.setItem(LOCALSTORAGE_KEY, me);
-    //     }
-    // }, [me, signedIn]);
+  // const displayStatus = (s) => {
+  //     if (s.msg) {
+  //         const { type, msg } = s;
+  //         const content = {
+  //             content: msg, duration: 0.5 }
+  //         switch (type) {
+  //             case 'success':
+  //                 message.success(content);
+  //                 break;
+  //             case 'error':
+  //                 message.error(content);
+  //             default:
+  //                 break;
+  //         }
+  //     }
+  // }
+
+  // useEffect(() => {
+  //     if (signedIn) {
+  //       localStorage.setItem(LOCALSTORAGE_KEY, me);
+  //     }
+  // }, [me, signedIn]);
+
 
     client.onmessage = (byteString) => {
         const {data} = byteString;
@@ -90,29 +93,28 @@ const GameProvider = (props) => {
                 setOption(payload.choices)
             }
             default: break;
-        }
     }
+  };
 
-    const sendGuess = (name, body) => {
-        if(!name || !body){
-            throw new Error('User or Guess required!')
-        }
-        sendData({
-            type: "guess", 
-            payload: {name, body}
-        });
-    }
 
-    const startGame = (name) => {
+  const stopWait = (name) => {
         if(!name){
             throw new Error('Name required!')
         }
         sendData({
-            type: "start",
+            type: "stopWait",
             payload: {name}
-        });
-
+        });}
+  const sendGuess = (name, body) => {
+    if (!name || !body) {
+      throw new Error("User or Guess required!");
     }
+    sendData({
+      type: "guess",
+      payload: { name, body },
+    });
+  };
+
 
     const sendOption = (name, option) => {
         if(!option || !name){
@@ -122,7 +124,16 @@ const GameProvider = (props) => {
             type: "option",
             payload: {name, option}
         })
-    }
+    };
+    const startGame = (name) => {
+      if (!name) {
+        throw new Error("Name required!");
+      }
+      sendData({
+        type: "start",
+        payload: { name },
+      });
+    };
 
     return (
       <GameContext.Provider
@@ -131,8 +142,8 @@ const GameProvider = (props) => {
           setImg, setOver, setWinner, sendGuess, startGame, sendOption }}
         {...props}
       />
-); };
+);};
 
 const useGame = () => useContext(GameContext);
 
-export {GameProvider, useGame};
+export { GameProvider, useGame };
