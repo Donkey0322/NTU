@@ -93,7 +93,7 @@ export default {
                     let choices = random_list[GameBoxName][0].choices;
                     shuffle(choices);
                     sendData({'task': 'option', 'payload': {'Img': random_list[GameBoxName][0].Img, 'choices': choices}}, GameBoxes[GameBoxName]);
-
+                }
                 case 'stopWait': {
                     const {name} = payload;
                     const me = await PlayerModel.findOne({'name': name});
