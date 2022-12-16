@@ -7,8 +7,44 @@
     }, 
     {
         "Img": "https://imgur.dcard.tw/I0vMiNAh.jpg",
-        "answer": ["華妃"],
-        "choices": ["華妃"],
+        "answer": ["華妃 年世蘭"],
+        "choices": ["華妃 年世蘭", "華妃 年末蘭", "嬪妃 年世蘭", "華妃 年世梅"],
+        "theme": ["後宮甄嬛傳"]
+    },
+    {
+        "Img": "https://il.beauty321.com/gallery/albums_photo/14398-201910291821544056.jpg",
+        "answer": ["皇后 烏拉那拉 宜修"],
+        "choices": ["皇后 烏拉那拉 宜修", "皇后 葉赫那拉 宜修", "皇后 愛新覺羅 宜修", "皇后 葉赫那拉 修宜"],
+        "theme": ["後宮甄嬛傳"]
+    },
+    {
+        "Img": "https://images.chinatimes.com/newsphoto/2022-03-12/656/20220312002582.jpg",
+        "answer": ["沈眉莊"],
+        "choices": ["沈眉莊", "沈眉壯", "沉眉莊", "沈莊眉"],
+        "theme": ["後宮甄嬛傳"]
+    },
+    {
+        "Img": "https://p9.toutiaoimg.com/img/tos-cn-i-qvj2lq49k0/09a4b0a840e14f9a8df31dcfa06e23ae~tplv-obj:1080:735.image?from=post",
+        "answer": ["溫太醫"],
+        "choices": ["溫太醫", "李太醫", "林太醫", "許太醫"],
+        "theme": ["後宮甄嬛傳"]
+    },
+    {
+        "Img": "http://5b0988e595225.cdn.sohucs.com/images/20190626/87765098a4be484791b48ba1bfba2bb2.png",
+        "answer": ["雍正"],
+        "choices": ["雍正", "康熙", "乾隆", "道光"],
+        "theme": ["後宮甄嬛傳"]
+    },
+    {
+        "Img": "http://n.sinaimg.cn/sinakd20121/799/w1024h575/20220902/1524-6f689b02454ba69a2a41be05d567ec14.jpg",
+        "answer": ["松子"],
+        "choices": ["松子", "李子", "果子", "栗子"],
+        "theme": ["後宮甄嬛傳"]
+    },
+    {
+        "Img": "https://il.beauty321.com/gallery/albums_photo/14398-201910291821544056.jpg",
+        "answer": ["皇后 烏拉那拉 宜修"],
+        "choices": ["皇后 烏拉那拉 宜修", "皇后 葉赫那拉 宜修", "皇后 愛新覺羅 宜修", "皇后 葉赫那拉 修宜"],
         "theme": ["後宮甄嬛傳"]
     },
     {
@@ -57,14 +93,14 @@
     {
         "Img": "https://bucket-img.tnlmedia.com/cabinet/files/consoles/2/teams/2/2022/6/AWZffn0UXtCuQNhHps7nTJMn0EHUZsdNXupVSNbd.jpg",
         "answer": ["葉舒華"],
-        "choices": ["葉舒華"],
+        "choices": ["葉舒華", "周子瑜", "Minnie", "雨琪"],
         "theme": ["Kpop"]
     },
     
     {
         "Img": "https://hips.hearstapps.com/amv-prod-elletw.s3.amazonaws.com/free-article/GD.jpg?resize=480:*",
-        "answer": ["GD"],
-        "choices": ["GD", "太陽"],
+        "answer": ["權志龍"],
+        "choices": ["G-Drogan", "太陽", "DG", "權志龍"],
         "theme": ["Kpop"]
     },
     {
@@ -82,7 +118,31 @@
     {
         "Img": "https://web.ntnu.edu.tw/~498432269/hendel2.jpg",
         "answer": "音樂之母 韓德爾",
-        "choices": ["音樂之母 韓德爾", "音樂之母 韓國瑜", "音樂之母 韓勾Ａ金針菇" ,"音樂之母 "],
+        "choices": ["音樂之母 韓德爾", "音樂之母 韓國瑜", "音樂之母 韓勾Ａ金針菇" ,"音樂之父 韓德爾"],
+        "theme": ["爸爸媽媽"]
+    },
+    {
+        "Img": "http://5b0988e595225.cdn.sohucs.com/images/20200215/a9d4515036a045f1b10e972b35d2fba3.jpeg",
+        "answer": "科學之父 伽利略",
+        "choices": ["科學之父 伽利略", "科學之母 伽利略", "科學之父 牛頓" ,"科學之母 牛頓"],
+        "theme": ["爸爸媽媽"]
+    },
+    {
+        "Img": "https://i0.wp.com/www.18hall.com/wp-content/uploads/2018/06/peter-drucker_32606.jpg?fit=1940%2C900&ssl=1",
+        "answer": "現代管理學之父 彼得杜拉克",
+        "choices": ["現代管理學之父 彼得杜拉克", "現代管理學之母 彼得杜拉克", "現代管理學之父 彼得保羅" ,"現代管理學之父 彼得兔"],
+        "theme": ["爸爸媽媽"]
+    },
+    {
+        "Img": "https://web.ntnu.edu.tw/~498432269/hendel2.jpg",
+        "answer": "近代物理學之父 牛頓",
+        "choices": ["近代物理學之父 牛頓", "近代物理學之母 牛頓", "近代物理學之父 伽利略" ,"近代物理學之母 伽利略"],
+        "theme": ["爸爸媽媽"]
+    },
+    {
+        "Img": "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/l1120167-%E7%B6%B2%E8%B7%AF-1567654540.jpg?crop=1.00xw:0.567xh;0,0.315xh&resize=640:*",
+        "answer": "鹿希派之父 吳宗憲",
+        "choices": ["鹿希派之父 吳宗憲", "吳珊如之父 吳宗憲", "林柏昇之父 吳宗憲" ,"吳宗憲之父 鹿希派"],
         "theme": ["爸爸媽媽"]
     },
     {
@@ -90,62 +150,5 @@
         "answer": "音樂之母 韓德爾",
         "choices": ["音樂之母 韓德爾", "音樂之母 韓國瑜", "音樂之母 韓勾Ａ金針菇" ,"音樂之母 "],
         "theme": ["爸爸媽媽"]
-    },
-    {
-        "Img": "https://web.ntnu.edu.tw/~498432269/hendel2.jpg",
-        "answer": "音樂之母 韓德爾",
-        "choices": ["音樂之母 韓德爾", "音樂之母 韓國瑜", "音樂之母 韓勾Ａ金針菇" ,"音樂之母 "],
-        "theme": ["爸爸媽媽"]
-    },
-    {
-        "Img": "https://web.ntnu.edu.tw/~498432269/hendel2.jpg",
-        "answer": "音樂之母 韓德爾",
-        "choices": ["音樂之母 韓德爾", "音樂之母 韓國瑜", "音樂之母 韓勾Ａ金針菇" ,"音樂之母 "],
-        "theme": ["爸爸媽媽"]
-    },
-    {
-        "Img": "https://web.ntnu.edu.tw/~498432269/hendel2.jpg",
-        "answer": "音樂之母 韓德爾",
-        "choices": ["音樂之母 韓德爾", "音樂之母 韓國瑜", "音樂之母 韓勾Ａ金針菇" ,"音樂之母 "],
-        "theme": ["爸爸媽媽"]
-    },
-    {
-        "Img": "https://web.ntnu.edu.tw/~498432269/hendel2.jpg",
-        "answer": "音樂之母 韓德爾",
-        "choices": ["音樂之母 韓德爾", "音樂之母 韓國瑜", "音樂之母 韓勾Ａ金針菇" ,"音樂之母 "],
-        "theme": ["爸爸媽媽"]
-    },
-
-    {
-        "Img": "https://cdn.hk01.com/di/media/images/dw/20200910/380840754773364736.jpeg/H5QNRT-klAH34vPHWhcC9zlGGiXG8UZiPkGxOj5BsTo?v=w1920",
-        "answer": ["迪麗熱巴", "熱巴"]
-    },
-    {
-        "Img": "https://s.yimg.com/ny/api/res/1.2/oRAl7JVHLUNDuHfNYtg.ZA--/YXBwaWQ9aGlnaGxhbmRlcjt3PTY0MA--/https://media.zenfs.com/en/tagsis_com_142/e3ede1c169f11075b4c5994af6cf51a2",
-        "answer": ["楊洋"]
-    },
-    {
-        "Img": "https://assets.juksy.com/files/articles/115258/800x_100_w-6270d1ee44996.jpg",
-        "answer": ["強尼戴普", "johnny depp"]
-    },
-    {
-        "Img": "https://media.vogue.com.tw/photos/62de3dc49528062788acaef8/2:3/w_2560%2Cc_limit/0722%25E5%2590%25B3%25E9%259D%2592%25E5%25B3%25B0%25E5%25AE%25A3%25E5%2582%25B3PR%25E7%2585%25A7.jpg",
-        "answer": ["青峰", "吳青峰"]
-    },
-    {
-        "Img": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1c/2021Kunda.jpg/1200px-2021Kunda.jpg",
-        "answer": ["坤達", "謝坤達"]
-    },
-    {
-        "Img": "https://pgw.udn.com.tw/gw/photo.php?u=https://uc.udn.com.tw/photo/2022/08/01/realtime/18187566.jpg&x=0&y=0&sw=0&sh=0&sl=W&fw=1050&exp=3600",
-        "answer": ["韋禮安"]
-    },
-    {
-        "Img": "https://pgw.worldjournal.com/gw/photo.php?u=https://uc.udn.com.tw/photo/wj/paper/2022/05/19/17058727.jpg&x=0&y=0&sw=0&sh=0&sl=W&fw=800&exp=3600&q=75",
-        "answer": ["許光漢"]
-    },
-    {
-        "Img": "https://static.popdaily.com.tw/wp-content/uploads/2021/03/bf07ta7n0y880088cws80sck4qpz1d3.jpeg",
-        "answer": ["五條悟"]
     }
 ]

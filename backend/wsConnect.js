@@ -89,6 +89,11 @@ export default {
                     console.log(choices)
                     sendData({'task': 'option', 'payload': {'Img': random_list[GameBoxName][0].Img, 'choices': choices}}, GameBoxes[GameBoxName]);
                 }
+                case 'stopWait': {
+                    const {name} = payload;
+                    const me = await PlayerModel.findOne({'name': name});
+                    await PlayerModel.updateOne({'name': name}, {$set: {'waiting': false}});
+                }
                 default: 
                     break;
             }
