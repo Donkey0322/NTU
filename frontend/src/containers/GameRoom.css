@@ -30,19 +30,7 @@
   font-family: fantasy;
   letter-spacing: 2px;
 }
-.gameBoard input {
-  font-size: 25px;
-  border-radius: 5px;
-  height: 50%;
-}
 
-.gameBoard button {
-  font-size: 25px;
-  border-radius: 5px;
-  margin: 20px;
-  font-family: fantasy;
-  letter-spacing: 2px;
-}
 
 .Img {
   top: 20%;
