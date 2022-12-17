@@ -12,6 +12,18 @@
         "theme": ["後宮甄嬛傳"]
     },
     {
+        "Img": "https://media.vogue.com.tw/photos/6274d0b1aeefbcb44cfe5ab6/4:3/w_1064,h_798,c_limit/%E7%94%84%E5%AC%9B%E5%82%B3%20%E5%AE%89%E9%99%B5%E5%AE%B92.jpg",
+        "answer": ["安陵容"],
+        "choices": ["安陵容", "安美容", "安心容", "安平容"],
+        "theme": ["後宮甄嬛傳"]
+    },
+    {
+        "Img": "https://p1.nanmuxuan.com/images/1b/74e1b9c6c2d2adbf.jpg",
+        "answer": ["夏冬春"],
+        "choices": ["夏春秋", "夏冬春", "夏秋冬", "春冬夏"],
+        "theme": ["後宮甄嬛傳"]
+    },
+    {
         "Img": "https://il.beauty321.com/gallery/albums_photo/14398-201910291821544056.jpg",
         "answer": ["皇后 烏拉那拉 宜修"],
         "choices": ["皇后 烏拉那拉 宜修", "皇后 葉赫那拉 宜修", "皇后 愛新覺羅 宜修", "皇后 葉赫那拉 修宜"],
@@ -110,6 +122,12 @@
         "theme": ["Kpop"]
     },
     {
+        "Img": "https://img.ltn.com.tw/Upload/style/page/2021/01/01/210101-15308-1-I8YOY.jpg",
+        "answer": ["周子瑜"],
+        "choices": ["周子瑜", "周瑜", "子魚", "志效"],
+        "theme": ["Kpop"]
+    },
+    {
         "Img": "https://dff747922f.cbaul-cdnwnd.com/5de2e2a423c6fce5d62e7544f3a21e82/200000004-d9fb1d9fb3/1426344506-2213001468.jpg?ph=dff747922f",
         "answer": "音樂之父 巴赫",
         "choices": ["音樂之父 巴赫", "音樂之父 巴哈姆特", "音樂之父 巴巴" ,"音樂之父 巴菲特"],
@@ -143,6 +161,18 @@
         "Img": "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/l1120167-%E7%B6%B2%E8%B7%AF-1567654540.jpg?crop=1.00xw:0.567xh;0,0.315xh&resize=640:*",
         "answer": "鹿希派之父 吳宗憲",
         "choices": ["鹿希派之父 吳宗憲", "吳珊如之父 吳宗憲", "林柏昇之父 吳宗憲" ,"吳宗憲之父 鹿希派"],
+        "theme": ["爸爸媽媽"]
+    },
+    {
+        "Img": "https://upload.wikimedia.org/wikipedia/commons/c/c7/Max_Planck_1933.jpg",
+        "answer": "量子力學之父 普朗克",
+        "choices": ["量子力學之父 普朗克", "量子力學之父 倫琴", "量子力學之父 愛因斯坦" ,"量子力學之父 拉塞福"],
+        "theme": ["爸爸媽媽"]
+    },
+    {
+        "Img": "https://news.agentm.tw/wp-content/uploads/16417483947701-750x422.jpg",
+        "answer": "眾神之父 奧丁",
+        "choices": ["眾神之父 奧丁", "眾神之父 宙斯", "眾神之父 奧乙" ,"眾神之父 奧丙"],
         "theme": ["爸爸媽媽"]
     },
     {
