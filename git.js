@@ -16,17 +16,20 @@ async function a() {
       console.log("adding...");
       await git.add(".");
       console.log("committing...");
-      await git.commit([args[3], "-m"]);
+      await git.commit(args[3]);
       console.log("pushing...");
       await git.push();
       console.log("Done!");
       break;
     case "pull":
-      console.log("pulling...");
+      console.log("switching to main...");
       await git.checkout("main");
+      console.log("pulling...");
       await git.pull();
+      console.log(`switching to ${branch.current}...`);
       await git.checkout(branch.current);
-      await git.merge("main");
+      console.log(`merging from main to ${branch.current}...`);
+      await git.mergeFromTo("main", branch.current);
       console.log("Done!");
       break;
     case undefined:

@@ -1,61 +1,90 @@
-import './App.css';
-import './GameRoom.css';
-import { useState, useEffect, useRef } from 'react';
-import Option from "../components/Option";
-// import { Input, Tabs} from 'antd';
-import {useGame} from './hooks/useGame'
-// import styled from "styled-components";
-import computer_pic from "../img/computer.jpg";
-import user_pic from "../img/user.png";
-// import win from "./img/win.jpg";
-
-
+import { useGame } from "./hooks/useGame";
+import gif from "../img/giphy.gif";
+import EndPage from "./EndPage";
+import {
+  GameBackground,
+  Player,
+  PlayerHead,
+  ScoreBar,
+  Score,
+  QuestionImg,
+  Black,
+  Roulette,
+  MainWrapper,
+  Option,
+} from "./hooks/useUI";
+import useUX, { fadesOut, fadesIn } from "./hooks/useUX";
 
 const GameRoom = () => {
+  const {
+    status,
+    me,
+    Img,
+    myPoint,
+    yourPoint,
+    option,
+    over,
+    point,
+    sendGuess,
+  } = useGame();
+  const { step1, black1, step2, black2, step3, step4 } = useUX();
 
-    const {status, me, Img, myPoint, yourPoint, option, sendGuess, sendOption} = useGame();  
-    const [guess, setGuess] = useState('');
-    const [inputVal, setInputVal] = useState("");
-    const [pictureAbove, setPictureAbove] = useState("");
-
-    const handleChange = (e) =>{
-        setInputVal(e.target.value)
-        setGuess(e.target.value)
-    }
-
-    const handleGuess = async () => {
-        sendGuess(me, guess)
-        setInputVal('')
-    }
-
-    const handleOption = async (me) => {
-        let option = e.target.value;
-        sendOption(me, option)
-    }
-
-    useEffect(() => {
-       if(status){
-        setPictureAbove('正確照片的img')
-       }else{
-        setPictureAbove('錯誤照片的img')
-       }
-    }, [status]);
-
-    return (<>
-        <div className = 'game'>
-            <img  className="Img"  src={Img} /> 
-            <div className = 'gameBoard'>
-                <div>
-                    <Option me = {me} option = {option} handleOption = {handleOption}/>
-                </div>
-            </div>
-            <div className = 'user' style={{ backgroundImage: `url(${user_pic})` }}></div>
-            <div className = 'computer' style={{ backgroundImage: `url(${computer_pic})` }}>
-                {/* <span className ='tag' style={{visibility: isVisible ? 'visible' : 'hidden'}}></span> */}
-                {/* <p>{computer}</p> */}
-            </div>
-        </div>
-        </>
-    )
-}
-export default GameRoom
+  return (
+    <>
+      {step1 && <GameBackground></GameBackground>}
+      {black1 && <Black zIndex={1}></Black>}
+      {step2 && (
+        <MainWrapper zIndex={2}>
+          <Player style={{ left: "5vmin" }}>
+            <PlayerHead gif={gif} style={{ top: "5vmin" }}></PlayerHead>
+            <ScoreBar>
+              <Score color="orange" score={myPoint}></Score>
+            </ScoreBar>
+          </Player>
+          <Player style={{ right: "5vmin" }}>
+            <PlayerHead
+              gif={"https://mz.eastday.com/59712596.gif?imageslim"}
+              style={{ top: "5vmin" }}
+            ></PlayerHead>
+            <ScoreBar>
+              <Score color="aqua" score={yourPoint}></Score>
+            </ScoreBar>
+          </Player>
+          {step4 && (
+            <>
+              <QuestionImg
+                img={Img}
+                animation={step4 === 2 ? fadesOut : fadesIn}
+              />
+              <Option
+                me={me}
+                option={option}
+                point={point}
+                handleGuess={sendGuess}
+                status={status}
+                animation={step4 === 2 ? fadesOut : fadesIn}
+              />
+            </>
+          )}
+        </MainWrapper>
+      )}
+      {(black2 || over) && (
+        <Black
+          zIndex={3}
+          animation={black2 === 2 && !over ? fadesOut : fadesIn}
+        ></Black>
+      )}
+      {step3 && (
+        <MainWrapper zIndex={4}>
+          <Roulette animation={step3 === 2 ? fadesOut : fadesIn}></Roulette>
+        </MainWrapper>
+      )}
+      {over && (
+        <MainWrapper zIndex={5}>
+          <EndPage></EndPage>
+        </MainWrapper>
+      )}
+    </>
+  );
+};
+export default GameRoom;

@@ -1,24 +1,25 @@
-import AppTitle from "../components/Title";
+import { useState } from "react";
+import Title from "../components/Title";
 import LogIn from "../components/LogIn";
 import { useGame } from "./hooks/useGame";
+import Wait from "./Wait";
 
 const SignIn = () => {
-  const { me, setMe, setSignedIn, displayStatus, startGame } = useGame();
+  const { me, signedIn, setMe, setSignedIn, startGame } = useGame();
+
   const handleLogin = (name) => {
-    if (!name)
-      displayStatus({
-        type: "error",
-        msg: "Missing user name",
-      });
-    else {
-      setSignedIn(true);
-      startGame(name);
-    }
+    setSignedIn(true);
+    startGame(name);
   };
+
   return (
     <>
-      <AppTitle />
-      <LogIn me={me} setName={setMe} onLogin={handleLogin} />
+      <Title />
+      {signedIn ? (
+        <Wait />
+      ) : (
+        <LogIn me={me} setName={setMe} onLogin={handleLogin} />
+      )}
     </>
   );
 };
