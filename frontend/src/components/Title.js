@@ -4,7 +4,8 @@ const Wrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-
+  /* position: absolute; */
+  top: 25vh;
   h1 {
     margin: 0;
     margin-right: 20px;
@@ -12,10 +13,10 @@ const Wrapper = styled.div`
   }
 `;
 
-const Title = ({name}) => (
-    <Wrapper>
-        <h1>{name? `${name}'s `: "My "}Game Room</h1>
-    </Wrapper>
+const Title = () => (
+  <Wrapper>
+    <h1>Random Game Room</h1>
+  </Wrapper>
 );
 
 export default Title;
