@@ -76,6 +76,7 @@ export default {
           const theme = getTheme();
           await random(GameBoxName, theme);
 
+
           sendData(
             { task: "start", payload: { participant: true, theme } },
             GameBoxes[GameBoxName]
