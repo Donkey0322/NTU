@@ -1,4 +1,3 @@
-import { Button, Input, message, Tag } from "antd";
 import styled from "styled-components";
 import { fadesIn } from "../containers/hooks/useUX";
 
@@ -22,6 +21,7 @@ const OptionButton = styled.button`
   width: 15vw;
   height: 10vh;
   color: white;
+  border-style: double;
   background-color: ${({ status }) => {
     return status === "normal" ? "cornflowerblue" : status ? "#00FF01" : "red";
   }};
@@ -32,7 +32,9 @@ const OptionButton = styled.button`
   transition: all 0.3s ease;
   &:hover {
     cursor: pointer;
-    background-color: darkblue;
+    background-color: ${({ status }) => {
+      return status === "normal" ? "darkblue" : status ? "#00FF01" : "red";
+    }};
   }
 `;
 

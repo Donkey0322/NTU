@@ -54,7 +54,7 @@ const useUX = () => {
       await wait(setBlack2, 0.8, 2);
       wait(setStep3, 0.8, false);
       wait(setBlack2, 0.8, false);
-      wait(setStep4, 0.8);
+      wait(setStep4, 2);
       // wait(setStep4, 5, 2);
     }
     if (!init && signedIn && participant) {
