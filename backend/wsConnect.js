@@ -8,7 +8,6 @@ const theme = ["爸爸媽媽", "後宮甄嬛傳", "Kpop"];
 const sendData = (data, ws) => {
   const arrayWs = Array.from(ws);
   for (let i = 0; i < arrayWs.length; i++) {
-    // console.log(data.task, arrayWs[i].box);
     arrayWs[i].send(JSON.stringify(data));
   }
 };
@@ -48,9 +47,11 @@ export default {
   onMessage: (wss, ws) => async (byteString) => {
     const { data } = byteString;
     const { type, payload } = JSON.parse(data);
+
     switch (type) {
       case "start": {
         const { name } = payload;
+        ws.name = name;
         let me = await PlayerModel.findOne({ name });
         let player = await PlayerModel.findOne({ waiting: true });
         if (!me) {
@@ -147,9 +148,14 @@ export default {
           },
           GameBoxes[GameBoxName]
         );
-      }
-      default:
         break;
+      }
     }
+  },
+
+  onClose: (wss, ws) => async (byteString) => {
+    const name = ws.name;
+    console.log(name);
+    await PlayerModel.updateOne({ name }, { name, waiting: false });
   },
 };

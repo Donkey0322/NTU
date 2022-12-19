@@ -17,7 +17,6 @@ const Wrapper = styled.div`
 
 const App = () => {
   const { participant } = useGame();
-
   return <Wrapper>{participant ? <GameRoom /> : <SignIn />}</Wrapper>;
 };
 export default App;

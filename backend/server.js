@@ -8,6 +8,9 @@ import WebSocket from "ws";
 
 mongo.connect();
 const app = express();
+app.get("/", () => {
+  console.log("Hello");
+});
 const server = http.createServer(app);
 const wss = new WebSocket.Server({ server });
 const db = mongoose.connection;
@@ -16,7 +19,9 @@ db.once("open", () => {
   console.log("MongoDB connected!");
   wss.on("connection", (ws) => {
     ws.box = ""; //用來記錄目前 active ChatBox name
+    ws.name = "";
     ws.onmessage = wsConnect.onMessage(wss, ws);
+    ws.onclose = wsConnect.onClose(wss, ws);
   });
 });
 

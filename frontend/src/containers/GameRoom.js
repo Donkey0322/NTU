@@ -43,7 +43,9 @@ const GameRoom = () => {
           </Player>
           <Player style={{ right: "5vmin" }}>
             <PlayerHead
-              gif={"https://mz.eastday.com/59712596.gif?imageslim"}
+              gif={
+                "https://media0.giphy.com/media/cdhHG6aUtCCWY/giphy.gif?cid=ecf05e4752ajm2l3c8smaw281eqn7wrl41gh1xclvgkq5ht4&rid=giphy.gif&ct=g"
+              }
               style={{ top: "5vmin" }}
             ></PlayerHead>
             <ScoreBar>

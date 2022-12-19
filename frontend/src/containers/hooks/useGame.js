@@ -1,8 +1,15 @@
-import { useEffect } from "react";
 import { useState, useContext, createContext } from "react";
-import useUX from "./useUX";
+
+// const client = new WebSocket(
+//   "wss://d9bf-2001-b400-e4c2-9699-709c-85d5-c497-9af5.jp.ngrok.io"
+// );
 
 const client = new WebSocket("ws://localhost:4000");
+
+client.onopen = function () {
+  console.log("WebSocket is open now.");
+};
+
 const sendData = async (data) => {
   client.send(JSON.stringify(data));
 };
