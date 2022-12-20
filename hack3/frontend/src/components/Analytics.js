@@ -18,12 +18,8 @@ function Analytics() {
       {
         // TODO 2.3 Add Balence and Category (uncomment the following code)
       }
-      <div className="col-span-6">
-        <Balance items={items} />
-      </div>
-      <div className="col-span-6">
-        <Category items={items} />
-      </div>
+      <div className="col-span-6">{items && <Balance items={items} />}</div>
+      <div className="col-span-6">{items && <Category items={items} />}</div>
       {
         // TODO 2.3 End
       }
