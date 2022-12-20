@@ -37,12 +37,12 @@ const Mutation = {
   // TODO 5.2 Define the itemDelete mutation resolver
   deleteItem: async (parent, { id }, { itemModel, pubSub }) => {
     await itemModel.deleteOne({ id });
+    // TODO 6.3 Publish itemDeleted
     pubSub.publish("ITEM_DELETED", {
       itemDeleted: id,
     });
     return id;
   },
-  // TODO 6.3 Publish itemDeleted
 
   // TODO 5.2 End
   // TODO 6.3 End
