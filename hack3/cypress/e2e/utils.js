@@ -3,8 +3,7 @@ const GRAPHQL_ENDPOINT = "localhost:4000/graphql";
 export const WAIT_INTERVAL = 500;
 export const FRONTEND_URL = "localhost:3000/";
 
-export const GET_ITEMS_QUERY = `
-{
+export const GET_ITEMS_QUERY = `{
   items{
     id
     name
@@ -24,4 +23,4 @@ export const sendQuery = (query) => {
       query,
     },
   });
-}
+};
