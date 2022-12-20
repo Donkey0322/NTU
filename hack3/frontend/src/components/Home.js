@@ -74,7 +74,7 @@ function Home() {
 
           return {
             items: prev.items.filter(
-              (item) => item.id !== subscriptionData.data.itemDeleted.id
+              (item) => item.id !== subscriptionData.data.itemDeleted
             ),
           };
         },
