@@ -65,23 +65,23 @@ function Home() {
   }, [subscribeToMore]);
 
   // TODO 6.5 Logic of subscription
-  useEffect(() => {
-    try {
-      subscribeToMore({
-        document: ITEM_DELETED_SUBSCRIPTION,
-        updateQuery: (prev, { subscriptionData }) => {
-          if (!subscriptionData.data) return prev;
+  // useEffect(() => {
+  //   try {
+  //     subscribeToMore({
+  //       document: ITEM_DELETED_SUBSCRIPTION,
+  //       updateQuery: (prev, { subscriptionData }) => {
+  //         if (!subscriptionData.data) return prev;
 
-          return {
-            items: prev.items.map((item) => {
-              if (item.id !== subscriptionData.data.itemDeleted) return item;
-              return [];
-            }),
-          };
-        },
-      });
-    } catch (e) {}
-  }, [subscribeToMore]);
+  //         return {
+  //           items: prev.items.map((item) => {
+  //             if (item.id !== subscriptionData.data.itemDeleted) return item;
+  //             return [];
+  //           }),
+  //         };
+  //       },
+  //     });
+  //   } catch (e) {}
+  // }, [subscribeToMore]);
   // TODO 6.5 End
 
   if (loading) return <p>Loading...</p>;
