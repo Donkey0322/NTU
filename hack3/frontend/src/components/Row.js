@@ -38,6 +38,7 @@ function Row({ item, updateItem, deleteItem }) {
   };
 
   const handleSubmitEdit = (formData) => {
+    formData.id = item.id;
     updateItem({
       variables: {
         // TODO 4 Use `updateItem` and pass the correct variables
