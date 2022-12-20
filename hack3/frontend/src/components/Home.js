@@ -73,10 +73,9 @@ function Home() {
   //         if (!subscriptionData.data) return prev;
 
   //         return {
-  //           items: prev.items.map((item) => {
-  //             if (item.id !== subscriptionData.data.itemDeleted) return item;
-  //             return [];
-  //           }),
+  //           items: prev.items.filter(
+  //             (item) => item.id !== subscriptionData.data.itemDeleted.id
+  //           ),
   //         };
   //       },
   //     });
