@@ -1,8 +1,8 @@
-import fs from 'fs'
-import { createServer } from 'node:http';
-import { WebSocketServer } from 'ws'
-import { createSchema, createYoga, createPubSub } from 'graphql-yoga';
-import { useServer } from 'graphql-ws/lib/use/ws'
+import fs from "fs";
+import { createServer } from "node:http";
+import { WebSocketServer } from "ws";
+import { createSchema, createYoga, createPubSub } from "graphql-yoga";
+import { useServer } from "graphql-ws/lib/use/ws";
 
 // resolvers
 import Query from "./resolvers/Query.js";
@@ -17,10 +17,7 @@ const pubSub = createPubSub();
 
 const yoga = createYoga({
   schema: createSchema({
-    typeDefs: fs.readFileSync(
-      './src/schema.graphql',
-      'utf-8'
-    ),
+    typeDefs: fs.readFileSync("./src/schema.graphql", "utf-8"),
     resolvers: {
       Query,
       Mutation,
@@ -31,19 +28,19 @@ const yoga = createYoga({
   }),
   context: {
     pubSub,
-    itemModel
+    itemModel,
   },
   graphiql: {
-    subscriptionsProtocol: 'WS'
-  }
-})
+    subscriptionsProtocol: "WS",
+  },
+});
 
-const httpServer = createServer(yoga)
+const httpServer = createServer(yoga);
 
 const wsServer = new WebSocketServer({
   server: httpServer,
   path: yoga.graphqlEndpoint,
-})
+});
 
 useServer(
   {
@@ -55,8 +52,8 @@ useServer(
           ...ctx,
           req: ctx.extra.request,
           socket: ctx.extra.socket,
-          params: msg.payload
-        })
+          params: msg.payload,
+        });
 
       const args = {
         schema,
@@ -66,16 +63,16 @@ useServer(
         contextValue: await contextFactory(),
         rootValue: {
           execute,
-          subscribe
-        }
-      }
+          subscribe,
+        },
+      };
 
-      const errors = validate(args.schema, args.document)
-      if (errors.length) return errors
-      return args
+      const errors = validate(args.schema, args.document);
+      if (errors.length) return errors;
+      return args;
     },
   },
-  wsServer,
-)
+  wsServer
+);
 
 export default httpServer;
