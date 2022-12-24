@@ -1,9 +1,12 @@
-import mongo from "./mongo.js";
+import sql from "./sql.js";
 import httpServer from "./server.js";
+import { dataInit } from "./upload.js";
 
-import "dotenv-defaults/config.js";
-
-mongo.connect();
+sql.connect(function (err) {
+  if (err) throw err;
+  console.log("Connected!");
+  dataInit(sql);
+});
 const port = process.env.PORT | 4000;
 
 httpServer.listen({ port }, () => {

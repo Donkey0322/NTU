@@ -1,5 +1,3 @@
-import itemModel from "./models/item.js";
-
 const example = [
   {
     id: "1",
@@ -43,9 +41,16 @@ const example = [
   },
 ];
 
-const dataInit = async () => {
-  await itemModel.deleteMany({});
-  await itemModel.insertMany(example);
+const dataInit = async (db) => {
+  let query = "DELETE FROM items";
+  await db.query(query);
+  for (const data of example) {
+    let { id, name, amount, category, description } = data;
+
+    query = `INSERT INTO items(id, name, amount, category, description)
+             VALUES(${id}, "${name}", ${amount}, "${category}", "${description}")`;
+    await db.query(query);
+  }
   console.log("Database initialized!");
 };
 
