@@ -22,14 +22,15 @@ router.delete('/', async (req, res) => {
     let query = `delete from employees
                  where employee_id = ${id}`;
     await Myquery(query, false)
-    let return_query = `select * from employees;`;
+    let return_query = `select * from employees
+                        where working = 1;`;
     var result = await Myquery(return_query, true)
     res.status(200).send({result})
 });
 
 router.get("/", async (_, res) => {
     let query = `select * from employees
-                where employee_id = 1;`;
+                where working = 1;`;
     var result = await Myquery(query, true)
     res.status(200).send({result})
 });
