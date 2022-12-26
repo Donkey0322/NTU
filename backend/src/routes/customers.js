@@ -1,5 +1,6 @@
-import db from "./sql.js";
+import db from "../sql.js";
 import express from 'express';
+import moment from "moment";
 
 // router.post('/', async (req, res) => {
 //     console.log(req.body);
@@ -19,13 +20,16 @@ const queryCustomer = async () => {
             return result;
         }
     }); 
+    table.map((element) => {
+        element.birthday = moment(element.birthday).utc().format('YYYY-MM-DD')
+    })
     return table;
 };
 
 const deleteCustomer = async(data) => {
     let id = data;
     let query = `delete from customers
-                 where order_id = ${id}`;
+                 where customer_id = ${id}`;
     await db.query(query, function(err, result) {
     if(err) throw err;
     else{
@@ -46,3 +50,4 @@ router.get("/", async (_, res) => {
     let result = await queryCustomer();
     res.json({ result });
 });
+export default router;

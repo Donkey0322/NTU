@@ -1,6 +1,6 @@
-import db from "./sql.js";
+import db from "../sql.js";
 import express from 'express';
-
+import moment from "moment";
 const router = express.Router();
 
 const make_dict = (array_c, detail) => {
@@ -70,6 +70,12 @@ const queryOrder = async () => {
         if(err) throw err;
         return result;
     }); 
+    array1.map((element) => {
+        element.order_date = moment(element.order_date).utc().format('YYYY-MM-DD')
+        if(element.deliver_date !== null){
+            element.deliver_date = moment(element.deliver_date).utc().format('YYYY-MM-DD')
+        }
+    })
     let origin = make_dict(array_c = array1, detail = false)
     let array2 = await db.query(query_detail, function(err, result) {
         if(err) throw err;
@@ -92,3 +98,4 @@ router.get("/", async (_, res) => {
     let result = await queryOrder();
     res.json({ result });
 });
+export default router;
