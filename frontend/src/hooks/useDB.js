@@ -63,7 +63,7 @@ const DBProvider = (props) => {
           try {
             const {
               data: { result },
-            } = await instance.put(`${path}`, value);
+            } = await instance.put(`${path}`,  {value});
             const newResult = [];
             for (const tuple of table) {
               newResult.push(
@@ -79,7 +79,7 @@ const DBProvider = (props) => {
           try {
             const {
               data: { result },
-            } = await instance.delete(`${path}`, value);
+            } = await instance.delete(`${path}`, {params: {id: value}});
             setTable(result);
             break;
           } catch (error) {
