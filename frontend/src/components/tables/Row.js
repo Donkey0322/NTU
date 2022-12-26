@@ -11,29 +11,24 @@ import dayjs from "../../utils/day";
 import ItemFormModal from "../ItemFormModal";
 import { useDB } from "../../hooks/useDB";
 
-function Row({ item, updateItem, deleteItem }) {
+function Row({ item, updateItem, deleteItem, id }) {
   const [descriptionOpen, setDescriptionOpen] = useState(false);
-  const [editOpen, setEditOpen] = useState(false);
-  const { indexName } = useDB();
+  const [modalOpen, setModalOpen] = useState(false);
+  const { page, rowsPerPage, path, indexName, CRUD } = useDB();
+
+  const Query = CRUD("D", path);
 
   const onCollapse = () => {
     setDescriptionOpen((open) => !open);
   };
 
   const onEdit = () => {
-    setEditOpen((open) => !open);
+    setModalOpen(true);
   };
 
   const handleDelete = () => {
-    deleteItem({
-      variables: {
-        id: item.id,
-      },
-      onError: (err) => {
-        // eslint-disable-next-line no-console
-        console.error(err);
-      },
-    });
+    console.log(indexName, item[indexName], path);
+    Query(item[indexName]);
   };
 
   const handleSubmitEdit = (formData) => {
@@ -63,7 +58,11 @@ function Row({ item, updateItem, deleteItem }) {
             >
               <Typography>
                 {/* {item.date && dayjs(item.date).calendar()} */}
-                {item[column]}
+                {column.includes("day")
+                  ? dayjs(item[column]).calendar()
+                  : column.includes("id")
+                  ? id + page * rowsPerPage + 1
+                  : item[column]}
               </Typography>
             </TableCell>
           ))}
@@ -109,7 +108,13 @@ function Row({ item, updateItem, deleteItem }) {
           </Collapse>
         </TableCell>
       </TableRow> */}
-      <ItemFormModal title="Edit Item" move="U" defaultFormData={item} />
+      <ItemFormModal
+        title="Edit Item"
+        move="U"
+        defaultFormData={item}
+        open={modalOpen}
+        setOpen={setModalOpen}
+      />
     </>
   );
 }
