@@ -1,14 +1,23 @@
 import sql from "./sql.js";
-import httpServer from "./server.js";
+import express from "express";
+import cors from "cors";
 import { dataInit } from "./upload.js";
+import test from "./test.js";
 
 sql.connect(function (err) {
   if (err) throw err;
   console.log("Connected!");
   dataInit(sql);
 });
-const port = process.env.PORT | 4000;
 
-httpServer.listen({ port }, () => {
-  console.log(`The server is up on port ${port}!`);
+const app = express();
+// init middleware
+app.use(cors());
+// define routes
+app.use("/", test);
+
+// define server
+const port = process.env.PORT || 4000;
+app.listen(port, () => {
+  console.log(`Server is up on port ${port}.`);
 });
