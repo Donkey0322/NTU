@@ -24,12 +24,13 @@ const make_dict = (array_c, detail) => {
 };
 
 const make_arr = (origin, detail) => {
-  var arr = [];
-  for (let i in Object.keys(origin)) {
-    arr.push({ origin: origin[i], detail: detail[i] });
-  }
-  return arr;
-};
+
+    var arr = [] 
+    for(let i of Object.keys(origin)){
+        arr.push({'origin': origin[i],'detail': detail[i]})
+    }
+    return arr
+}
 
 // const addOrder = async (data) => {
 //     let {order_date, deliver_date, deliver_method, deliver_location, customer, promotion, order_status, notes} = data;
@@ -95,10 +96,11 @@ const queryOrder = async () => {
   return arr;
 };
 
-router.delete("/", async (req, res) => {
-  // console.log(req.body);
-  let id = req.query;
-  let query = `delete from orders
+
+router.delete('/', async (req, res) => {
+    // console.log(req.body);
+    let {id} = req.query
+    let query = `delete from orders
                  where order_id = ${id}`;
   await Myquery(query, true, true);
   var result = await queryOrder();

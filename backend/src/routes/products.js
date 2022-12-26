@@ -17,17 +17,20 @@ const Myquery = (query, detail) => {
 }
 
 router.delete('/', async (req, res) => {
-    let id = req.query;
+    let {id} = req.query;
+    console.log(id)
     let query = `delete from products
                  where product_id = ${id}`;
     await Myquery(query, false)
-    let return_query = `select * from products;`;
+    let return_query = `select * from products
+                        where selling = 1;`;
     var result = await Myquery(return_query, true)
     res.status(200).send({result})
 });
 
 router.get("/", async (_, res) => {
-    let query = `select * from products;`;
+    let query = `select * from products
+                 where selling = 1;`;
     var result = await Myquery(query, true)
     res.status(200).send({result})
 });

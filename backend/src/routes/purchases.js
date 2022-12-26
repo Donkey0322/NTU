@@ -34,6 +34,15 @@ function getRandomName() {
   return base64String;
 }
 
+
+const make_arr = (origin, detail) => {
+    var arr = [] 
+    for(let i of Object.keys(origin)){
+        arr.push({'origin': origin[i], 'detail': detail[i]})
+    }
+    return arr
+}
+
 // const addPurchase = async (data) => {
 //     let {ingredient, purchase_date, price, quantity} = data;
 //     let id = getRandomName()
@@ -47,25 +56,26 @@ function getRandomName() {
 //     });
 // };
 
-const Myquery = (query, detail) => {
-  return new Promise((resolve) => {
-    db.query(query, (err, result) => {
-      if (err) {
-        throw err;
-      } else {
-        if (!detail) {
-          result.map((element) => {
-            element.purchase_date = moment(element.purchase_date)
-              .utc()
-              .format("YYYY-MM-DD");
-            element.purchase_date = new Date(element.purchase_date);
-          });
-        }
-      }
-      resolve(result);
-    });
-  });
-};
+
+const Myquery = (query, detail, remove) => {
+    return new Promise((resolve) => {
+        db.query(query,  (err, result) => {
+            if (err) {
+                throw err;
+            }else{
+                if(!detail){
+                    result.map((element) => {
+                        element.purchase_date = moment(element.purchase_date).utc().format('YYYY-MM-DD')
+                        element.purchase_date = new Date(element.purchase_date)
+                        })
+                }
+                if(!remove){
+                    resolve(result);
+                }
+            }
+        })
+    })
+}
 
 const queryPurchase = async () => {
   let query_origin = `select purchases.purchase_id, purchases.purchase_code, purchases.purchase_date, sum(purchases_detail.price * purchases_detail.quantity) as 'total' 
@@ -78,12 +88,13 @@ const queryPurchase = async () => {
                         join purchases_detail on purchases.purchase_id = purchases_detail.purchase_id
                         order by purchases.purchase_date desc;`;
 
-  let array1 = await Myquery(query_origin, false);
-  let origin = make_dict(array1, false);
-  let array2 = await Myquery(query_detail, true);
-  let detail = make_dict(array2, true);
-  var dict = { origin, detail };
-  return dict;
+
+    let array1 = await Myquery(query_origin, false, false)
+    let origin = make_dict(array1, false, false)
+    let array2 = await Myquery(query_detail, true, false)
+    let detail = make_dict(array2, true)
+    var arr = make_arr(origin, detail)
+    return arr
 };
 
 // router.post('/', async (req, res) => {
@@ -103,7 +114,9 @@ router.delete("/", async (req, res) => {
 });
 
 router.get("/", async (_, res) => {
-  var result = await queryPurchase();
-  res.status(200).send({ result });
+
+    var result = await queryPurchase()
+    console.log(result)
+    res.status(200).send({result})
 });
 export default router;

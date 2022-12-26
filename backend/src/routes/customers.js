@@ -25,7 +25,7 @@ const Myquery = (query, detail) => {
 
 router.delete("/", async (req, res) => {
   console.log(req.body);
-  let id = req.query;
+  let {id} = req.query;
   let query = `delete from customers
                  where customer_id = ${id}`;
   await Myquery(query, false);
@@ -42,10 +42,10 @@ router.get("/", async (_, res) => {
 });
 
 router.put("/", async (_, res) => {
-  console.log("Customer to update:", req.body);
-  let { customer_id, customer_name, gender, birthday, phone_number, mail } =
-    req.body;
-  let query = `update customers set
+
+    console.log('Customer to update:', req.body.value);
+    let {customer_id, customer_name, gender, birthday, phone_number, mail} = req.body.value;
+    let query = `update customers set
                  customer_name = "${customer_name}", 
                  gender = "${gender}", 
                  birthday = "${birthday}",

@@ -5,29 +5,28 @@ import moment from "moment";
 const router = express.Router();
 
 const Myquery = (query, detail) => {
-  return new Promise((resolve) => {
-    db.query(query, (err, result) => {
-      if (err) {
-        throw err;
-      } else {
-        if (detail) {
-          result.map((element) => {
-            element.issue_date = moment(element.issue_date)
-              .utc()
-              .format("YYYY-MM-DD");
-            element.issue_date = new Date(element.issue_date);
-          });
-          resolve(result);
-        }
-      }
-    });
-  });
-};
 
-router.delete("/", async (req, res) => {
-  // console.log(req.body);
-  let id = req.query;
-  let query = `delete from customer_services
+    return new Promise((resolve) => {
+        db.query(query,  (err, result) => {
+            if (err) {
+                throw err;
+            }else{
+                if(detail){
+                    result.map((element) => {
+                        element.issue_date = moment(element.issue_date).utc().format('YYYY-MM-DD')
+                        element.issue_date = new Date(element.issue_date)
+                    })
+                    resolve(result);
+                }
+            }
+        })
+    })
+}
+
+router.delete('/', async (req, res) => {
+    // console.log(req.body);
+    let {id} = req.query
+    let query = `delete from customer_services
     where issue_id = ${id}`;
   await Myquery(query, false);
   let return_query = `select customer_services.issue_id, customer_services.details, customer_services.issue_type,
