@@ -5,6 +5,7 @@ var connection = mysql.createConnection({
   user: "root",
   password: "b097050030415",
   database: "DBP",
+  port: 3306
 });
 
 export default connection;
