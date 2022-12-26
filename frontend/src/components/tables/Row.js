@@ -6,20 +6,23 @@ import Collapse from "@mui/material/Collapse";
 import IconButton from "@mui/material/IconButton";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
-
+import Box from "@mui/material/Box";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableHead from "@mui/material/TableHead";
 import dayjs from "../../utils/day";
 import ItemFormModal from "../ItemFormModal";
 import { useDB } from "../../hooks/useDB";
 
 function Row({ item, updateItem, deleteItem, id }) {
-  const [descriptionOpen, setDescriptionOpen] = useState(false);
+  const [open, setOpen] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const { page, rowsPerPage, path, indexName, CRUD } = useDB();
 
   const Query = CRUD("D", path);
 
   const onCollapse = () => {
-    setDescriptionOpen((open) => !open);
+    setOpen((open) => !open);
   };
 
   const onEdit = () => {
@@ -31,26 +34,11 @@ function Row({ item, updateItem, deleteItem, id }) {
     Query(item[indexName]);
   };
 
-  const handleSubmitEdit = (formData) => {
-    formData.id = item.id;
-    updateItem({
-      variables: {
-        // TODO 4 Use `updateItem` and pass the correct variables
-        input: formData,
-        // TODO End
-      },
-      onError: (err) => {
-        // eslint-disable-next-line no-console
-        console.error(err);
-      },
-    });
-  };
-
   return (
     <>
       <TableRow data-cy="item" hover>
         {item &&
-          Object.keys(item).map((column, index) => (
+          Object.keys(item.origin ? item.origin : item).map((column, index) => (
             <TableCell
               onClick={onCollapse}
               sx={{ cursor: "pointer" }}
@@ -66,6 +54,7 @@ function Row({ item, updateItem, deleteItem, id }) {
               </Typography>
             </TableCell>
           ))}
+
         {/* 
         <TableCell onClick={onCollapse} sx={{ cursor: "pointer" }}>
           <Typography>{item.date && dayjs(item.date).calendar()}</Typography>
@@ -96,6 +85,39 @@ function Row({ item, updateItem, deleteItem, id }) {
           </IconButton>
         </TableCell>
       </TableRow>
+      {item.detail && (
+        <TableRow>
+          <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
+            <Collapse in={open} timeout="auto" unmountOnExit>
+              <Box sx={{ margin: 1 }}>
+                <Typography variant="h6" gutterBottom component="div">
+                  Details
+                </Typography>
+                <Table size="small" aria-label="purchases">
+                  <TableHead>
+                    <TableRow>
+                      {Object.keys(item.detail[0]).map((column, index) => {
+                        <TableCell key={index}>{column}</TableCell>;
+                      })}
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {item.detail.map((d, index) => (
+                      <TableRow key={index}>
+                        {Object.keys(d).map((i, index) => {
+                          <TableCell component="th" scope="row">
+                            {d[i]}
+                          </TableCell>;
+                        })}
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </Box>
+            </Collapse>
+          </TableCell>
+        </TableRow>
+      )}
       {/* <TableRow key={`${item.id}-descriptions`}>
         <TableCell colSpan={5} style={{ paddingTop: 0, paddingBottom: 0 }}>
           <Collapse in={descriptionOpen} timeout="auto" unmountOnExit>

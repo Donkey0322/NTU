@@ -56,15 +56,15 @@ const Transition = React.forwardRef((props, ref) => (
 
 function ItemFormModal({ title, defaultFormData, move, open, setOpen }) {
   const { table, path, CRUD } = useDB();
-
   const Query = CRUD(move, path);
+
   let columns = [];
   if (move === "C") {
     for (const column in table[0]) {
       // console.log(column);
       columns.push(column);
     }
-    console.log("C", table[0]);
+    // console.log("C", table[0]);
   } else {
     columns = Object.keys(defaultFormData);
   }
@@ -80,10 +80,6 @@ function ItemFormModal({ title, defaultFormData, move, open, setOpen }) {
 
   const sanitizedDefaultFormData = useMemo(() => tempData, [defaultFormData]);
   const [formData, setFormData] = useState(sanitizedDefaultFormData);
-
-  useEffect(() => {
-    console.log(formData);
-  }, [formData]);
 
   const [errors, setErrors] = useState({
     name: false,
@@ -167,9 +163,9 @@ function ItemFormModal({ title, defaultFormData, move, open, setOpen }) {
               ) : typeof formData[column] === "number" ? (
                 <FormControl sx={{ width: 200 }} key={index}>
                   <Input
-                    // name={formData[column]}
+                    name={column}
                     type="number"
-                    // placeholder={formData[column]}
+                    placeholder={column}
                     onChange={handleInputChange}
                     required
                     defaultValue={sanitizedDefaultFormData[column]}
