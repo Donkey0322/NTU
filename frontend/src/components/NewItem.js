@@ -5,23 +5,29 @@ import { useHotkeys } from "react-hotkeys-hook";
 import AddIcon from "@mui/icons-material/Add";
 import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
-
 import ItemFormModal from "./ItemFormModal";
+import { useDB } from "../hooks/useDB";
 
 function NewItem() {
-  const [open, setOpen] = useState(false);
+  const { setModalOpen } = useDB();
 
-  const handleOpen = () => {
-    setOpen(true);
-  };
-
-  const handleSubmit = () => {};
-
-  useHotkeys("ctrl+k, ", handleOpen, []);
+  useHotkeys(
+    "ctrl+k, ",
+    () => {
+      setModalOpen(true);
+    },
+    []
+  );
 
   return (
     <>
-      <button type="button" onClick={handleOpen} data-cy="new-item-button">
+      <button
+        type="button"
+        onClick={() => {
+          setModalOpen(true);
+        }}
+        data-cy="new-item-button"
+      >
         <Paper
           className="px-3 py-2"
           sx={{
@@ -43,14 +49,7 @@ function NewItem() {
           </div>
         </Paper>
       </button>
-      <ItemFormModal
-        open={open}
-        title="Add new item"
-        handleClose={() => {
-          setOpen(false);
-        }}
-        onSubmit={handleSubmit}
-      />
+      <ItemFormModal title="Add new item" move="C" />
     </>
   );
 }

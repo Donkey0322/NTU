@@ -17,6 +17,7 @@ import Typography from "@mui/material/Typography";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
+import { useDB } from "../hooks/useDB";
 
 function HelperText({ color, children }) {
   return (
@@ -35,25 +36,44 @@ HelperText.defaultProps = {
   color: "default",
 };
 
+const Default = (value) => {
+  switch (typeof value) {
+    case "number":
+      return 0;
+    case "string":
+      return "";
+    default:
+      return Date.now();
+  }
+};
+
 // eslint-disable-next-line react/jsx-props-no-spreading
 const Transition = React.forwardRef((props, ref) => (
   <Grow ref={ref} {...props} unmountOnExit />
 ));
 
-function ItemFormModal({
-  open,
-  handleClose,
-  title,
-  onSubmit,
-  defaultFormData,
-}) {
+function ItemFormModal({ title, defaultFormData, move }) {
+  const { table, modalOpen, path, setModalOpen, CRUD } = useDB();
+
+  const Query = CRUD(move, path);
+  let columns = [];
+  if (move === "C") {
+    for (const column in table[0]) {
+      columns.push(column);
+    }
+  } else {
+    columns = Object.keys(defaultFormData);
+  }
+  const tempData = new Object();
+  for (const coulmn of columns) {
+    tempData[coulmn] = defaultFormData
+      ? defaultFormData[coulmn]
+      : Default(table[0][coulmn]);
+  }
+
   const sanitizedDefaultFormData = useMemo(
     () => ({
-      name: defaultFormData.name ?? "",
-      amount: defaultFormData.amount ?? 0,
-      category: defaultFormData.category ?? "FOOD",
-      date: defaultFormData.date ?? Date.now(),
-      description: defaultFormData.description ?? "",
+      tempData,
     }),
     [defaultFormData]
   );
@@ -80,15 +100,13 @@ function ItemFormModal({
     }));
   };
 
-  const onClose = () => {
+  const handleClose = () => {
     setFormData(sanitizedDefaultFormData);
-
     setErrors({
       name: false,
       amount: false,
     });
-
-    handleClose();
+    setModalOpen(false);
   };
 
   const handleSubmit = (event) => {
@@ -106,45 +124,67 @@ function ItemFormModal({
       ...formData,
       amount: parseInt(formData.amount, 10),
     };
-    onSubmit(parsedFormData);
-
-    handleClose();
+    Query(parsedFormData);
+    setModalOpen(false);
   };
 
   return (
-    <Dialog open={open} onClose={onClose} TransitionComponent={Transition}>
+    <Dialog
+      open={modalOpen}
+      onClose={handleClose}
+      TransitionComponent={Transition}
+    >
       <DialogTitle>{title}</DialogTitle>
       <DialogContent sx={{ width: 600 }}>
         <div className="flex flex-col gap-4 px-10">
-          <FormControl variant="filled">
-            <Input
-              name="name"
-              placeholder="Item name"
-              autoFocus
-              onChange={handleInputChange}
-              required
-              size="medium"
-              defaultValue={sanitizedDefaultFormData.name}
-              data-cy="form-name"
-            />
-            {errors.name && (
-              <HelperText color="error">Name is required</HelperText>
-            )}
-          </FormControl>
-          <FormControl sx={{ width: 200 }}>
-            <Input
-              name="amount"
-              type="number"
-              placeholder="amount"
-              onChange={handleInputChange}
-              required
-              defaultValue={sanitizedDefaultFormData.amount}
-              data-cy="form-amount"
-            />
-            {errors.amount && (
-              <HelperText color="error">Amount is required</HelperText>
-            )}
-          </FormControl>
+          {columns.map((column) =>
+            typeof formData[column] === "string" ? (
+              <FormControl variant="filled">
+                <Input
+                  name={formData[column]}
+                  // placeholder="Item name"
+                  autoFocus
+                  onChange={handleInputChange}
+                  required
+                  size="medium"
+                  defaultValue={sanitizedDefaultFormData[column]}
+                  data-cy="form-name"
+                />
+                {/* {errors.name && (
+                      <HelperText color="error">Name is required</HelperText>
+                    )} */}
+              </FormControl>
+            ) : typeof formData[column] === "number" ? (
+              <FormControl sx={{ width: 200 }}>
+                <Input
+                  name={formData[column]}
+                  type="number"
+                  placeholder={formData[column]}
+                  onChange={handleInputChange}
+                  required
+                  defaultValue={sanitizedDefaultFormData[column]}
+                  data-cy="form-amount"
+                />
+                {/* {errors.amount && (
+                  <HelperText color="error">Amount is required</HelperText>
+                )} */}
+              </FormControl>
+            ) : (
+              <FormControl>
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                  <DateTimePicker
+                    // eslint-disable-next-line react/jsx-props-no-spreading
+                    renderInput={(props) => (
+                      <TextField {...props} name="date" />
+                    )}
+                    label="Date"
+                    onChange={handleDateChange}
+                  />
+                </LocalizationProvider>
+              </FormControl>
+            )
+          )}
+
           <FormControl sx={{ width: 200 }}>
             <InputLabel id="category-select-label">Category</InputLabel>
             <Select
@@ -209,31 +249,5 @@ function ItemFormModal({
     </Dialog>
   );
 }
-
-ItemFormModal.propTypes = {
-  open: PropTypes.bool,
-  handleClose: PropTypes.func.isRequired,
-  title: PropTypes.string.isRequired,
-  onSubmit: PropTypes.func,
-  defaultFormData: PropTypes.shape({
-    name: PropTypes.string,
-    amount: PropTypes.number,
-    category: PropTypes.string,
-    date: PropTypes.number,
-    description: PropTypes.string,
-  }),
-};
-
-ItemFormModal.defaultProps = {
-  open: false,
-  onSubmit: () => {},
-  defaultFormData: {
-    name: "",
-    amount: 0,
-    category: "FOOD",
-    date: Date.now(),
-    description: "",
-  },
-};
 
 export default ItemFormModal;

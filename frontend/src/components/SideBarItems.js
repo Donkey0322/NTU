@@ -24,7 +24,7 @@ const items = [
     to: "/customer-service",
   },
   {
-    name: "Emplyees",
+    name: "Employees",
     icon: <SupervisedUserCircleIcon />,
     to: "/employees",
   },
