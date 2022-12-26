@@ -14,7 +14,10 @@ const queryCustomer = async () => {
 
     let table = await db.query(query, function(err, result) {
         if(err) throw err;
-        return result;
+        else{
+            console.log('Customer query done')
+            return result;
+        }
     }); 
     return table;
 };
@@ -25,7 +28,9 @@ const deleteCustomer = async(data) => {
                  where order_id = ${id}`;
     await db.query(query, function(err, result) {
     if(err) throw err;
-    return result;
+    else{
+        console.log('Customer delete done')
+    }
     });
 }
 
@@ -34,10 +39,10 @@ router.delete('/', async (req, res) => {
     let id = req.query
     await deleteCustomer(id);
     let result = await queryCustomer();
-    res.json({ customers: result});
+    res.json({ result });
 });
 
 router.get("/", async (_, res) => {
     let result = await queryCustomer();
-    res.json({ customers: result});
+    res.json({ result });
 });
