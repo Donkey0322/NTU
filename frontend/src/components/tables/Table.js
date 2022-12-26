@@ -24,8 +24,16 @@ import Row from "./Row";
 // }));
 
 function Table_Board({ title }) {
-  const { page, rowsPerPage, indexName, table, setPage, setRowsPerPage, CRUD } =
-    useDB();
+  const {
+    page,
+    rowsPerPage,
+    indexName,
+    table,
+    setPage,
+    setRowsPerPage,
+    setPath,
+    CRUD,
+  } = useDB();
   const location = useLocation();
   const currentPath = location.pathname;
   const Query = CRUD("R", currentPath);
@@ -33,6 +41,7 @@ function Table_Board({ title }) {
   useEffect(() => {
     console.log("TABLE");
     Query();
+    setPath(currentPath);
   }, []);
 
   const handlePageChange = (event, newPage) => {

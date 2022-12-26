@@ -109,13 +109,7 @@ function Row({ item, updateItem, deleteItem }) {
           </Collapse>
         </TableCell>
       </TableRow> */}
-      <ItemFormModal
-        title="Edit Item"
-        open={editOpen}
-        handleClose={() => setEditOpen(false)}
-        onSubmit={handleSubmitEdit}
-        defaultFormData={item}
-      />
+      <ItemFormModal title="Edit Item" move="U" defaultFormData={item} />
     </>
   );
 }

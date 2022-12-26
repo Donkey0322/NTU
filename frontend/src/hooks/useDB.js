@@ -7,6 +7,8 @@ const DBContext = createContext({
   rowsPerPage: 10, //一頁包含幾個 tuple
   table: [], //後端回傳的詳細資料
   indexName: "",
+  modalOpen: false,
+  path: "",
   CRUD: () => {}, //axios api
 });
 
@@ -15,6 +17,8 @@ const DBProvider = (props) => {
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [table, setTable] = useState([]);
   const [indexName, setIndexName] = useState("");
+  const [modalOpen, setModalOpen] = useState(false);
+  const [path, setPath] = useState("");
 
   useEffect(() => {
     if (table.length > 0) {
@@ -90,9 +94,13 @@ const DBProvider = (props) => {
         rowsPerPage,
         table,
         indexName,
+        modalOpen,
+        path,
         setPage,
         setRowsPerPage,
         setTable,
+        setModalOpen,
+        setPath,
         CRUD,
       }}
       {...props}
