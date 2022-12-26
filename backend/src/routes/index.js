@@ -1,6 +1,7 @@
-import express from 'express'
+import express from 'express';
+import sql from "./sql.js";
 import {addCustomer, addCustomerService, addEmployee, addOrder, addOrdersDetail, addProduct,
-        addProductSetDetail, addPromotion, addPurchase }from './scoreCard';
+        addProductSetDetail, addPromotion, addPurchase }from './add';
 const router = express.Router();
 
 router.delete('/cards', async (_, res) => {
@@ -24,27 +25,95 @@ router.get('/cards', async (req, res) => {
     }
 });
 
-router.post('/addPurchase', async (req, res) => {
+router.post('/purchases', async (req, res) => {
     console.log(req.body);
     var add = await addPurchase(req.body);
     res.json({ message: `${add} (${req.body.name}, ${req.body.subject}, ${req.body.score})`, card: true});
 });
 
-router.post('/addPromotion', async (req, res) => {
+router.post('/promotions', async (req, res) => {
     console.log(req.body);
     var add = await addPromotion(req.body);
     res.json({ message: `${add} (${req.body.name}, ${req.body.subject}, ${req.body.score})`, card: true});
 });
 
-router.post('/addEmployee', async (req, res) => {
+router.post('/employees', async (req, res) => {
     console.log(req.body);
     var add = await addEmployee(req.body);
     res.json({ message: `${add} (${req.body.name}, ${req.body.subject}, ${req.body.score})`, card: true});
 });
 
-router.post('/addCustomer', async (req, res) => {
+router.post('/customers', async (req, res) => {
     console.log(req.body);
     var add = await addCustomer(req.body);
     res.json({ message: `${add} (${req.body.name}, ${req.body.subject}, ${req.body.score})`, card: true});
 });
+
+router.post('/customer_services', async (req, res) => {
+    console.log(req.body);
+    var add = await addCustomer(req.body);
+    res.json({ message: `${add} (${req.body.name}, ${req.body.subject}, ${req.body.score})`, card: true});
+});
+
+router.get("/purchases", async (_, res) => {
+    sql.query("SELECT * FROM purchases", (err, result) => {
+        if (err) throw err;
+        else {
+        console.log("Query done");
+        res.json({ result });
+        }
+    });
+});
+
+router.get("/promotions", async (_, res) => {
+    sql.query("SELECT * FROM promotions", (err, result) => {
+        if (err) throw err;
+        else {
+        console.log("Query done");
+        res.json({ result });
+        }
+    });
+});
+
+router.get("/employees", async (_, res) => {
+    sql.query("SELECT * FROM employees", (err, result) => {
+        if (err) throw err;
+        else {
+        console.log("Query done");
+        res.json({ result });
+        }
+    });
+});
+
+router.get("/customers", async (_, res) => {
+    sql.query("SELECT * FROM customers", (err, result) => {
+        if (err) throw err;
+        else {
+        console.log("Query done");
+        res.json({ result });
+        }
+    });
+});
+
+router.get("/purchases", async (_, res) => {
+    sql.query("SELECT * FROM purchases", (err, result) => {
+        if (err) throw err;
+        else {
+        console.log("Query done");
+        res.json({ result });
+        }
+    });
+});
+
+router.get("/orders", async (_, res) => {
+    sql.query("SELECT * FROM orders", (err, result) => {
+        if (err) throw err;
+        else {
+        console.log("Query done");
+        res.json({ result });
+        }
+    });
+});
+
+
 export default router;
