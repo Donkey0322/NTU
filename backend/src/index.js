@@ -3,6 +3,7 @@ import express from "express";
 import cors from "cors";
 import { dataInit } from "./upload.js";
 import test from "./test.js";
+import router from "./routes/index.js";
 
 sql.connect(function (err) {
   if (err) throw err;
@@ -14,7 +15,8 @@ const app = express();
 // init middleware
 app.use(cors());
 // define routes
-app.use("/", test);
+// app.use("/", test);
+app.use("/", router);
 
 // define server
 const port = process.env.PORT || 4000;

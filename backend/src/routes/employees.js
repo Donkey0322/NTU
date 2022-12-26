@@ -1,11 +1,6 @@
-import db from "./sql.js";
+import db from "../sql.js";
 import express from 'express';
 
-// router.post('/', async (req, res) => {
-//     console.log(req.body);
-//     var add = await addCustomer(req.body);
-//     res.json({ message: `${add} (${req.body.name}, ${req.body.subject}, ${req.body.score})`, card: true});
-// });
 
 const router = express.Router();
 const queryEmployee = async () => {
@@ -23,7 +18,7 @@ const queryEmployee = async () => {
 const deleteEmployee = async(data) => {
     let id = data;
     let query = `delete from customers
-                 where order_id = ${id}`;
+                 where employee_id = ${id}`;
     await db.query(query, function(err, result) {
     if(err) throw err;
     else{
@@ -69,7 +64,8 @@ router.get("/", async (_, res) => {
 });
 
 router.post('/', async (req, res) => {
-    console.log('Employee to delete:', req.body);
+    console.log('Employee to add:', req.body);
     var result = await addEmployee(req.body);
     res.json({ result });
 });
+export default router;
