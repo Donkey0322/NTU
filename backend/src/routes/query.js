@@ -8,3 +8,12 @@ const queryPurchase = async () => {
         return rows;
     }); 
 };
+
+const queryAll = async () => {
+    query = `SELECT * FROM purchases`;
+    await db.query(query, function(err, rows) {
+        if(err) throw err;
+        console.log(rows)
+        return rows;
+    }); 
+};

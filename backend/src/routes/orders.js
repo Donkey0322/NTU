@@ -1,58 +1,94 @@
 import db from "./sql.js";
 import express from 'express';
-import sql from "./sql.js";
 
 const router = express.Router();
 
-const addOrder = async (data) => {
-    let {order_date, deliver_date, deliver_method, deliver_location, customer, promotion, order_status, notes} = data;
-    query = `INSERT INTO purchases (order_date, deliver_date, deliver_method, deliver_location, customer, promotion, order_status, notes)
-             VALUES("${order_date}", "${deliver_date}", "${deliver_method}", "${deliver_location}", ${customer}, ${promotion}, "${order_status}", "${notes}")`;
-    await db.query(query, (err, result) => {
-        if (err) throw err;
-        else {
-            console.log("Insert done");
+const make_dict = (array_c, detail) => {
+    var dic = {}
+    if(detail){
+        for(var i in array_c){
+            if(Object.keys(detail).includes(String(array_c[i].order_id))){
+                dic[array_c[i].order_id].push(array_c[i])
+            }else{
+                dic[array_c[i].order_id] = []
+                dic[array_c[i].order_id].push(array_c[i])
+            }
         }
-    }); 
-};
+    }
+    else{
+        for(var i in array_c){
+            dic[array_c[i].order_id] = array_c[i]
+        }
+    }
+    console.log('Order query done')
+    return dic
+}
+
+// const addOrder = async (data) => {
+//     let {order_date, deliver_date, deliver_method, deliver_location, customer, promotion, order_status, notes} = data;
+//     let query = `INSERT INTO purchases (order_date, deliver_date, deliver_method, deliver_location, customer, promotion, order_status, notes)
+//              VALUES("${order_date}", "${deliver_date}", "${deliver_method}", "${deliver_location}", ${customer}, ${promotion}, "${order_status}", "${notes}")`;
+//     await db.query(query, (err, result) => {
+//         if (err) throw err;
+//         else {
+//             console.log("Insert done");
+//         }
+//     }); 
+//     let n
+// };
+
+const deleteOrder = async(data) => {
+    let id = data;
+    let query = `delete from orders
+                 where order_id = ${id}`;
+    await db.query(query, function(err, result) {
+    if(err) throw err;
+    else{
+        console.log('Order delete done')
+    }
+    });
+}
 
 const queryOrder = async () => {
-    query_origin = `select orders.order_id, orders.order_date, orders.deliver_date, orders.deliver_method, orders.deliver_location,
+    let query_origin = `select orders.order_id, orders.order_date, orders.deliver_date, orders.deliver_method, orders.deliver_location,
                     customers.customer_name, orders.order_status, orders.notes, sum(orders_detail.quantity * products.price) as 'total'
                     from orders 
                         left join orders_detail on orders.order_id = orders_detail.order_id
                         left join products on orders_detail.product_id = products.product_id
                         left join customers on customers.customer_id = orders.customer
                         left join promotions on promotions.promotion_id = orders.promotion
-                        group by orders.order_id;`;
-    query_detail = `select orders.order_id, products.product_name, orders_detail.quantity, (orders_detail.quantity * products.price) as money from orders
+                        group by orders.order_id
+                        order by deliver_date is not null, deliver_date desc;`;
+    let query_detail = `select orders.order_id, products.product_name, orders_detail.quantity, (orders_detail.quantity * products.price) as money from orders
                         left join orders_detail on orders.order_id = orders_detail.order_id
                         left join products on orders_detail.product_id = products.product_id
                         left join customers on customers.customer_id = orders.customer
-                        left join promotions on promotions.promotion_id = orders.promotion;`
-                        
-    origin = await db.query(query_origin, function(err, rows) {
+                        left join promotions on promotions.promotion_id = orders.promotion
+                        order by deliver_date is not null, deliver_date desc;`
+
+    let array1 = await db.query(query_origin, function(err, result) {
         if(err) throw err;
-        return rows;
+        return result;
     }); 
-    detail = await db.query(query_detail, function(err, rows) {
+    let origin = make_dict(array_c = array1, detail = false)
+    let array2 = await db.query(query_detail, function(err, result) {
         if(err) throw err;
-        return rows;
+        return result;
     }); 
+    let detail = make_dict(array_c = array2, detail = true)
+    var dict = {origin, detail}
+    return dict
 };
 
-router.post('/', async (req, res) => {
-    console.log(req.body);
-    await addPurchase(req.body);
-    res.json({ message: `${add} (${req.body.name}, ${req.body.subject}, ${req.body.score})`, card: true});
+router.delete('/', async (req, res) => {
+    // console.log(req.body);
+    let id = req.query
+    await deleteOrder(id);
+    let result = await queryOrder();
+    res.json({ result });
 });
 
 router.get("/", async (_, res) => {
-    sql.query("SELECT * FROM purchases", (err, result) => {
-        if (err) throw err;
-        else {
-        console.log("Query done");
-        res.json({ result });
-        }
-    });
+    let result = await queryOrder();
+    res.json({ result });
 });
