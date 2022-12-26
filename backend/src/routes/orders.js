@@ -26,7 +26,7 @@ const make_dict = (array_c, detail) => {
 
 const make_arr = (origin, detail) => {
     var arr = [] 
-    for(let i in Object.keys(origin)){
+    for(let i of Object.keys(origin)){
         arr.push({'origin': origin[i],'detail': detail[i]})
     }
     return arr
@@ -95,7 +95,7 @@ const queryOrder = async () => {
 
 router.delete('/', async (req, res) => {
     // console.log(req.body);
-    let id = req.query
+    let {id} = req.query
     let query = `delete from orders
                  where order_id = ${id}`;
     await Myquery(query, true, true);

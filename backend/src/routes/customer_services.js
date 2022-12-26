@@ -24,7 +24,7 @@ const Myquery = (query, detail) => {
 
 router.delete('/', async (req, res) => {
     // console.log(req.body);
-    let id = req.query
+    let {id} = req.query
     let query = `delete from customer_services
     where issue_id = ${id}`;
     await Myquery(query, false)

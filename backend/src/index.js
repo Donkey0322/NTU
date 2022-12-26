@@ -4,6 +4,7 @@ import cors from "cors";
 import { dataInit } from "./upload.js";
 import test from "./test.js";
 import router from "./routes/index.js";
+import bodyparser from 'body-parser';
 
 sql.connect(function (err) {
   if (err) throw err;
@@ -14,6 +15,8 @@ sql.connect(function (err) {
 const app = express();
 // init middleware
 app.use(cors());
+app.use(bodyparser.urlencoded({extended:false}))
+app.use(bodyparser.json())
 // define routes
 // app.use("/", test);
 app.use("/", router);
