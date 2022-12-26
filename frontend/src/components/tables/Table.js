@@ -1,6 +1,3 @@
-import { useState, useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
-
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -9,27 +6,34 @@ import TableCell from "@mui/material/TableCell";
 import TableRow from "@mui/material/TableRow";
 import TableFooter from "@mui/material/TableFooter";
 import TablePagination from "@mui/material/TablePagination";
+import { useEffect } from "react";
+import { useLocation } from "react-router-dom";
+import { useDB } from "../../hooks/useDB";
 
-import { useDB } from "../hooks/useDB";
+import Title from "../Title";
+import Row from "./Row";
 
-import Title from "./Title";
-import Row from "./tables/Row";
+// const StyledTableCell = styled(TableCell)(({ theme }) => ({
+//   [`&.${tableCellClasses.head}`]: {
+//     backgroundColor: theme.palette.common.black,
+//     color: theme.palette.common.white,
+//   },
+//   [`&.${tableCellClasses.body}`]: {
+//     fontSize: 14,
+//   },
+// }));
 
-function Home({ title }) {
-  const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(10);
-  const { table, CRUD } = useDB();
+function Table_Board({ title }) {
+  const { page, rowsPerPage, indexName, table, setPage, setRowsPerPage, CRUD } =
+    useDB();
   const location = useLocation();
   const currentPath = location.pathname;
-
   const Query = CRUD("R", currentPath);
 
   useEffect(() => {
-    console.log(1);
+    console.log("TABLE");
     Query();
   }, []);
-
-  const sortedItems = table.slice().sort((a, b) => b.date - a.date);
 
   const handlePageChange = (event, newPage) => {
     setPage(newPage);
@@ -41,31 +45,32 @@ function Home({ title }) {
   };
 
   return (
-    <Paper className="p-4">
-      <Title>Recent Records</Title>
+    <Paper className="p-4" sx={{ overflowX: "hidden" }}>
+      <Title>{title}</Title>
       <Table size="small">
         <TableHead>
           <TableRow>
-            <TableCell variant="head">Date</TableCell>
-            <TableCell variant="head">Name</TableCell>
-            <TableCell variant="head" align="right">
-              Amount
-            </TableCell>
-            <TableCell variant="head">Category</TableCell>
+            {table.length > 0 &&
+              Object.keys(table[0]).map((column, index) => (
+                <TableCell variant="head" key={index}>
+                  {column}
+                </TableCell>
+              ))}
             <TableCell variant="head" />
           </TableRow>
         </TableHead>
         <TableBody>
-          {sortedItems
-            .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-            .map((table) => (
-              <Row
-                key={table.id}
-                item={table}
-                updateItem={null}
-                deleteItem={null}
-              />
-            ))}
+          {table.length > 0 &&
+            table
+              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+              .map((tuple, index) => (
+                <Row
+                  key={index}
+                  item={tuple}
+                  updateItem={null}
+                  deleteItem={null}
+                />
+              ))}
         </TableBody>
         <TableFooter>
           <TableRow>
@@ -84,4 +89,4 @@ function Home({ title }) {
   );
 }
 
-export default Home;
+export default Table_Board;

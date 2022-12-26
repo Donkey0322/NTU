@@ -1,22 +1,22 @@
-import React, { useState, useMemo } from 'react';
-import PropTypes from 'prop-types';
+import React, { useState, useMemo } from "react";
+import PropTypes from "prop-types";
 
-import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
-import DialogTitle from '@mui/material/DialogTitle';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import FormControl from '@mui/material/FormControl';
-import Grow from '@mui/material/Grow';
-import Input from '@mui/material/Input';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import Select from '@mui/material/Select';
-import TextField from '@mui/material/TextField';
-import Typography from '@mui/material/Typography';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
+import Button from "@mui/material/Button";
+import Dialog from "@mui/material/Dialog";
+import DialogTitle from "@mui/material/DialogTitle";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import FormControl from "@mui/material/FormControl";
+import Grow from "@mui/material/Grow";
+import Input from "@mui/material/Input";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import Select from "@mui/material/Select";
+import TextField from "@mui/material/TextField";
+import Typography from "@mui/material/Typography";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 
 function HelperText({ color, children }) {
   return (
@@ -32,22 +32,31 @@ HelperText.propTypes = {
 };
 
 HelperText.defaultProps = {
-  color: 'default',
+  color: "default",
 };
 
 // eslint-disable-next-line react/jsx-props-no-spreading
-const Transition = React.forwardRef((props, ref) => <Grow ref={ref} {...props} unmountOnExit />);
+const Transition = React.forwardRef((props, ref) => (
+  <Grow ref={ref} {...props} unmountOnExit />
+));
 
 function ItemFormModal({
-  open, handleClose, title, onSubmit, defaultFormData,
+  open,
+  handleClose,
+  title,
+  onSubmit,
+  defaultFormData,
 }) {
-  const sanitizedDefaultFormData = useMemo(() => ({
-    name: defaultFormData.name ?? '',
-    amount: defaultFormData.amount ?? 0,
-    category: defaultFormData.category ?? 'FOOD',
-    date: defaultFormData.date ?? Date.now(),
-    description: defaultFormData.description ?? '',
-  }), [defaultFormData]);
+  const sanitizedDefaultFormData = useMemo(
+    () => ({
+      name: defaultFormData.name ?? "",
+      amount: defaultFormData.amount ?? 0,
+      category: defaultFormData.category ?? "FOOD",
+      date: defaultFormData.date ?? Date.now(),
+      description: defaultFormData.description ?? "",
+    }),
+    [defaultFormData]
+  );
 
   const [formData, setFormData] = useState(sanitizedDefaultFormData);
 
@@ -86,7 +95,7 @@ function ItemFormModal({
     event.preventDefault();
     event.stopPropagation();
     // name and amount are required
-    if (formData.name === '' || formData.amount === '') {
+    if (formData.name === "" || formData.amount === "") {
       setErrors({
         name: !formData.name,
         amount: !formData.amount,
@@ -103,14 +112,8 @@ function ItemFormModal({
   };
 
   return (
-    <Dialog
-      open={open}
-      onClose={onClose}
-      TransitionComponent={Transition}
-    >
-      <DialogTitle>
-        {title}
-      </DialogTitle>
+    <Dialog open={open} onClose={onClose} TransitionComponent={Transition}>
+      <DialogTitle>{title}</DialogTitle>
       <DialogContent sx={{ width: 600 }}>
         <div className="flex flex-col gap-4 px-10">
           <FormControl variant="filled">
@@ -124,7 +127,9 @@ function ItemFormModal({
               defaultValue={sanitizedDefaultFormData.name}
               data-cy="form-name"
             />
-            {errors.name && <HelperText color="error">Name is required</HelperText>}
+            {errors.name && (
+              <HelperText color="error">Name is required</HelperText>
+            )}
           </FormControl>
           <FormControl sx={{ width: 200 }}>
             <Input
@@ -136,7 +141,9 @@ function ItemFormModal({
               defaultValue={sanitizedDefaultFormData.amount}
               data-cy="form-amount"
             />
-            {errors.amount && <HelperText color="error">Amount is required</HelperText>}
+            {errors.amount && (
+              <HelperText color="error">Amount is required</HelperText>
+            )}
           </FormControl>
           <FormControl sx={{ width: 200 }}>
             <InputLabel id="category-select-label">Category</InputLabel>
@@ -175,7 +182,8 @@ function ItemFormModal({
               name="description"
               multiline
               rows={4}
-              placeholder="description" onChange={handleInputChange}
+              placeholder="description"
+              onChange={handleInputChange}
               data-cy="form-description"
             />
           </FormControl>
@@ -220,11 +228,11 @@ ItemFormModal.defaultProps = {
   open: false,
   onSubmit: () => {},
   defaultFormData: {
-    name: '',
+    name: "",
     amount: 0,
-    category: 'FOOD',
+    category: "FOOD",
     date: Date.now(),
-    description: '',
+    description: "",
   },
 };
 

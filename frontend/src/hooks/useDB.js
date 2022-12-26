@@ -23,6 +23,12 @@ const DBProvider = (props) => {
     }
   }, [table]);
 
+  useEffect(() => {
+    if (table.length > 0 && indexName) {
+      console.log(typeof table[0][indexName]);
+    }
+  }, [indexName]);
+
   const CRUD =
     (type, path) =>
     async (value = null) => {
