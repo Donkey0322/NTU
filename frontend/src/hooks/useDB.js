@@ -34,7 +34,6 @@ const DBProvider = (props) => {
   const CRUD =
     (type, path) =>
     async (value = null) => {
-      console.log(path);
       switch (type) {
         case "C":
           try {

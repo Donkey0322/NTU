@@ -24,6 +24,14 @@ const make_dict = (array_c, detail) => {
     return dic
 }
 
+const make_arr = (origin, detail) => {
+    var arr = [] 
+    for(let i in Object.keys(origin)){
+        arr.push({'origin': origin[i],'detail': detail[i]})
+    }
+    return arr
+}
+
 // const addOrder = async (data) => {
 //     let {order_date, deliver_date, deliver_method, deliver_location, customer, promotion, order_status, notes} = data;
 //     let query = `INSERT INTO purchases (order_date, deliver_date, deliver_method, deliver_location, customer, promotion, order_status, notes)
@@ -38,7 +46,7 @@ const make_dict = (array_c, detail) => {
 // };
 
 
-const Myquery = (query, detail) => {
+const Myquery = (query, detail, remove) => {
     return new Promise((resolve) => {
         db.query(query,  (err, result) => {
             if (err) {
@@ -54,8 +62,10 @@ const Myquery = (query, detail) => {
                         }
                         })
                 }
+                if(!remove){
+                    resolve(result);
+                }
             }
-            resolve(result);
         })
     })
 }
@@ -75,12 +85,12 @@ const queryOrder = async () => {
                         left join customers on customers.customer_id = orders.customer
                         order by deliver_date is not null, deliver_date desc;`
 
-    let array1 = await Myquery(query_origin, false)
-    let origin = make_dict(array1, false)
-    let array2 = await Myquery(query_detail, true)
-    let detail = make_dict(array2, true)
-    var dict = {origin, detail}
-    return dict
+    let array1 = await Myquery(query_origin, false, false)
+    let origin = make_dict(array1, false, false)
+    let array2 = await Myquery(query_detail, true, false)
+    let detail = make_dict(array2, true, false)
+    var arr = make_arr(origin, detail)
+    return arr
 };
 
 router.delete('/', async (req, res) => {
@@ -88,7 +98,7 @@ router.delete('/', async (req, res) => {
     let id = req.query
     let query = `delete from orders
                  where order_id = ${id}`;
-    await Myquery(query, true);
+    await Myquery(query, true, true);
     var result = await queryOrder();
     res.status(200).send({result});
 });
