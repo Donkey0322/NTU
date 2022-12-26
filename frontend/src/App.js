@@ -1,15 +1,11 @@
-import {
-  BrowserRouter,
-  Routes,
-  Route,
-} from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-import CssBaseline from '@mui/material/CssBaseline';
-import AppFrame from './components/AppFrame';
-import Home from './components/Home';
-import Analytics from './components/Analytics';
+import CssBaseline from "@mui/material/CssBaseline";
+import AppFrame from "./components/AppFrame";
+import Table from "./components/Table.js";
+import Analytics from "./components/Analytics";
 
-import './index.css';
+import "./index.css";
 
 function App() {
   return (
@@ -19,7 +15,7 @@ function App() {
         <Routes>
           <Route path="/" element={<AppFrame />}>
             <Route path="analytics" element={<Analytics />} />
-            <Route path="/" element={<Home />} />
+            <Route path="/" element={<Table title={"Recent Records"} />} />
             <Route path="*" element={<h1>Error, Page Not Found</h1>} />
           </Route>
         </Routes>

@@ -1,34 +1,18 @@
-import { useQuery } from '@apollo/client';
+// import { useQuery } from "@apollo/client";
 
-import { GET_ITEMS_QUERY } from '../graphql/queries';
+// import { GET_ITEMS_QUERY } from "../graphql/queries";
 
-import Balance from './Balance';
-import Category from './Category';
+import Balance from "./Balance";
+import Category from "./Category";
 
 function Analytics() {
-  // TODO 2.2 Use the useQuery hook to get items from backend
-  const {data: itemsData} = useQuery(GET_ITEMS_QUERY);
-  var items = [];
-  if(itemsData){
-    var {items} = itemsData;
-  }
-  // TODO 2.2 End
-
-
+  //   const { data } = useQuery(GET_ITEMS_QUERY);
+  let data;
+  const items = data ? data.items : [];
   return (
     <div className="grid grid-cols-12 gap-6">
-      { 
-        // TODO 2.3 Add Balence and Category (uncomment the following code)
-      }
-       <div className="col-span-6">
-        <Balance items={items} />
-      </div>
-      <div className="col-span-6">
-        <Category items={items} />
-      </div> 
-      {
-        // TODO 2.3 End
-      }
+      <div className="col-span-6">{items && <Balance items={items} />}</div>
+      <div className="col-span-6">{items && <Category items={items} />}</div>
     </div>
   );
 }

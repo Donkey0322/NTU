@@ -15,12 +15,12 @@ import { useDB } from "../hooks/useDB";
 import Title from "./Title";
 import Row from "./Row";
 
-function Home({ title }) {
-  const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(10);
-  const { table, CRUD } = useDB();
+function Table_Board({ title }) {
+  const { page, rowsPerPage, indexName, table, setPage, setRowsPerPage, CRUD } =
+    useDB();
   const location = useLocation();
   const currentPath = location.pathname;
+  // const sortedItems = table.slice().sort((a, b) => b.date - a.date);
 
   const Query = CRUD("R", currentPath);
 
@@ -28,8 +28,6 @@ function Home({ title }) {
     console.log(1);
     Query();
   }, []);
-
-  const sortedItems = table.slice().sort((a, b) => b.date - a.date);
 
   const handlePageChange = (event, newPage) => {
     setPage(newPage);
@@ -42,26 +40,23 @@ function Home({ title }) {
 
   return (
     <Paper className="p-4">
-      <Title>Recent Records</Title>
+      <Title>{title}</Title>
       <Table size="small">
         <TableHead>
           <TableRow>
-            <TableCell variant="head">Date</TableCell>
-            <TableCell variant="head">Name</TableCell>
-            <TableCell variant="head" align="right">
-              Amount
-            </TableCell>
-            <TableCell variant="head">Category</TableCell>
+            {Object.keys(table[0]).map((column) => (
+              <TableCell variant="head">{column}</TableCell>
+            ))}
             <TableCell variant="head" />
           </TableRow>
         </TableHead>
         <TableBody>
-          {sortedItems
+          {table
             .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-            .map((table) => (
+            .map((tuple) => (
               <Row
-                key={table.id}
-                item={table}
+                key={tuple[indexName]}
+                item={tuple}
                 updateItem={null}
                 deleteItem={null}
               />
@@ -84,4 +79,4 @@ function Home({ title }) {
   );
 }
 
-export default Home;
+export default Table_Board;

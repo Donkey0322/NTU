@@ -51,6 +51,14 @@ const dataInit = async (db) => {
              VALUES(${id}, "${name}", ${amount}, "${category}", "${description}")`;
     await db.query(query);
   }
+  await db.query("SELECT * FROM items WHERE id = 1", (err, result) => {
+    if (err) throw err;
+    else {
+      for (const i in result[0]) {
+        console.log(i);
+      }
+    }
+  });
   console.log("Database initialized!");
 };
 

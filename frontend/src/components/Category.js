@@ -1,16 +1,24 @@
-import PropTypes from 'prop-types';
-import {
-  PieChart, Pie, ResponsiveContainer, Cell,
-} from 'recharts';
-import { Paper } from '@mui/material';
-import Title from './Title';
+import PropTypes from "prop-types";
+import { PieChart, Pie, ResponsiveContainer, Cell } from "recharts";
+import { Paper } from "@mui/material";
+import Title from "./Title";
 
-const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
+const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
 
 const RADIAN = Math.PI / 180;
 
 function Label({
-  x, y, cx, cy, percent, fill, name, value, innerRadius, outerRadius, midAngle,
+  x,
+  y,
+  cx,
+  cy,
+  percent,
+  fill,
+  name,
+  value,
+  innerRadius,
+  outerRadius,
+  midAngle,
 }) {
   const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
   const x2 = cx + radius * Math.cos(-midAngle * RADIAN);
@@ -18,10 +26,16 @@ function Label({
 
   return (
     <>
-      <text x={x} y={y} fill={fill} textAnchor={x > cx ? 'start' : 'end'}>
+      <text x={x} y={y} fill={fill} textAnchor={x > cx ? "start" : "end"}>
         {`${name} $${value} `}
       </text>
-      <text x={x2} y={y2} fill="white" textAnchor={x > cx ? 'start' : 'end'} dominantBaseline="central">
+      <text
+        x={x2}
+        y={y2}
+        fill="white"
+        textAnchor={x > cx ? "start" : "end"}
+        dominantBaseline="central"
+      >
         {`${(percent * 100).toFixed(0)}%`}
       </text>
     </>
@@ -44,7 +58,7 @@ Label.propTypes = {
 
 export default function Category({ items }) {
   const categories = items.reduce((acc, item) => {
-    if (item.category === 'INCOME') return acc;
+    if (item.category === "INCOME") return acc;
 
     if (acc[item.category]) {
       acc[item.category] += item.amount;
@@ -54,10 +68,12 @@ export default function Category({ items }) {
     return acc;
   }, {});
 
-  const categoryList = Object.keys(categories).map((category) => ({
-    name: category.toLowerCase(),
-    amount: categories[category],
-  })).sort((a, b) => a.amount - b.amount);
+  const categoryList = Object.keys(categories)
+    .map((category) => ({
+      name: category.toLowerCase(),
+      amount: categories[category],
+    }))
+    .sort((a, b) => a.amount - b.amount);
 
   return (
     <Paper className="p-4 h-96">
@@ -79,13 +95,14 @@ export default function Category({ items }) {
         </PieChart>
       </ResponsiveContainer>
     </Paper>
-
   );
 }
 
 Category.propTypes = {
-  items: PropTypes.arrayOf(PropTypes.shape({
-    amount: PropTypes.number.isRequired,
-    category: PropTypes.string.isRequired,
-  })).isRequired,
+  items: PropTypes.arrayOf(
+    PropTypes.shape({
+      amount: PropTypes.number.isRequired,
+      category: PropTypes.string.isRequired,
+    })
+  ).isRequired,
 };
