@@ -7,7 +7,6 @@ const DBContext = createContext({
   rowsPerPage: 10, //一頁包含幾個 tuple
   table: [], //後端回傳的詳細資料
   indexName: "",
-  modalOpen: false,
   path: "",
   CRUD: () => {}, //axios api
 });
@@ -17,7 +16,6 @@ const DBProvider = (props) => {
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [table, setTable] = useState([]);
   const [indexName, setIndexName] = useState("");
-  const [modalOpen, setModalOpen] = useState(false);
   const [path, setPath] = useState("");
 
   useEffect(() => {
@@ -27,16 +25,16 @@ const DBProvider = (props) => {
     }
   }, [table]);
 
-  useEffect(() => {
-    if (table.length > 0 && indexName) {
-      console.log(typeof table[0][indexName]);
-    }
-  }, [indexName]);
+  // useEffect(() => {
+  //   if (table.length > 0 && indexName) {
+  //     console.log(typeof table[0][indexName]);
+  //   }
+  // }, [indexName]);
 
   const CRUD =
     (type, path) =>
     async (value = null) => {
-      console.log(path)
+      console.log(path);
       switch (type) {
         case "C":
           try {
@@ -66,8 +64,14 @@ const DBProvider = (props) => {
           try {
             const {
               data: { result },
-            } = await instance.put(`/${path}`, value);
-            setTable(result);
+            } = await instance.put(`${path}`, value);
+            const newResult = [];
+            for (const tuple of table) {
+              newResult.push(
+                tuple[indexName] === result[indexName] ? result : tuple
+              );
+            }
+            setTable(newResult);
             break;
           } catch (error) {
             throw error;
@@ -76,7 +80,7 @@ const DBProvider = (props) => {
           try {
             const {
               data: { result },
-            } = await instance.delete(`/${path}`, value);
+            } = await instance.delete(`${path}`, value);
             setTable(result);
             break;
           } catch (error) {
@@ -94,12 +98,10 @@ const DBProvider = (props) => {
         rowsPerPage,
         table,
         indexName,
-        modalOpen,
         path,
         setPage,
         setRowsPerPage,
         setTable,
-        setModalOpen,
         setPath,
         CRUD,
       }}

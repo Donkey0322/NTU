@@ -62,7 +62,7 @@ function Table_Board({ title }) {
             {table.length > 0 &&
               Object.keys(table[0]).map((column, index) => (
                 <TableCell variant="head" key={index}>
-                  {column}
+                  {column.includes("id") ? "" : column}
                 </TableCell>
               ))}
             <TableCell variant="head" />
@@ -76,6 +76,7 @@ function Table_Board({ title }) {
                 <Row
                   key={index}
                   item={tuple}
+                  id={index}
                   updateItem={null}
                   deleteItem={null}
                 />

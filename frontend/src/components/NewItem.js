@@ -9,7 +9,7 @@ import ItemFormModal from "./ItemFormModal";
 import { useDB } from "../hooks/useDB";
 
 function NewItem() {
-  const { setModalOpen } = useDB();
+  const [modalOpen, setModalOpen] = useState(false);
 
   useHotkeys(
     "ctrl+k, ",
@@ -49,7 +49,12 @@ function NewItem() {
           </div>
         </Paper>
       </button>
-      <ItemFormModal title="Add new item" move="C" />
+      <ItemFormModal
+        title="Add new item"
+        move="C"
+        open={modalOpen}
+        setOpen={setModalOpen}
+      />
     </>
   );
 }
