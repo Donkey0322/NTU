@@ -49,14 +49,21 @@ const dataInit = async (db) => {
 
     query = `INSERT INTO items(id, name, amount, category, description)
              VALUES(${id}, "${name}", ${amount}, "${category}", "${description}")`;
-    await db.query(query);
+    await db.query(query, (err, result) => {
+      if(err) throw err
+      else{
+        return result
+      }
+    });
   }
-  await db.query("SELECT * FROM items WHERE id = 1", (err, result) => {
+  await db.query("SELECT * FROM items WHERE id in (1,3)", (err, result) => {
     if (err) throw err;
     else {
-      for (const i in result[0]) {
-        console.log(i);
-      }
+      console.log(result[0].id)
+      // for (const i in result[0]) {
+
+      //   console.log(i);
+      // }
     }
   });
   console.log("Database initialized!");

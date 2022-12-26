@@ -42,9 +42,9 @@ function Table_Board({ title }) {
     <Paper className="p-4">
       <Title>{title}</Title>
       <Table size="small">
-        <TableHead>
+       <TableHead>
           <TableRow>
-            {Object.keys(table[0]).map((column) => (
+            {table[0] && Object.keys(table[0]).map((column) => (
               <TableCell variant="head">{column}</TableCell>
             ))}
             <TableCell variant="head" />
