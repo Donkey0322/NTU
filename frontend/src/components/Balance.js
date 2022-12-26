@@ -1,11 +1,11 @@
-import PropTypes from 'prop-types';
-import Typography from '@mui/material/Typography';
-import Paper from '@mui/material/Paper';
-import Title from './Title';
+import PropTypes from "prop-types";
+import Typography from "@mui/material/Typography";
+import Paper from "@mui/material/Paper";
+import Title from "./Title";
 
 function Balance({ items }) {
   const total = items.reduce((acc, item) => {
-    if (item.category === 'INCOME') {
+    if (item.category === "INCOME") {
       return acc + item.amount;
     }
     return acc - item.amount;
@@ -14,7 +14,7 @@ function Balance({ items }) {
   const thisMonth = items.reduce((acc, item) => {
     const date = new Date(item.date);
     if (date.getMonth() === new Date().getMonth()) {
-      if (item.category === 'INCOME') {
+      if (item.category === "INCOME") {
         return acc + item.amount;
       }
       return acc - item.amount;
@@ -34,19 +34,18 @@ function Balance({ items }) {
 }
 
 Balance.propTypes = {
-  items: PropTypes.arrayOf(PropTypes.shape({
-    amount: PropTypes.number.isRequired,
-    category: PropTypes.string.isRequired,
-  })).isRequired,
+  items: PropTypes.arrayOf(
+    PropTypes.shape({
+      amount: PropTypes.number.isRequired,
+      category: PropTypes.string.isRequired,
+    })
+  ).isRequired,
 };
 
 function BalanceItem({ label, amount }) {
   return (
     <div>
-      <Typography
-        variant="h5"
-        component="h2"
-        >
+      <Typography variant="h5" component="h2">
         {label}
       </Typography>
       <Typography
@@ -54,13 +53,12 @@ function BalanceItem({ label, amount }) {
         className="text-center"
         data-cy="balance-item-amount"
         sx={{
-          color: amount >= 0 ? 'success.main' : 'error.main',
+          color: amount >= 0 ? "success.main" : "error.main",
         }}
       >
         {`$${amount}`}
       </Typography>
     </div>
-
   );
 }
 

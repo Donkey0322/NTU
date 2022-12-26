@@ -1,21 +1,20 @@
 import { useState } from "react";
-import PropTypes from "prop-types";
-
 import TableCell from "@mui/material/TableCell";
 import TableRow from "@mui/material/TableRow";
 import Typography from "@mui/material/Typography";
 import Collapse from "@mui/material/Collapse";
 import IconButton from "@mui/material/IconButton";
-
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 
-import dayjs from "../utils/day";
-import ItemFormModal from "./ItemFormModal";
+import dayjs from "../../utils/day";
+import ItemFormModal from "../ItemFormModal";
+import { useDB } from "../../hooks/useDB";
 
 function Row({ item, updateItem, deleteItem }) {
   const [descriptionOpen, setDescriptionOpen] = useState(false);
   const [editOpen, setEditOpen] = useState(false);
+  const { indexName } = useDB();
 
   const onCollapse = () => {
     setDescriptionOpen((open) => !open);
@@ -54,7 +53,21 @@ function Row({ item, updateItem, deleteItem }) {
 
   return (
     <>
-      <TableRow data-cy="item" key={item.id} hover>
+      <TableRow data-cy="item" hover>
+        {item &&
+          Object.keys(item).map((column, index) => (
+            <TableCell
+              onClick={onCollapse}
+              sx={{ cursor: "pointer" }}
+              key={index}
+            >
+              <Typography>
+                {/* {item.date && dayjs(item.date).calendar()} */}
+                {item[column]}
+              </Typography>
+            </TableCell>
+          ))}
+        {/* 
         <TableCell onClick={onCollapse} sx={{ cursor: "pointer" }}>
           <Typography>{item.date && dayjs(item.date).calendar()}</Typography>
         </TableCell>
@@ -74,7 +87,7 @@ function Row({ item, updateItem, deleteItem }) {
           sx={{ cursor: "pointer" }}
         >
           <Typography>{item.category?.toLowerCase()}</Typography>
-        </TableCell>
+        </TableCell> */}
         <TableCell align="right" data-cy="item-edit">
           <IconButton onClick={onEdit} data-cy="update-item">
             <EditIcon />
