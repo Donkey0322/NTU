@@ -7,6 +7,7 @@ const DBContext = createContext({
   rowsPerPage: 10, //一頁包含幾個 tuple
   table: [], //後端回傳的詳細資料
   indexName: "",
+  path: "",
   CRUD: () => {}, //axios api
 });
 
@@ -15,6 +16,7 @@ const DBProvider = (props) => {
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [table, setTable] = useState([]);
   const [indexName, setIndexName] = useState("");
+  const [path, setPath] = useState("");
 
   useEffect(() => {
     if (table.length > 0) {
@@ -23,11 +25,11 @@ const DBProvider = (props) => {
     }
   }, [table]);
 
-  useEffect(() => {
-    if (table.length > 0 && indexName) {
-      console.log(typeof table[0][indexName]);
-    }
-  }, [indexName]);
+  // useEffect(() => {
+  //   if (table.length > 0 && indexName) {
+  //     console.log(typeof table[0][indexName]);
+  //   }
+  // }, [indexName]);
 
   const CRUD =
     (type, path) =>
@@ -61,8 +63,14 @@ const DBProvider = (props) => {
           try {
             const {
               data: { result },
-            } = await instance.put(`/${path}`, value);
-            setTable(result);
+            } = await instance.put(`${path}`, value);
+            const newResult = [];
+            for (const tuple of table) {
+              newResult.push(
+                tuple[indexName] === result[indexName] ? result : tuple
+              );
+            }
+            setTable(newResult);
             break;
           } catch (error) {
             throw error;
@@ -71,7 +79,7 @@ const DBProvider = (props) => {
           try {
             const {
               data: { result },
-            } = await instance.delete(`/${path}`, value);
+            } = await instance.delete(`${path}`, value);
             setTable(result);
             break;
           } catch (error) {
@@ -89,9 +97,11 @@ const DBProvider = (props) => {
         rowsPerPage,
         table,
         indexName,
+        path,
         setPage,
         setRowsPerPage,
         setTable,
+        setPath,
         CRUD,
       }}
       {...props}

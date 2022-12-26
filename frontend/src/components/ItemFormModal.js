@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import PropTypes from "prop-types";
 
 import Button from "@mui/material/Button";
@@ -7,6 +7,7 @@ import DialogTitle from "@mui/material/DialogTitle";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import FormControl from "@mui/material/FormControl";
+import Slide from "@mui/material/Slide";
 import Grow from "@mui/material/Grow";
 import Input from "@mui/material/Input";
 import InputLabel from "@mui/material/InputLabel";
@@ -41,9 +42,7 @@ const Default = (value) => {
     case "number":
       return 0;
     case "string":
-      return "";
-    default:
-      return Date.now();
+      return " ";
   }
 };
 
@@ -51,34 +50,40 @@ const Default = (value) => {
 const Transition = React.forwardRef((props, ref) => (
   <Grow ref={ref} {...props} unmountOnExit />
 ));
+// const Transition = React.forwardRef(function Transition(props, ref) {
+//   return <Slide direction="up" ref={ref} {...props} />;
+// });
 
-function ItemFormModal({ title, defaultFormData, move }) {
-  const { table, modalOpen, path, setModalOpen, CRUD } = useDB();
+function ItemFormModal({ title, defaultFormData, move, open, setOpen }) {
+  const { table, path, CRUD } = useDB();
 
   const Query = CRUD(move, path);
   let columns = [];
   if (move === "C") {
     for (const column in table[0]) {
+      // console.log(column);
       columns.push(column);
     }
+    console.log("C", table[0]);
   } else {
     columns = Object.keys(defaultFormData);
   }
   const tempData = new Object();
-  for (const coulmn of columns) {
-    tempData[coulmn] = defaultFormData
-      ? defaultFormData[coulmn]
-      : Default(table[0][coulmn]);
+  for (const column of columns) {
+    tempData[column] = defaultFormData
+      ? defaultFormData[column]
+      : column.includes("day")
+      ? new Date()
+      : Default(table[0][column]);
+    // console.log(move, tempData[column]);
   }
 
-  const sanitizedDefaultFormData = useMemo(
-    () => ({
-      tempData,
-    }),
-    [defaultFormData]
-  );
-
+  const sanitizedDefaultFormData = useMemo(() => tempData, [defaultFormData]);
   const [formData, setFormData] = useState(sanitizedDefaultFormData);
+
+  useEffect(() => {
+    console.log(formData);
+  }, [formData]);
 
   const [errors, setErrors] = useState({
     name: false,
@@ -106,86 +111,78 @@ function ItemFormModal({ title, defaultFormData, move }) {
       name: false,
       amount: false,
     });
-    setModalOpen(false);
+    setOpen(false);
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
     event.stopPropagation();
-    // name and amount are required
-    if (formData.name === "" || formData.amount === "") {
-      setErrors({
-        name: !formData.name,
-        amount: !formData.amount,
-      });
-      return;
+    let reqData = new Object();
+    for (const column of columns) {
+      reqData[column] =
+        typeof tempData[column] === "number"
+          ? parseInt(tempData[column], 10)
+          : tempData[column];
     }
-    const parsedFormData = {
-      ...formData,
-      amount: parseInt(formData.amount, 10),
-    };
-    Query(parsedFormData);
-    setModalOpen(false);
+    Query(reqData);
+    setOpen(false);
   };
 
   return (
-    <Dialog
-      open={modalOpen}
-      onClose={handleClose}
-      TransitionComponent={Transition}
-    >
+    <Dialog open={open} onClose={handleClose} TransitionComponent={Transition}>
       <DialogTitle>{title}</DialogTitle>
       <DialogContent sx={{ width: 600 }}>
         <div className="flex flex-col gap-4 px-10">
-          {columns.map((column) =>
-            typeof formData[column] === "string" ? (
-              <FormControl variant="filled">
-                <Input
-                  name={formData[column]}
-                  // placeholder="Item name"
-                  autoFocus
-                  onChange={handleInputChange}
-                  required
-                  size="medium"
-                  defaultValue={sanitizedDefaultFormData[column]}
-                  data-cy="form-name"
-                />
-                {/* {errors.name && (
+          {formData &&
+            columns.map((column, index) =>
+              column.includes("day") ? (
+                <FormControl key={index}>
+                  <LocalizationProvider dateAdapter={AdapterDayjs}>
+                    <DateTimePicker
+                      // eslint-disable-next-line react/jsx-props-no-spreading
+                      renderInput={(props) => (
+                        <TextField {...props} name="date" />
+                      )}
+                      label={column}
+                      onChange={handleDateChange}
+                    />
+                  </LocalizationProvider>
+                </FormControl>
+              ) : typeof formData[column] === "string" ? (
+                <FormControl variant="filled" key={index}>
+                  <Input
+                    name={column}
+                    placeholder={column}
+                    autoFocus
+                    onChange={handleInputChange}
+                    required
+                    size="medium"
+                    defaultValue={sanitizedDefaultFormData[column]}
+                    data-cy="form-name"
+                  />
+                  {/* {errors.name && (
                       <HelperText color="error">Name is required</HelperText>
                     )} */}
-              </FormControl>
-            ) : typeof formData[column] === "number" ? (
-              <FormControl sx={{ width: 200 }}>
-                <Input
-                  name={formData[column]}
-                  type="number"
-                  placeholder={formData[column]}
-                  onChange={handleInputChange}
-                  required
-                  defaultValue={sanitizedDefaultFormData[column]}
-                  data-cy="form-amount"
-                />
-                {/* {errors.amount && (
+                </FormControl>
+              ) : typeof formData[column] === "number" ? (
+                <FormControl sx={{ width: 200 }} key={index}>
+                  <Input
+                    // name={formData[column]}
+                    type="number"
+                    // placeholder={formData[column]}
+                    onChange={handleInputChange}
+                    required
+                    defaultValue={sanitizedDefaultFormData[column]}
+                    data-cy="form-amount"
+                  />
+                  {/* {errors.amount && (
                   <HelperText color="error">Amount is required</HelperText>
                 )} */}
-              </FormControl>
-            ) : (
-              <FormControl>
-                <LocalizationProvider dateAdapter={AdapterDayjs}>
-                  <DateTimePicker
-                    // eslint-disable-next-line react/jsx-props-no-spreading
-                    renderInput={(props) => (
-                      <TextField {...props} name="date" />
-                    )}
-                    label="Date"
-                    onChange={handleDateChange}
-                  />
-                </LocalizationProvider>
-              </FormControl>
-            )
-          )}
+                </FormControl>
+              ) : null
+            )}
 
-          <FormControl sx={{ width: 200 }}>
+          {/* <FormControl sx={{ width: 200 }}>
             <InputLabel id="category-select-label">Category</InputLabel>
             <Select
               name="category"
@@ -226,7 +223,7 @@ function ItemFormModal({ title, defaultFormData, move }) {
               onChange={handleInputChange}
               data-cy="form-description"
             />
-          </FormControl>
+          </FormControl> */}
         </div>
       </DialogContent>
       <DialogActions sx={{ p: 2 }}>

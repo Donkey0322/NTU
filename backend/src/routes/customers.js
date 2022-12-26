@@ -1,7 +1,6 @@
 import db from "../sql.js";
-import express from 'express';
+import express from "express";
 import moment from "moment";
-
 
 const router = express.Router();
 const Myquery = (query, detail) => {
@@ -22,10 +21,10 @@ const Myquery = (query, detail) => {
     })
 }
 
-router.delete('/', async (req, res) => {
-    // console.log(req.body);
-    let id = req.query
-    let query = `delete from customers
+router.delete("/", async (req, res) => {
+  console.log(req.body);
+  let id = req.query;
+  let query = `delete from customers
                  where customer_id = ${id}`;
     await Myquery(query, false)
     let return_query = `select * from customers;`;
@@ -34,7 +33,7 @@ router.delete('/', async (req, res) => {
 });
 
 router.get("/", async (_, res) => {
-    let query = `select * from customers
+  let query = `select * from customers
     order by customer_id desc;`;
     var result = await Myquery(query, true)
     res.status(200).send({result})
