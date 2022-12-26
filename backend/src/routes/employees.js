@@ -3,69 +3,45 @@ import express from 'express';
 
 
 const router = express.Router();
-const queryEmployee = async () => {
-    let query = `select * from employees;`;
-    let table = await db.query(query, function(err, result) {
-        if(err) throw err;
-        else{
-            console.log('Employee query return.')
-            return result;
-        }
-    }); 
-    return table;
-};
 
-const deleteEmployee = async(data) => {
-    let id = data;
-    let query = `delete from customers
-                 where employee_id = ${id}`;
-    await db.query(query, function(err, result) {
-    if(err) throw err;
-    else{
-        console.log('Employee delete done')
-    }
-    });
+const Myquery = (query) => {
+    return new Promise((resolve) => {
+        db.query(query,  (err, result) => {
+            if (err) {
+                throw err;
+            }else{
+                resolve(result);
+            }
+        })
+    })
 }
 
-const addEmployee = async (data) => {
-    let {gender, employee_name, salary} = data;
-    query = `INSERT INTO employees (gender, employee_name, salary)
-             VALUES("${gender}", "${employee_name}", ${salary})`;
-    await db.query(query, (err, result) => {
-        if (err) throw err;
-        else {
-            console.log("Employee insert done");
-        }
-    })
-    query_return = `select * from employees
-                    order by employee_id desc
-                    limit 1;`
-    let new_employee = await db.query(query_return, (err, result) => {
-                            if (err) throw err;
-                            else {
-                                console.log("Employee new add return");
-                                return result
-                            }
-                        })
-    return new_employee;
-};
-
 router.delete('/', async (req, res) => {
-    // console.log(req.body);
-    let id = req.query
-    await deleteEmployee(id);
-    let result = await queryEmployee();
-    res.json({result});
+    let id = req.query;
+    let query = `delete from employees
+                 where employee_id = ${id}`;
+    await Myquery(query)
+    let return_query = `select * from employees;`;
+    var result = await Myquery(return_query)
+    res.status(200).send({result})
 });
 
 router.get("/", async (_, res) => {
-    let result = await queryEmployee();
-    res.json({ result });
+    let query = `select * from employees;`;
+    var result = await Myquery(query)
+    res.status(200).send({result})
 });
 
 router.post('/', async (req, res) => {
     console.log('Employee to add:', req.body);
-    var result = await addEmployee(req.body);
-    res.json({ result });
+    let {gender, employee_name, salary} = req.body;
+    let query = `INSERT INTO employees (gender, employee_name, salary)
+             VALUES("${gender}", "${employee_name}", ${salary})`;
+    await Myquery(query)
+    let query_return = `select * from employees
+                    order by employee_id desc
+                    limit 1;`
+    let result = await Myquery(query_return)
+    res.status(200).send({result})
 });
 export default router;

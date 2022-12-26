@@ -1,6 +1,6 @@
 import db from "../sql.js";
 import express from 'express';
-
+import moment from "moment";
 
 const router = express.Router();
 import { v4 } from 'uuid';
@@ -9,17 +9,17 @@ const make_dict = (array_c, detail) => {
     var dic = {}
     if(detail){
         for(var i in array_c){
-            if(Object.keys(detail).includes(String(array_c[i].order_id))){
-                dic[array_c[i].order_id].push(array_c[i])
+            if(Object.keys(detail).includes(String(array_c[i].purchase_id))){
+                dic[array_c[i].purchase_id].push(array_c[i])
             }else{
-                dic[array_c[i].order_id] = []
-                dic[array_c[i].order_id].push(array_c[i])
+                dic[array_c[i].purchase_id] = []
+                dic[array_c[i].purchase_id].push(array_c[i])
             }
         }
     }
     else{
         for(var i in array_c){
-            dic[array_c[i].order_id] = array_c[i]
+            dic[array_c[i].purchase_id] = array_c[i]
         }
     }
     console.log('Purchase query done')
@@ -27,7 +27,6 @@ const make_dict = (array_c, detail) => {
 }
 
 function getRandomName() {
-
     let hexString = v4();
     console.log("hex:   ", hexString);
     hexString = hexString.replace(/-/g, "");
@@ -50,6 +49,26 @@ function getRandomName() {
 //     }); 
 // };
 
+const Myquery = (query, detail) => {
+    return new Promise((resolve) => {
+        db.query(query,  (err, result) => {
+            if (err) {
+                throw err;
+            }else{
+                if(!detail){
+                    result.map((element) => {
+                        element.purchase_date = moment(element.purchase_date).utc().format('YYYY-MM-DD')
+                        element.purchase_date = new Date(element.purchase_date)
+                        })
+                }
+            }
+            resolve(result);
+        })
+    })
+}
+
+
+
 const queryPurchase = async () => {
     let query_origin = `select purchases.purchase_id, purchases.purchase_code, purchases.purchase_date, sum(purchases_detail.price * purchases_detail.quantity) as 'total' 
                         from purchases
@@ -61,24 +80,10 @@ const queryPurchase = async () => {
                         join purchases_detail on purchases.purchase_id = purchases_detail.purchase_id
                         order by purchases.purchase_date desc;`;
 
-
-    let array1 = await db.query(query_origin, function(err, result) {
-        if(err) throw err;
-        return result;
-    }); 
-
-    array1.map((element) => {
-        element.purchase_date = moment(element.purchase_date).utc().format('YYYY-MM-DD')
-    })
-
-    let origin = make_dict(array_c = array1, detail = false)
-
-    let array2 = await db.query(query_detail, function(err, result) {
-        if(err) throw err;
-        return result;
-    }); 
-
-    let detail = make_dict(array_c = array2, detail = true)
+    let array1 = await Myquery(query_origin, false)
+    let origin = make_dict(array1, false)
+    let array2 = await Myquery(query_detail, true)
+    let detail = make_dict(array2, true)
     var dict = {origin, detail}
     return dict
 };
@@ -89,16 +94,21 @@ const queryPurchase = async () => {
 //     res.json({ message: `${add} (${req.body.name}, ${req.body.subject}, ${req.body.score})`, card: true});
 // });
 
+
 router.delete('/', async (req, res) => {
     // console.log(req.body);
     let id = req.query
-    await deletePurchase(id);
-    let result = await queryPurchase();
-    res.json({ result });
+    let query = `delete from purchases
+                 where purchase_id = ${id}`;
+    await Myquery(query, true);
+    var result = await queryPurchase();
+    res.status(200).send({result});
 });
 
+
 router.get("/", async (_, res) => {
-    let result = await queryPurchase();
-    res.json({ result });
+    var result = await queryPurchase()
+    res.status(200).send({result})
+
 });
 export default router;
