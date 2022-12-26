@@ -60,11 +60,13 @@ function Table_Board({ title }) {
         <TableHead>
           <TableRow>
             {table.length > 0 &&
-              Object.keys(table[0]).map((column, index) => (
-                <TableCell variant="head" key={index}>
-                  {column.includes("id") ? "" : column}
-                </TableCell>
-              ))}
+              Object.keys(table[0].origin ? table[0].origin : table[0]).map(
+                (column, index) => (
+                  <TableCell variant="head" key={index}>
+                    {column.includes("id") ? "" : column}
+                  </TableCell>
+                )
+              )}
             <TableCell variant="head" />
           </TableRow>
         </TableHead>

@@ -20,7 +20,7 @@ const DBProvider = (props) => {
 
   useEffect(() => {
     if (table.length > 0) {
-      const columns = Object.keys(table[0]);
+      const columns = Object.keys(table[0].origin ? table[0].origin : table[0]);
       setIndexName(columns[columns.findIndex((c) => c.includes("id"))]);
     }
   }, [table]);
