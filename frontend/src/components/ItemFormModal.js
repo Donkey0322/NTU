@@ -107,9 +107,11 @@ function ItemFormModal({
   };
 
   const handleDateChange = (name) => (date) => {
+    const a = new Object();
+    a[name] = date;
     setFormData((prev) => ({
       ...prev,
-      name: date,
+      ...a,
     }));
   };
 
@@ -132,6 +134,7 @@ function ItemFormModal({
           ? parseInt(formData[column], 10)
           : formData[column];
     }
+    console.log(reqData)
     Query(reqData);
     if (table[0].origin && move === "C") {
       columns = [];
