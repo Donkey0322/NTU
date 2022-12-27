@@ -120,9 +120,8 @@ router.put('/', async (req, res) => {
                  order_status = "${order_status}"
              where order_id = ${order_id};`;
     await Myquery(query, true)
-    let query_return = `select * from orders
-                        where order_id = ${order_id};`
-    let result = await Myquery(query_return, true)
-    res.status(200).send({result})
+    var result = await queryOrder();
+    //   console.log(result);
+      res.status(200).send({ result });
 });
 export default router;
