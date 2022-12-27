@@ -51,7 +51,14 @@ const Transition = React.forwardRef((props, ref) => (
   <Grow ref={ref} {...props} unmountOnExit />
 ));
 
-function ItemFormModal({ title, defaultFormData, move, open, setOpen }) {
+function ItemFormModal({
+  title,
+  defaultFormData,
+  move,
+  open,
+  setOpen,
+  handleDetail,
+}) {
   const { table, path, CRUD } = useDB();
   const Query = CRUD(move, path);
 
@@ -60,20 +67,22 @@ function ItemFormModal({ title, defaultFormData, move, open, setOpen }) {
     for (const column in table[0].origin ? table[0].origin : table[0]) {
       columns.push(column);
       // console.log(defaultFormData);
+      console.log(column);
     }
   } else {
-    columns = Object.keys(defaultFormData);
+    columns = Object.keys(
+      defaultFormData.origin ? defaultFormData.origin : defaultFormData
+    );
   }
   var tempData = new Object();
   for (const column of columns) {
     tempData[column] = !Array.isArray(defaultFormData)
-      ? defaultFormData[column]
+      ? defaultFormData.origin
+        ? defaultFormData.origin[column]
+        : defaultFormData[column]
       : column.includes("day")
       ? new Date()
-      : Default(table[0][column]);
-    if (move == "C") {
-      console.log(tempData);
-    }
+      : Default(table[0].origin ? table[0].origin[column] : table[0][column]);
   }
   if (move === "C") console.log(tempData);
 
@@ -124,7 +133,21 @@ function ItemFormModal({ title, defaultFormData, move, open, setOpen }) {
           : formData[column];
     }
     Query(reqData);
-    setOpen(false);
+    if (table[0].origin && move === "C") {
+      columns = [];
+      for (const column in table[0].detail[0]) {
+        columns.push(column);
+        tempData = new Object();
+      }
+      for (const column of columns) {
+        tempData[column] = column.includes("day")
+          ? new Date()
+          : Default(
+              table[0].origin ? table[0].origin[column] : table[0][column]
+            );
+      }
+      setFormData(tempData);
+    } else setOpen(false);
   };
 
   return (
@@ -135,7 +158,10 @@ function ItemFormModal({ title, defaultFormData, move, open, setOpen }) {
           {Object.keys(formData).length > 0 &&
             columns.length > 0 &&
             columns.map((column, index) =>
-              column.includes("day") || column.includes("date") ? (
+              column.includes("id") ||
+              column.includes("code") ||
+              column.includes("total") ? null : column.includes("day") ||
+                column.includes("date") ? (
                 <FormControl key={index}>
                   <LocalizationProvider dateAdapter={AdapterDayjs}>
                     <DateTimePicker
