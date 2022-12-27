@@ -136,6 +136,7 @@ function ItemFormModal({ title, defaultFormData, move, open, setOpen }) {
       for (const column in table[0].detail[0]) {
         tempcolumns.push(column);
       }
+
       tempData = new Object();
       for (const column of tempcolumns) {
         tempData[column] = column.includes("day")
