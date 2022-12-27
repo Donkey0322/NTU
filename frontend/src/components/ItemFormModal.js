@@ -100,7 +100,10 @@ function ItemFormModal({ title, defaultFormData, move, open, setOpen }) {
     const { name, value } = event.target;
     setFormData((prev) => ({
       ...prev,
-      [name]: value,
+      [name]:
+        typeof sanitizedDefaultFormData[name] === "number"
+          ? Number(value)
+          : value,
     }));
   };
 
