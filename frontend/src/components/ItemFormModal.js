@@ -137,6 +137,7 @@ function ItemFormModal({
           ? parseInt(formData[column], 10)
           : formData[column];
     }
+    console.log(reqData)
     Query(reqData);
     if (table[0].origin && move === "C") {
       columns = [];

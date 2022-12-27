@@ -55,14 +55,16 @@ const Myquery = (query, detail) => {
         throw err;
       } else {
         if (!detail) {
-          result.map((element) => {
-            element.order_date = moment(element.order_date).utc().format("YYYY-MM-DD");
-            element.order_date = new Date(element.order_date);
-            if (element.deliver_date !== null) {
-              element.deliver_date = moment(element.deliver_date).utc().format("YYYY-MM-DD");
-              element.deliver_date = new Date(element.deliver_date);
+            if(result.affectedRows !== 1){
+                result.map((element) => {
+                    element.order_date = moment(element.order_date).utc().format("YYYY-MM-DD");
+                    element.order_date = new Date(element.order_date);
+                    if (element.deliver_date !== null) {
+                      element.deliver_date = moment(element.deliver_date).utc().format("YYYY-MM-DD");
+                      element.deliver_date = new Date(element.deliver_date);
+                    }
+                  });
             }
-          });
         }
         resolve(result);
       }
@@ -117,7 +119,7 @@ router.put('/', async (req, res) => {
                  deliver_date = "${moment(deliver_date).utc().format("YYYY-MM-DD")}", 
                  order_status = "${order_status}"
              where order_id = ${order_id};`;
-    await Myquery(query)
+    await Myquery(query, true)
     let query_return = `select * from orders
                         where order_id = ${order_id};`
     let result = await Myquery(query_return, true)
