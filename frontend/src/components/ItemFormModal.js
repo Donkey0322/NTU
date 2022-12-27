@@ -116,9 +116,9 @@ function ItemFormModal({ title, defaultFormData, move, open, setOpen }) {
     let reqData = new Object();
     for (const column of columns) {
       reqData[column] =
-        typeof tempData[column] === "number"
-          ? parseInt(tempData[column], 10)
-          : tempData[column];
+        typeof formData[column] === "number"
+          ? parseInt(formData[column], 10)
+          : formData[column];
     }
     Query(reqData);
     setOpen(false);

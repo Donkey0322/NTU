@@ -57,7 +57,7 @@ const make_arr = (origin, detail) => {
 // };
 
 
-const Myquery = (query, detail, remove) => {
+const Myquery = (query, detail) => {
     return new Promise((resolve) => {
         db.query(query,  (err, result) => {
             if (err) {
@@ -69,9 +69,7 @@ const Myquery = (query, detail, remove) => {
                         element.purchase_date = new Date(element.purchase_date)
                         })
                 }
-                if(!remove){
                     resolve(result);
-                }
             }
         })
     })
@@ -89,9 +87,9 @@ const queryPurchase = async () => {
                         order by purchases.purchase_date desc;`;
 
 
-    let array1 = await Myquery(query_origin, false, false)
-    let origin = make_dict(array1, false, false)
-    let array2 = await Myquery(query_detail, true, false)
+    let array1 = await Myquery(query_origin, false)
+    let origin = make_dict(array1, false)
+    let array2 = await Myquery(query_detail, true)
     let detail = make_dict(array2, true)
     var arr = make_arr(origin, detail)
     return arr
