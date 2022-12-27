@@ -124,7 +124,7 @@ function ItemFormModal({ title, defaultFormData, move, open, setOpen }) {
     event.preventDefault();
     event.stopPropagation();
     let reqData = new Object();
-    for (const column of tempcolumns) {
+    for (const column of columns) {
       reqData[column] =
         typeof formData[column] === "number"
           ? parseInt(formData[column], 10)

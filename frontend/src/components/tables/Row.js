@@ -31,7 +31,7 @@ function Row({ item, updatable, deletable, id }) {
   };
 
   const handleDelete = () => {
-    Query(item[indexName]);
+    Query(item.origin ? item.origin[indexName] : item[indexName]);
   };
 
   return (

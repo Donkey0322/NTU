@@ -99,7 +99,9 @@ const addPurchase = async (data, addDetail) => {
     if(addDetail){
         let {ingredient, price, quantity} = data
         let query = `select max(purchase_id) as 'purchase_id' from purchases`;
-        let purchase_id = await Myquery(query).purchase_id;
+        let purchase_main = await Myquery(query);
+        let purchase_id = purchase_main[0].purchase_id
+        console.log(purchase_id)
         let query_add = `INSERT INTO purchases_detail (purchase_id, ingredient, price, quantity)
         VALUES(${purchase_id}, "${ingredient}", ${price}, ${quantity})`;
         await Myquery(query_add, true)
