@@ -121,19 +121,25 @@ function Row({ item, updatable, deletable, id }) {
                 <Table size="small" aria-label="purchases">
                   <TableHead>
                     <TableRow>
-                      {Object.keys(item.detail[0]).map((column, index) => (
-                        <TableCell key={index}>{column}</TableCell>
-                      ))}
+                      {Object.keys(item.detail[0]).map(
+                        (column, index) =>
+                          !column.includes("id") && (
+                            <TableCell key={index}>{column}</TableCell>
+                          )
+                      )}
                     </TableRow>
                   </TableHead>
                   <TableBody>
                     {item.detail.map((d, index) => (
                       <TableRow key={index}>
-                        {Object.keys(d).map((i, index) => (
-                          <TableCell component="th" scope="row" key={index}>
-                            {d[i]}
-                          </TableCell>
-                        ))}
+                        {Object.keys(d).map(
+                          (i, index) =>
+                            !i.includes("id") && (
+                              <TableCell component="th" scope="row" key={index}>
+                                {d[i]}
+                              </TableCell>
+                            )
+                        )}
                       </TableRow>
                     ))}
                   </TableBody>

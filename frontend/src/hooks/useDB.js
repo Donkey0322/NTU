@@ -35,9 +35,9 @@ const DBProvider = (props) => {
               data: { result },
             } = await instance.post(`${path}`, value);
             if (typeof result !== "undefined") {
-              if(result[0].origin){
+              if (result[0].origin) {
                 setTable(result);
-              }else{
+              } else {
                 setTable([...result, ...table]);
               }
             }
@@ -64,12 +64,16 @@ const DBProvider = (props) => {
               data: { result },
             } = await instance.put(`${path}`, { value });
             const newResult = [];
-            for (const tuple of table) {
-              newResult.push(
-                tuple[indexName] === result[0][indexName] ? result[0] : tuple
-              );
+            if (result[0].origin) {
+              setTable(result);
+            } else {
+              for (const tuple of table) {
+                newResult.push(
+                  tuple[indexName] === result[0][indexName] ? result[0] : tuple
+                );
+              }
+              setTable(newResult);
             }
-            setTable(newResult);
             break;
           } catch (error) {
             throw error;

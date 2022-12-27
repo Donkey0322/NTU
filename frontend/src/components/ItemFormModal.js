@@ -56,6 +56,7 @@ function ItemFormModal({ title, defaultFormData, move, open, setOpen }) {
   const initialValue = dayjs();
   const [value, setValue] = useState(initialValue);
   const [columns, setColumns] = useState([]);
+  const [detail, setDetail] = useState(false);
   const Query = CRUD(move, path);
 
   let tempcolumns = [];
@@ -84,8 +85,10 @@ function ItemFormModal({ title, defaultFormData, move, open, setOpen }) {
   const [formData, setFormData] = useState(sanitizedDefaultFormData);
 
   useEffect(() => {
-    setFormData(sanitizedDefaultFormData);
-    setColumns(tempcolumns);
+    if (!detail) {
+      setFormData(sanitizedDefaultFormData);
+      setColumns(tempcolumns);
+    }
   }, [sanitizedDefaultFormData]);
 
   const [errors, setErrors] = useState({
@@ -118,6 +121,7 @@ function ItemFormModal({ title, defaultFormData, move, open, setOpen }) {
       amount: false,
     });
     setOpen(false);
+    setDetail(false);
   };
 
   const handleSubmit = (event) => {
@@ -132,6 +136,7 @@ function ItemFormModal({ title, defaultFormData, move, open, setOpen }) {
     }
     Query(reqData);
     if (table[0].origin && move === "C") {
+      setDetail(true);
       tempcolumns = [];
       for (const column in table[0].detail[0]) {
         tempcolumns.push(column);
@@ -143,13 +148,12 @@ function ItemFormModal({ title, defaultFormData, move, open, setOpen }) {
           ? new Date()
           : Default(table[0].detail[0][column]);
       }
+      console.log(tempcolumns, tempData);
       setColumns(tempcolumns);
       console.log(tempData);
       setFormData(tempData);
     } else setOpen(false);
   };
-
-  // useEffect(() => {}, [formData]);
 
   return (
     <Dialog open={open} onClose={handleClose} TransitionComponent={Transition}>
