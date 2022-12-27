@@ -67,9 +67,10 @@ const DBProvider = (props) => {
             const newResult = [];
             for (const tuple of table) {
               newResult.push(
-                tuple[indexName] === result[indexName] ? result : tuple
+                tuple[indexName] === result[0][indexName] ? result[0] : tuple
               );
             }
+            console.log(newResult)
             setTable(newResult);
             break;
           } catch (error) {
