@@ -46,7 +46,7 @@ function Row({ item, updatable, deletable, id }) {
             >
               <Typography>
                 {/* {item.date && dayjs(item.date).calendar()} */}
-                {column === "working" ? (
+                {column === "working" || column === "selling" ? (
                   item[column] === 1 ? (
                     <Chip color="primary">True</Chip>
                   ) : (
