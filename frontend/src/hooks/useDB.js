@@ -34,8 +34,7 @@ const DBProvider = (props) => {
             const {
               data: { result },
             } = await instance.post(`${path}`, value);
-            console.log(table, result);
-            if (!result) {
+            if (typeof result !== "undefined") {
               setTable([...result, ...table]);
             }
             break;
@@ -66,7 +65,6 @@ const DBProvider = (props) => {
                 tuple[indexName] === result[0][indexName] ? result[0] : tuple
               );
             }
-            console.log(newResult);
             setTable(newResult);
             break;
           } catch (error) {
