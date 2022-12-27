@@ -109,4 +109,18 @@ router.get("/", async (_, res) => {
 //   console.log(result);
   res.status(200).send({ result });
 });
+
+router.put('/', async (req, res) => {
+    // console.log('Product to update:', req.body.value);
+    let {order_id, deliver_date, order_status} = req.body.value;
+    let query = `update orders set
+                 deliver_date = "${moment(deliver_date).utc().format("YYYY-MM-DD")}", 
+                 order_status = "${order_status}"
+             where order_id = ${order_id};`;
+    await Myquery(query)
+    let query_return = `select * from orders
+                        where order_id = ${order_id};`
+    let result = await Myquery(query_return, true)
+    res.status(200).send({result})
+});
 export default router;

@@ -37,9 +37,9 @@ router.get("/", async (_, res) => {
 
 router.post('/', async (req, res) => {
     console.log('Product to add:', req.body);
-    let {product_name, price, photo} = req.body;
+    let {product_name, price, selling} = req.body;
     let query = `INSERT INTO products (product_name, price, selling )
-             VALUES("${product_name}", ${price}, "${photo}", ${selling})`;
+             VALUES("${product_name}", ${price}, ${selling})`;
     await Myquery(query)
     let query_return = `select * from products
                     order by product_id desc
