@@ -51,33 +51,26 @@ const Transition = React.forwardRef((props, ref) => (
   <Grow ref={ref} {...props} unmountOnExit />
 ));
 
-function ItemFormModal({
-  title,
-  defaultFormData,
-  move,
-  open,
-  setOpen,
-  handleDetail,
-}) {
+function ItemFormModal({ title, defaultFormData, move, open, setOpen }) {
   const { table, path, CRUD } = useDB();
   const initialValue = dayjs();
   const [value, setValue] = useState(initialValue);
+  const [columns, setColumns] = useState([]);
   const Query = CRUD(move, path);
 
-  let columns = [];
+  let tempcolumns = [];
   if (move === "C") {
     for (const column in table[0].origin ? table[0].origin : table[0]) {
-      columns.push(column);
-      // console.log(defaultFormData);
-      console.log(column);
+      tempcolumns.push(column);
     }
   } else {
-    columns = Object.keys(
+    tempcolumns = Object.keys(
       defaultFormData.origin ? defaultFormData.origin : defaultFormData
     );
   }
+  // setColumns(tempcolumns);
   var tempData = new Object();
-  for (const column of columns) {
+  for (const column of tempcolumns) {
     tempData[column] = !Array.isArray(defaultFormData)
       ? defaultFormData.origin
         ? defaultFormData.origin[column]
@@ -86,13 +79,13 @@ function ItemFormModal({
       ? new Date()
       : Default(table[0].origin ? table[0].origin[column] : table[0][column]);
   }
-  if (move === "C") console.log(tempData);
 
   const sanitizedDefaultFormData = useMemo(() => tempData, [defaultFormData]);
   const [formData, setFormData] = useState(sanitizedDefaultFormData);
 
   useEffect(() => {
     setFormData(sanitizedDefaultFormData);
+    setColumns(tempcolumns);
   }, [sanitizedDefaultFormData]);
 
   const [errors, setErrors] = useState({
@@ -131,28 +124,31 @@ function ItemFormModal({
     event.preventDefault();
     event.stopPropagation();
     let reqData = new Object();
-    for (const column of columns) {
+    for (const column of tempcolumns) {
       reqData[column] =
         typeof formData[column] === "number"
           ? parseInt(formData[column], 10)
           : formData[column];
     }
-    console.log(reqData)
     Query(reqData);
     if (table[0].origin && move === "C") {
-      columns = [];
+      tempcolumns = [];
       for (const column in table[0].detail[0]) {
-        columns.push(column);
+        tempcolumns.push(column);
       }
       tempData = new Object();
-      for (const column of columns) {
+      for (const column of tempcolumns) {
         tempData[column] = column.includes("day")
           ? new Date()
-          : Default(table[0].origin[column]);
+          : Default(table[0].detail[0][column]);
       }
+      setColumns(tempcolumns);
+      console.log(tempData);
       setFormData(tempData);
     } else setOpen(false);
   };
+
+  // useEffect(() => {}, [formData]);
 
   return (
     <Dialog open={open} onClose={handleClose} TransitionComponent={Transition}>
@@ -272,7 +268,9 @@ function ItemFormModal({
         </Button>
         <Button
           variant="contained"
-          onClick={handleSubmit}
+          onClick={(e) => {
+            handleSubmit(e);
+          }}
           data-cy="form-submit"
         >
           Save
