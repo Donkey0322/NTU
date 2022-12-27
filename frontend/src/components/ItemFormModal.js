@@ -1,6 +1,6 @@
 import React, { useState, useMemo, useEffect } from "react";
 import PropTypes from "prop-types";
-
+import dayjs from "dayjs";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
@@ -17,7 +17,7 @@ import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
+import { DatePicker } from "@mui/x-date-pickers";
 import { useDB } from "../hooks/useDB";
 
 function HelperText({ color, children }) {
@@ -51,46 +51,41 @@ const Transition = React.forwardRef((props, ref) => (
   <Grow ref={ref} {...props} unmountOnExit />
 ));
 
-function ItemFormModal({
-  title,
-  defaultFormData,
-  move,
-  open,
-  setOpen,
-  handleDetail,
-}) {
+function ItemFormModal({ title, defaultFormData, move, open, setOpen }) {
   const { table, path, CRUD } = useDB();
+  const initialValue = dayjs();
+  const [value, setValue] = useState(initialValue);
+  const [columns, setColumns] = useState([]);
   const Query = CRUD(move, path);
 
-  let columns = [];
+  let tempcolumns = [];
   if (move === "C") {
     for (const column in table[0].origin ? table[0].origin : table[0]) {
-      columns.push(column);
-      // console.log(defaultFormData);
-      console.log(column);
+      tempcolumns.push(column);
     }
   } else {
-    columns = Object.keys(
+    tempcolumns = Object.keys(
       defaultFormData.origin ? defaultFormData.origin : defaultFormData
     );
   }
+  // setColumns(tempcolumns);
   var tempData = new Object();
-  for (const column of columns) {
+  for (const column of tempcolumns) {
     tempData[column] = !Array.isArray(defaultFormData)
       ? defaultFormData.origin
         ? defaultFormData.origin[column]
         : defaultFormData[column]
-      : column.includes("day")
+      : column.includes("day") || column.includes("date")
       ? new Date()
       : Default(table[0].origin ? table[0].origin[column] : table[0][column]);
   }
-  if (move === "C") console.log(tempData);
 
   const sanitizedDefaultFormData = useMemo(() => tempData, [defaultFormData]);
   const [formData, setFormData] = useState(sanitizedDefaultFormData);
 
   useEffect(() => {
     setFormData(sanitizedDefaultFormData);
+    setColumns(tempcolumns);
   }, [sanitizedDefaultFormData]);
 
   const [errors, setErrors] = useState({
@@ -108,6 +103,7 @@ function ItemFormModal({
 
   const handleDateChange = (name) => (date) => {
     const a = new Object();
+    setValue(date);
     a[name] = date;
     setFormData((prev) => ({
       ...prev,
@@ -128,31 +124,32 @@ function ItemFormModal({
     event.preventDefault();
     event.stopPropagation();
     let reqData = new Object();
-    for (const column of columns) {
+    for (const column of tempcolumns) {
       reqData[column] =
         typeof formData[column] === "number"
           ? parseInt(formData[column], 10)
           : formData[column];
     }
-    console.log(reqData)
     Query(reqData);
     if (table[0].origin && move === "C") {
-      columns = [];
+      tempcolumns = [];
       for (const column in table[0].detail[0]) {
-        columns.push(column);
-        tempData = new Object();
+        tempcolumns.push(column);
       }
-      console.log(columns)
-      for (const column of columns) {
+
+      tempData = new Object();
+      for (const column of tempcolumns) {
         tempData[column] = column.includes("day")
           ? new Date()
-          : Default(
-              table[0].origin ? table[0].origin[column] : table[0][column]
-            );
+          : Default(table[0].detail[0][column]);
       }
+      setColumns(tempcolumns);
+      console.log(tempData);
       setFormData(tempData);
     } else setOpen(false);
   };
+
+  // useEffect(() => {}, [formData]);
 
   return (
     <Dialog open={open} onClose={handleClose} TransitionComponent={Transition}>
@@ -168,11 +165,12 @@ function ItemFormModal({
                 column.includes("date") ? (
                 <FormControl key={index}>
                   <LocalizationProvider dateAdapter={AdapterDayjs}>
-                    <DateTimePicker
+                    <DatePicker
                       // eslint-disable-next-line react/jsx-props-no-spreading
                       renderInput={(props) => (
                         <TextField {...props} name="date" />
                       )}
+                      value={value}
                       label={column}
                       onChange={handleDateChange(column)}
                     />
@@ -271,7 +269,9 @@ function ItemFormModal({
         </Button>
         <Button
           variant="contained"
-          onClick={handleSubmit}
+          onClick={(e) => {
+            handleSubmit(e);
+          }}
           data-cy="form-submit"
         >
           Save
