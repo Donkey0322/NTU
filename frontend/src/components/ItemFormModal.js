@@ -50,9 +50,6 @@ const Default = (value) => {
 const Transition = React.forwardRef((props, ref) => (
   <Grow ref={ref} {...props} unmountOnExit />
 ));
-// const Transition = React.forwardRef(function Transition(props, ref) {
-//   return <Slide direction="up" ref={ref} {...props} />;
-// });
 
 function ItemFormModal({ title, defaultFormData, move, open, setOpen }) {
   const { table, path, CRUD } = useDB();
@@ -75,7 +72,6 @@ function ItemFormModal({ title, defaultFormData, move, open, setOpen }) {
       : column.includes("day")
       ? new Date()
       : Default(table[0][column]);
-    // console.log(move, tempData[column]);
   }
 
   const sanitizedDefaultFormData = useMemo(() => tempData, [defaultFormData]);
@@ -94,10 +90,10 @@ function ItemFormModal({ title, defaultFormData, move, open, setOpen }) {
     }));
   };
 
-  const handleDateChange = (date) => {
+  const handleDateChange = (name) => (date) => {
     setFormData((prev) => ({
       ...prev,
-      date,
+      name: date,
     }));
   };
 
@@ -116,9 +112,9 @@ function ItemFormModal({ title, defaultFormData, move, open, setOpen }) {
     let reqData = new Object();
     for (const column of columns) {
       reqData[column] =
-        typeof tempData[column] === "number"
-          ? parseInt(tempData[column], 10)
-          : tempData[column];
+        typeof formData[column] === "number"
+          ? parseInt(formData[column], 10)
+          : formData[column];
     }
     Query(reqData);
     setOpen(false);
@@ -131,7 +127,7 @@ function ItemFormModal({ title, defaultFormData, move, open, setOpen }) {
         <div className="flex flex-col gap-4 px-10">
           {formData &&
             columns.map((column, index) =>
-              column.includes("day") ? (
+              column.includes("day") || column.includes("date") ? (
                 <FormControl key={index}>
                   <LocalizationProvider dateAdapter={AdapterDayjs}>
                     <DateTimePicker
@@ -140,7 +136,7 @@ function ItemFormModal({ title, defaultFormData, move, open, setOpen }) {
                         <TextField {...props} name="date" />
                       )}
                       label={column}
-                      onChange={handleDateChange}
+                      onChange={handleDateChange(column)}
                     />
                   </LocalizationProvider>
                 </FormControl>
