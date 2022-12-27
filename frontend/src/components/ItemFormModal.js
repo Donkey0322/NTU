@@ -142,6 +142,7 @@ function ItemFormModal({
         columns.push(column);
         tempData = new Object();
       }
+      console.log(columns)
       for (const column of columns) {
         tempData[column] = column.includes("day")
           ? new Date()
