@@ -165,8 +165,22 @@ function ItemFormModal({ title, defaultFormData, move, open, setOpen }) {
             columns.map((column, index) =>
               column.includes("id") ||
               column.includes("code") ||
-              column.includes("total") ? null : column.includes("day") ||
-                column.includes("date") ? (
+              column.includes("total") ? null : column === "gender" ? (
+                <FormControl sx={{ width: 200 }}>
+                  <InputLabel id="category-select-label">Gender</InputLabel>
+                  <Select
+                    name="gender"
+                    label="gender"
+                    labelId="gender-select-label"
+                    defaultValue={sanitizedDefaultFormData.gender}
+                    onChange={handleInputChange}
+                    data-cy="form-category"
+                  >
+                    <MenuItem value="male">male</MenuItem>
+                    <MenuItem value="female">female</MenuItem>
+                  </Select>
+                </FormControl>
+              ) : column.includes("day") || column.includes("date") ? (
                 <FormControl key={index}>
                   <LocalizationProvider dateAdapter={AdapterDayjs}>
                     <DatePicker
