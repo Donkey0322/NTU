@@ -9,7 +9,7 @@ const make_dict = (array_c, detail) => {
   var dic = {};
   if (detail) {
     for (var i in array_c) {
-      if (Object.keys(detail).includes(String(array_c[i].purchase_id))) {
+      if (Object.keys(dic).includes(String(array_c[i].purchase_id))) {
         dic[array_c[i].purchase_id].push(array_c[i]);
       } else {
         dic[array_c[i].purchase_id] = [];
@@ -69,7 +69,7 @@ const Myquery = (query, detail) => {
                         element.purchase_date = new Date(element.purchase_date)
                         })
                 }
-                    resolve(result);
+                resolve(result);
             }
         })
     })
@@ -95,26 +95,69 @@ const queryPurchase = async () => {
     return arr
 };
 
-// router.post('/', async (req, res) => {
-//     console.log(req.body);
-//     await addPurchase(req.body);
-//     res.json({ message: `${add} (${req.body.name}, ${req.body.subject}, ${req.body.score})`, card: true});
-// });
+const addPurchase = async (data, addDetail) => {
+    if(addDetail){
+        let {ingredient, price, quantity} = data
+        let query = `select max(purchase_id) as 'purchase_id' from purchases`;
+        let purchase_id = await Myquery(query).purchase_id;
+        let query_add = `INSERT INTO purchases_detail (purchase_id, ingredient, price, quantity)
+        VALUES(${purchase_id}, "${ingredient}", ${price}, ${quantity})`;
+        await Myquery(query_add, true)
+        var result = await queryPurchase()
+        return result;
+    }else{
+        let {purchase_date} = data;
+        let purchase_code = getRandomName();
+        let query = `INSERT INTO purchases (purchase_code, purchase_date)
+             VALUES("${purchase_code}", "${moment(purchase_date).utc().format("YYYY-MM-DD")}")`;
+        await Myquery(query, false);
+        
+    }
+    
+    await db.query(query, (err, result) => {
+        if (err) throw err;
+        else {
+            console.log("Insert done");
+        }
+    });
+    let n
+};
 
 router.delete("/", async (req, res) => {
-  // console.log(req.body);
-  let id = req.query;
+//   console.log(req.query);
+  let {id} = req.query;
   let query = `delete from purchases
-                 where purchase_id = ${id}`;
+                where purchase_id = ${id}`;
   await Myquery(query, true);
   var result = await queryPurchase();
   res.status(200).send({ result });
 });
 
 router.get("/", async (_, res) => {
-
     var result = await queryPurchase()
-    console.log(result)
+    // console.log(result)
     res.status(200).send({result})
+});
+
+router.post("/", async (req, res) => {
+    console.log('delete')
+    let {data} = req.body;
+    console.log('add data is:', data)
+    var addDetail = false
+    console.log('data element:', data.length)
+    if(data.length !== 1){
+        addDetail = true
+    }
+    if(addDetail){
+        var result = await addPurchase(data, addDetail);
+        console.log('result is', result)
+        res.status(200).send({result})
+    }
+    else{
+        await addPurchase(data, addDetail);
+        console.log('adding main purchase')
+        res.status(200).send()
+    } 
+
 });
 export default router;

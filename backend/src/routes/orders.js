@@ -7,7 +7,7 @@ const make_dict = (array_c, detail) => {
   var dic = {};
   if (detail) {
     for (var i in array_c) {
-      if (Object.keys(detail).includes(String(array_c[i].order_id))) {
+      if (Object.keys(dic).includes(String(array_c[i].order_id))) {
         dic[array_c[i].order_id].push(array_c[i]);
       } else {
         dic[array_c[i].order_id] = [];
@@ -19,7 +19,7 @@ const make_dict = (array_c, detail) => {
       dic[array_c[i].order_id] = array_c[i];
     }
   }
-  console.log("Order query done");
+//   console.log("Order query done");
   return dic;
 };
 
@@ -27,6 +27,9 @@ const make_arr = (origin, detail) => {
 
     var arr = [] 
     for(let i of Object.keys(origin)){
+        // console.log('key:', i)
+        // console.log('origin:', origin[i])
+        // console.log('detail:', detail)
         arr.push({'origin': origin[i],'detail': detail[i]})
     }
     return arr
@@ -45,7 +48,7 @@ const make_arr = (origin, detail) => {
 //     let n
 // };
 
-const Myquery = (query, detail, remove) => {
+const Myquery = (query, detail) => {
   return new Promise((resolve) => {
     db.query(query, (err, result) => {
       if (err) {
@@ -53,21 +56,15 @@ const Myquery = (query, detail, remove) => {
       } else {
         if (!detail) {
           result.map((element) => {
-            element.order_date = moment(element.order_date)
-              .utc()
-              .format("YYYY-MM-DD");
+            element.order_date = moment(element.order_date).utc().format("YYYY-MM-DD");
             element.order_date = new Date(element.order_date);
             if (element.deliver_date !== null) {
-              element.deliver_date = moment(element.deliver_date)
-                .utc()
-                .format("YYYY-MM-DD");
+              element.deliver_date = moment(element.deliver_date).utc().format("YYYY-MM-DD");
               element.deliver_date = new Date(element.deliver_date);
             }
           });
         }
-        if (!remove) {
-          resolve(result);
-        }
+        resolve(result);
       }
     });
   });
@@ -88,28 +85,28 @@ const queryOrder = async () => {
                         left join customers on customers.customer_id = orders.customer
                         order by deliver_date is not null, deliver_date desc;`;
 
-  let array1 = await Myquery(query_origin, false, false);
-  let origin = make_dict(array1, false, false);
-  let array2 = await Myquery(query_detail, true, false);
-  let detail = make_dict(array2, true, false);
+  let array1 = await Myquery(query_origin, false);
+  let origin = make_dict(array1, false);
+  let array2 = await Myquery(query_detail, true);
+  let detail = make_dict(array2, true);
   var arr = make_arr(origin, detail);
   return arr;
 };
 
 
 router.delete('/', async (req, res) => {
-    // console.log(req.body);
+    console.log(req);
     let {id} = req.query
     let query = `delete from orders
                  where order_id = ${id}`;
-  await Myquery(query, true, true);
+  await Myquery(query, true);
   var result = await queryOrder();
   res.status(200).send({ result });
 });
 
 router.get("/", async (_, res) => {
   var result = await queryOrder();
-  console.log(result);
+//   console.log(result);
   res.status(200).send({ result });
 });
 export default router;
