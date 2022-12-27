@@ -12,9 +12,10 @@ import TableBody from "@mui/material/TableBody";
 import TableHead from "@mui/material/TableHead";
 import dayjs from "../../utils/day";
 import ItemFormModal from "../ItemFormModal";
+import Chip from "@mui/joy/Chip";
 import { useDB } from "../../hooks/useDB";
 
-function Row({ item, updateItem, deleteItem, id }) {
+function Row({ item, updatable, deletable, id }) {
   const [open, setOpen] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const { page, rowsPerPage, path, indexName, CRUD } = useDB();
@@ -45,15 +46,32 @@ function Row({ item, updateItem, deleteItem, id }) {
             >
               <Typography>
                 {/* {item.date && dayjs(item.date).calendar()} */}
-                {column.includes("day") || column.includes("date")
-                  ? dayjs(
-                      item.origin ? item.origin[column] : item[column]
-                    ).calendar()
-                  : column.includes("id")
-                  ? id + page * rowsPerPage + 1
-                  : item.origin
-                  ? item.origin[column]
-                  : item[column]}
+                {column === "working" ? (
+                  item[column] === 1 ? (
+                    <Chip color="primary">True</Chip>
+                  ) : (
+                    <Chip
+                      color="danger"
+                      disabled={false}
+                      onClick={function () {}}
+                      size="md"
+                      variant="soft"
+                    >
+                      {" "}
+                      False
+                    </Chip>
+                  )
+                ) : column.includes("day") || column.includes("date") ? (
+                  dayjs(
+                    item.origin ? item.origin[column] : item[column]
+                  ).calendar()
+                ) : column.includes("id") ? (
+                  id + page * rowsPerPage + 1
+                ) : item.origin ? (
+                  item.origin[column]
+                ) : (
+                  item[column]
+                )}
               </Typography>
             </TableCell>
           ))}
@@ -80,12 +98,16 @@ function Row({ item, updateItem, deleteItem, id }) {
           <Typography>{item.category?.toLowerCase()}</Typography>
         </TableCell> */}
         <TableCell align="right" data-cy="item-edit">
-          <IconButton onClick={onEdit} data-cy="update-item">
-            <EditIcon />
-          </IconButton>
-          <IconButton onClick={handleDelete} data-cy="delete-item">
-            <DeleteIcon />
-          </IconButton>
+          {updatable && (
+            <IconButton onClick={onEdit} data-cy="update-item">
+              <EditIcon />
+            </IconButton>
+          )}
+          {deletable && (
+            <IconButton onClick={handleDelete} data-cy="delete-item">
+              <DeleteIcon />
+            </IconButton>
+          )}
         </TableCell>
       </TableRow>
       {item.detail && (

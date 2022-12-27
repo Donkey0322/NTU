@@ -23,7 +23,7 @@ import Row from "./Row";
 //   },
 // }));
 
-function Table_Board({ title }) {
+function Table_Board({ title, updatable, deletable }) {
   const {
     page,
     rowsPerPage,
@@ -78,8 +78,8 @@ function Table_Board({ title }) {
                   key={index}
                   item={tuple}
                   id={index}
-                  updateItem={null}
-                  deleteItem={null}
+                  updatable={updatable}
+                  deletable={deletable}
                 />
               ))}
         </TableBody>

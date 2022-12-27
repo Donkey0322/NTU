@@ -10,7 +10,7 @@ import { useDB } from "../hooks/useDB";
 
 function NewItem() {
   const [modalOpen, setModalOpen] = useState(false);
-  const { table } = useDB();
+  const { table, path } = useDB();
 
   useHotkeys(
     "ctrl+k, ",
@@ -28,6 +28,11 @@ function NewItem() {
           setModalOpen(true);
         }}
         data-cy="new-item-button"
+        disabled={
+          path === "/customer_services" ||
+          path === "/customers" ||
+          path === "/orders"
+        }
       >
         <Paper
           className="px-3 py-2"
