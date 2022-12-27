@@ -56,7 +56,7 @@ const Drawer = styled(MuiDrawer, {
     }),
     boxSizing: "border-box",
     ...(!open && {
-      overflowX: "hidden",
+      overflowX: "scroll",
       transition: theme.transitions.create("width", {
         easing: theme.transitions.easing.sharp,
         duration: theme.transitions.duration.leavingScreen,
@@ -134,7 +134,7 @@ function AppFrame() {
               : theme.palette.grey[900],
           flexGrow: 1,
           height: "100vh",
-          overflow: "auto",
+          overflow: "hidden",
         }}
       >
         <Toolbar />

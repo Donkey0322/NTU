@@ -14,6 +14,11 @@ import { Link, useLocation } from "react-router-dom";
 
 const items = [
   {
+    name: "Home",
+    icon: <HomeIcon />,
+    to: "/",
+  },
+  {
     name: "Customers",
     icon: <WcIcon />,
     to: "/customers",
@@ -42,16 +47,6 @@ const items = [
     name: "Purchases",
     icon: <ShoppingCartIcon />,
     to: "/purchases",
-  },
-  {
-    name: "Home",
-    icon: <HomeIcon />,
-    to: "/",
-  },
-  {
-    name: "Analytics",
-    icon: <LeaderboardIcon />,
-    to: "/analytics",
   },
 ];
 
