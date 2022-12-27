@@ -58,7 +58,6 @@ const items = [
 function SideBarItems() {
   const location = useLocation();
   const currentPath = location.pathname;
-  // console.log(Link);
 
   return (
     <>
