@@ -22,13 +22,13 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<AppFrame />}>
+            <Route path="customer_services" element={<Customer_Service />} />
             <Route path="analytics" element={<Analytics />} />
             <Route path="purchases" element={<Purchase />} />
             <Route path="customers" element={<Customer />} />
             <Route path="employees" element={<Employee />} />
             <Route path="products" element={<Product />} />
             <Route path="orders" element={<Order />} />
-            <Route path="customer_services" element={<Customer_Service />} />
             <Route path="/" element={<Table title={"Recent Records"} />} />
             <Route path="*" element={<h1>Error, Page Not Found</h1>} />
           </Route>

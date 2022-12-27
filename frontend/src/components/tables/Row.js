@@ -46,10 +46,14 @@ function Row({ item, updateItem, deleteItem, id }) {
             >
               <Typography>
                 {/* {item.date && dayjs(item.date).calendar()} */}
-                {column.includes("day")
-                  ? dayjs(item[column]).calendar()
+                {column.includes("day") || column.includes("date")
+                  ? dayjs(
+                      item.origin ? item.origin[column] : item[column]
+                    ).calendar()
                   : column.includes("id")
                   ? id + page * rowsPerPage + 1
+                  : item.origin
+                  ? item.origin[column]
                   : item[column]}
               </Typography>
             </TableCell>
@@ -96,19 +100,19 @@ function Row({ item, updateItem, deleteItem, id }) {
                 <Table size="small" aria-label="purchases">
                   <TableHead>
                     <TableRow>
-                      {Object.keys(item.detail[0]).map((column, index) => {
-                        <TableCell key={index}>{column}</TableCell>;
-                      })}
+                      {Object.keys(item.detail[0]).map((column, index) => (
+                        <TableCell key={index}>{column}</TableCell>
+                      ))}
                     </TableRow>
                   </TableHead>
                   <TableBody>
                     {item.detail.map((d, index) => (
                       <TableRow key={index}>
-                        {Object.keys(d).map((i, index) => {
+                        {Object.keys(d).map((i, index) => (
                           <TableCell component="th" scope="row">
                             {d[i]}
-                          </TableCell>;
-                        })}
+                          </TableCell>
+                        ))}
                       </TableRow>
                     ))}
                   </TableBody>

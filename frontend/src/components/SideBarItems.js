@@ -21,7 +21,7 @@ const items = [
   {
     name: "Customer Service",
     icon: <SupportAgentIcon />,
-    to: "/customer-services",
+    to: "/customer_services",
   },
   {
     name: "Employees",
