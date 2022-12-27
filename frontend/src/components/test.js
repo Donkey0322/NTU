@@ -1,1 +1,4 @@
-console.log(typeof new Date("2022-12-05T07:00:00.360Z"));
+let a = { b: 1 };
+let c = { b: 2 };
+
+console.log({ ...a, ...c });

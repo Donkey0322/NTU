@@ -1,6 +1,6 @@
 import React, { useState, useMemo, useEffect } from "react";
 import PropTypes from "prop-types";
-
+import dayjs from "dayjs";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
@@ -17,7 +17,7 @@ import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
+import { DatePicker } from "@mui/x-date-pickers";
 import { useDB } from "../hooks/useDB";
 
 function HelperText({ color, children }) {
@@ -60,6 +60,8 @@ function ItemFormModal({
   handleDetail,
 }) {
   const { table, path, CRUD } = useDB();
+  const initialValue = dayjs();
+  const [value, setValue] = useState(initialValue);
   const Query = CRUD(move, path);
 
   let columns = [];
@@ -80,7 +82,7 @@ function ItemFormModal({
       ? defaultFormData.origin
         ? defaultFormData.origin[column]
         : defaultFormData[column]
-      : column.includes("day")
+      : column.includes("day") || column.includes("date")
       ? new Date()
       : Default(table[0].origin ? table[0].origin[column] : table[0][column]);
   }
@@ -108,6 +110,7 @@ function ItemFormModal({
 
   const handleDateChange = (name) => (date) => {
     const a = new Object();
+    setValue(date);
     a[name] = date;
     setFormData((prev) => ({
       ...prev,
@@ -140,14 +143,12 @@ function ItemFormModal({
       columns = [];
       for (const column in table[0].detail[0]) {
         columns.push(column);
-        tempData = new Object();
       }
+      tempData = new Object();
       for (const column of columns) {
         tempData[column] = column.includes("day")
           ? new Date()
-          : Default(
-              table[0].origin ? table[0].origin[column] : table[0][column]
-            );
+          : Default(table[0].origin[column]);
       }
       setFormData(tempData);
     } else setOpen(false);
@@ -167,11 +168,12 @@ function ItemFormModal({
                 column.includes("date") ? (
                 <FormControl key={index}>
                   <LocalizationProvider dateAdapter={AdapterDayjs}>
-                    <DateTimePicker
+                    <DatePicker
                       // eslint-disable-next-line react/jsx-props-no-spreading
                       renderInput={(props) => (
                         <TextField {...props} name="date" />
                       )}
+                      value={value}
                       label={column}
                       onChange={handleDateChange(column)}
                     />
