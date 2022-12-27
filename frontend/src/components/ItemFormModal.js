@@ -58,10 +58,9 @@ function ItemFormModal({ title, defaultFormData, move, open, setOpen }) {
   let columns = [];
   if (move === "C") {
     for (const column in table[0]) {
-      // console.log(column);
       columns.push(column);
+      console.log("C");
     }
-    // console.log("C", table[0]);
   } else {
     columns = Object.keys(defaultFormData);
   }
@@ -76,6 +75,10 @@ function ItemFormModal({ title, defaultFormData, move, open, setOpen }) {
 
   const sanitizedDefaultFormData = useMemo(() => tempData, [defaultFormData]);
   const [formData, setFormData] = useState(sanitizedDefaultFormData);
+
+  useEffect(() => {
+    setFormData(sanitizedDefaultFormData);
+  }, [sanitizedDefaultFormData]);
 
   const [errors, setErrors] = useState({
     name: false,

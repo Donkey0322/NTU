@@ -30,7 +30,6 @@ function Row({ item, updateItem, deleteItem, id }) {
   };
 
   const handleDelete = () => {
-    console.log(indexName, item[indexName], path);
     Query(item[indexName]);
   };
 

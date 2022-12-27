@@ -25,12 +25,6 @@ const DBProvider = (props) => {
     }
   }, [table]);
 
-  // useEffect(() => {
-  //   if (table.length > 0 && indexName) {
-  //     console.log(typeof table[0][indexName]);
-  //   }
-  // }, [indexName]);
-
   const CRUD =
     (type, path) =>
     async (value = null) => {
@@ -50,7 +44,6 @@ const DBProvider = (props) => {
           }
         case "R":
           try {
-            console.log(path);
             const {
               data: { result },
             } = await instance.get(`${path}`);
@@ -63,7 +56,7 @@ const DBProvider = (props) => {
           try {
             const {
               data: { result },
-            } = await instance.put(`${path}`,  {value});
+            } = await instance.put(`${path}`, { value });
             const newResult = [];
             for (const tuple of table) {
               newResult.push(
@@ -80,7 +73,7 @@ const DBProvider = (props) => {
           try {
             const {
               data: { result },
-            } = await instance.delete(`${path}`, {params: {id: value}});
+            } = await instance.delete(`${path}`, { params: { id: value } });
             setTable(result);
             break;
           } catch (error) {
