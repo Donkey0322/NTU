@@ -108,7 +108,7 @@ function Row({ item, updateItem, deleteItem, id }) {
                     {item.detail.map((d, index) => (
                       <TableRow key={index}>
                         {Object.keys(d).map((i, index) => (
-                          <TableCell component="th" scope="row">
+                          <TableCell component="th" scope="row" key={index}>
                             {d[i]}
                           </TableCell>
                         ))}
