@@ -42,7 +42,7 @@ const Default = (value) => {
     case "number":
       return 0;
     case "string":
-      return " ";
+      return "";
   }
 };
 
@@ -57,21 +57,25 @@ function ItemFormModal({ title, defaultFormData, move, open, setOpen }) {
 
   let columns = [];
   if (move === "C") {
-    for (const column in table[0]) {
+    for (const column in table[0].origin ? table[0].origin : table[0]) {
       columns.push(column);
-      console.log("C");
+      // console.log(defaultFormData);
     }
   } else {
     columns = Object.keys(defaultFormData);
   }
-  const tempData = new Object();
+  var tempData = new Object();
   for (const column of columns) {
-    tempData[column] = defaultFormData
+    tempData[column] = !Array.isArray(defaultFormData)
       ? defaultFormData[column]
       : column.includes("day")
       ? new Date()
       : Default(table[0][column]);
+    if (move == "C") {
+      console.log(tempData);
+    }
   }
+  if (move === "C") console.log(tempData);
 
   const sanitizedDefaultFormData = useMemo(() => tempData, [defaultFormData]);
   const [formData, setFormData] = useState(sanitizedDefaultFormData);
@@ -128,7 +132,8 @@ function ItemFormModal({ title, defaultFormData, move, open, setOpen }) {
       <DialogTitle>{title}</DialogTitle>
       <DialogContent sx={{ width: 600 }}>
         <div className="flex flex-col gap-4 px-10">
-          {formData &&
+          {Object.keys(formData).length > 0 &&
+            columns.length > 0 &&
             columns.map((column, index) =>
               column.includes("day") || column.includes("date") ? (
                 <FormControl key={index}>
@@ -167,7 +172,11 @@ function ItemFormModal({ title, defaultFormData, move, open, setOpen }) {
                     placeholder={column}
                     onChange={handleInputChange}
                     required
-                    defaultValue={sanitizedDefaultFormData[column]}
+                    defaultValue={
+                      Array.isArray(defaultFormData)
+                        ? ""
+                        : sanitizedDefaultFormData[column]
+                    }
                     data-cy="form-amount"
                   />
                   {/* {errors.amount && (

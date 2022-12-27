@@ -10,6 +10,7 @@ import { useDB } from "../hooks/useDB";
 
 function NewItem() {
   const [modalOpen, setModalOpen] = useState(false);
+  const { table } = useDB();
 
   useHotkeys(
     "ctrl+k, ",
@@ -49,12 +50,17 @@ function NewItem() {
           </div>
         </Paper>
       </button>
-      <ItemFormModal
-        title="Add new item"
-        move="C"
-        open={modalOpen}
-        setOpen={setModalOpen}
-      />
+      {table.length > 0 && (
+        <ItemFormModal
+          title="Add new item"
+          move="C"
+          open={modalOpen}
+          setOpen={setModalOpen}
+          defaultFormData={Object.keys(
+            table[0].origin ? table[0].origin : table[0]
+          )}
+        />
+      )}
     </>
   );
 }

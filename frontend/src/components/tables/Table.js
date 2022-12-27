@@ -39,7 +39,6 @@ function Table_Board({ title }) {
   const Query = CRUD("R", currentPath);
 
   useEffect(() => {
-    console.log("TABLE");
     Query();
     setPath(currentPath);
   }, []);
