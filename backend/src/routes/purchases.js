@@ -28,7 +28,7 @@ const make_dict = (array_c, detail) => {
 function getRandomName() {
   let hexString = v4();
   console.log("hex:   ", hexString);
-  hexString = hexString.replace(/-/g, "");
+  hexString = hexString.replace("-", "");
   let base64String = Buffer.from(hexString, "hex").toString("base64");
   console.log("base64:", base64String);
   return base64String;
@@ -76,15 +76,15 @@ const Myquery = (query, detail) => {
 }
 
 const queryPurchase = async () => {
-  let query_origin = `select purchases.purchase_id, purchases.purchase_code, purchases.purchase_date, sum(purchases_detail.price * purchases_detail.quantity) as 'total' 
-                        from purchases
-                        join purchases_detail on purchases.purchase_id = purchases_detail.purchase_id
-                        group by purchases.purchase_id
-                        order by purchases.purchase_date desc;`;
-  let query_detail = `select purchases.purchase_id,purchases_detail.ingredient, purchases_detail.quantity , purchases_detail.price,  purchases_detail.price * purchases_detail.quantity as 'total' 
-                        from purchases
-                        join purchases_detail on purchases.purchase_id = purchases_detail.purchase_id
-                        order by purchases.purchase_date desc;`;
+    let query_origin = `select purchases.purchase_id, purchases.purchase_code, purchases.purchase_date, sum(purchases_detail.price * purchases_detail.quantity) as 'total' 
+                            from purchases
+                            join purchases_detail on purchases.purchase_id = purchases_detail.purchase_id
+                            group by purchases.purchase_id
+                            order by purchases.purchase_date desc;`;
+    let query_detail = `select purchases.purchase_id,purchases_detail.ingredient, purchases_detail.quantity , purchases_detail.price,  purchases_detail.price * purchases_detail.quantity as 'total' 
+                            from purchases
+                            join purchases_detail on purchases.purchase_id = purchases_detail.purchase_id
+                            order by purchases.purchase_date desc;`;
 
 
     let array1 = await Myquery(query_origin, false)
@@ -110,21 +110,12 @@ const addPurchase = async (data, addDetail) => {
         let purchase_code = getRandomName();
         let query = `INSERT INTO purchases (purchase_code, purchase_date)
              VALUES("${purchase_code}", "${moment(purchase_date).utc().format("YYYY-MM-DD")}")`;
-        await Myquery(query, false);
-        
+        await Myquery(query, true);
     }
-    
-    await db.query(query, (err, result) => {
-        if (err) throw err;
-        else {
-            console.log("Insert done");
-        }
-    });
-    let n
 };
 
 router.delete("/", async (req, res) => {
-//   console.log(req.query);
+  console.log(req.query);
   let {id} = req.query;
   let query = `delete from purchases
                 where purchase_id = ${id}`;
@@ -140,12 +131,12 @@ router.get("/", async (_, res) => {
 });
 
 router.post("/", async (req, res) => {
-    console.log('delete')
-    let {data} = req.body;
+    console.log('add')
+    let data = req.body;
     console.log('add data is:', data)
     var addDetail = false
-    console.log('data element:', data.length)
-    if(data.length !== 1){
+    console.log('data element:', Object.keys(data).length)
+    if( Object.keys(data).length !== 4){
         addDetail = true
     }
     if(addDetail){

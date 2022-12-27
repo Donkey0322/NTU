@@ -34,8 +34,11 @@ const DBProvider = (props) => {
             const {
               data: { result },
             } = await instance.post(`${path}`, value);
-            console.log(table, result)
-            setTable([...result, ...table]);
+            // console.log(table, typeof result)
+            if(typeof result !== 'undefined'){
+              setTable([...result, ...table]);
+            }
+            console.log(table)
             break;
           } catch (error) {
             // return new Promise((resolve, reject) => {
