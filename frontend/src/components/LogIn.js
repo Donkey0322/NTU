@@ -15,7 +15,7 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 const BoxContainer = styled.div`
     display: flex;
     justify-content: Center;
-    
+    margin-top: 10%;
 `;
 
 
