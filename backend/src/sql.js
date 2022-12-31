@@ -7,7 +7,7 @@ dotenv.config();
 var connection = mysql.createConnection({
   host: "35.234.37.229",
   user: "root",
-  password: "b097050030415",
+  password: process.env.PASSWORD,
   database: "DBP",
   port: 3306
 });

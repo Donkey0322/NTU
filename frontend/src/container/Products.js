@@ -14,7 +14,7 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
-import Product from './Product';
+import Product from '../components/Product';
 
 
 const ProductContainer = styled.div`
@@ -27,7 +27,9 @@ const RightContainer = styled.div`
     width: 70%;
 `;
 const SelectorContainer = styled.div`
-    height: 10%;
+    display: flex;
+    align-item: center;
+    height: 15%;
 `;
 
 
