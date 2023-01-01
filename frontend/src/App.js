@@ -5,6 +5,8 @@ import AppFrame from "./container/AppFrame";
 import SignIn from "./container/SignIn";
 import Products from "./container/Products";
 import styled from "styled-components";
+import MainPage from "./container/MainPage";
+import ProductDetail from "./container/ProductDetail";
 
 const AppContainer = styled.div`
   width: 100vw;
@@ -16,14 +18,14 @@ function App() {
   return (
     <Router>
       <Routes>
-        {/* <Route path="/" element={<Products />} /> */}
         <Route path="/" element={<AppFrame />}>
-          <Route path="/" element={<SignIn />} />
+          <Route path="/" element={<MainPage />} />
+          <Route path="/signin" element={<SignIn />} />
+          <Route path="/products" element={<Products />} />
+          <Route path="/product/:id" element={<ProductDetail />} />
+          {/* <Route path="/vip" element={<Vip />} /> */}
         </Route>
-        {/* <SignIn /> */}
-        {/* <Route path="/main" element={<MainPage />} />
-          <Route path="/products" element={<SearchPage />} />
-          <Route path="/product/:id" element={<RestaurantPage />} /> */}
+
       </Routes>
     </Router>
   );
