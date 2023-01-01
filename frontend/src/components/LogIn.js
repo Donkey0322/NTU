@@ -1,22 +1,19 @@
-import Box from "@mui/material/Box";
-import Tabs from "@mui/material/Tabs";
-import Tab from "@mui/material/Tab";
-import TabList from "@mui/lab/TabList";
-import TabContext from "@mui/lab/TabContext";
-import { useState } from "react";
-import React from "react";
-import TabPanel from "@mui/lab/TabPanel";
+import {
+  Box,
+  Tab,
+  TextField,
+  Button,
+  Checkbox,
+  FormControlLabel,
+} from "@mui/material";
+import { TabList, TabContext, TabPanel } from "@mui/lab";
+import React, { useState } from "react";
 import styled from "styled-components";
-import TextField from "@mui/material/TextField";
-import Button from "@mui/material/Button";
-import Checkbox from "@mui/material/Checkbox";
-import FormControlLabel from "@mui/material/FormControlLabel";
 
 const BoxContainer = styled.div`
-    display: flex;
-    justify-content: Center;
-    margin-top: 10%;
-
+  display: flex;
+  justify-content: Center;
+  margin-top: 10vmin;
 `;
 
 const LogIn = () => {
