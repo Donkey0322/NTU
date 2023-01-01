@@ -1,39 +1,72 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
-
-const SmallProductContainer = styled.div`
+const ProductsContainer = styled.div`
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2vmin 2%;
+  div.product {
     display: flex;
     flex-direction: column;
-    margin: 5%;
-    img {
-        height: 250px;
-        width: 250px;
+    align-items: center;
+    cursor: grab;
+    .price {
+      color: darkgray;
     }
-    text {
-        text-align: center;
+    .label {
+      font-size: large;
+      font-weight: 500;
     }
-`;
-const OutContainer = styled.div`
-    display: flex;
+    &:hover {
+      > div {
+        background-color: white;
+        transition: all 0.3s ease;
+        opacity: 0.7;
+      }
+      img {
+        transform: scale(1.25);
+      }
+
+      .price {
+        transition: all 0.3s ease;
+        color: black;
+      }
+    }
+  }
 `;
 
+const ProductImgContainer = styled.div`
+  overflow: hidden;
+  width: 30vmin;
+  height: 30vmin;
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: all 0.3s ease;
+  }
+`;
+
+const item = [
+  { src: require("../images/canele1.png"), label: "抹茶可麗露", price: 80 },
+  { src: require("../images/canele2.png"), label: "巧克力可麗露", price: 80 },
+  { src: require("../images/canele3.png"), label: "香草可麗露", price: 80 },
+];
+
 const Product = () => {
-    return (
-        <OutContainer>
-            <SmallProductContainer>
-                <img src={require('../images/canele1.png')} alt="" />
-                <text>抹茶可麗露 $80</text>
-            </SmallProductContainer>
-            <SmallProductContainer>
-                <img src={require('../images/canele2.png')} alt="" />
-                <text>巧克力可麗露 $80</text>
-            </SmallProductContainer>
-            <SmallProductContainer>
-                <img src={require('../images/canele3.png')} alt="" />
-                <text>香草可麗露 $80</text>
-            </SmallProductContainer>
-        </OutContainer>
-    )
-}
+  return (
+    <ProductsContainer>
+      {item.map((i, index) => (
+        <div className="product" key={index}>
+          <ProductImgContainer>
+            <img src={i.src} alt="" />
+          </ProductImgContainer>
+          <p className="label">{i.label}</p>
+          <p className="price">${i.price}</p>
+        </div>
+      ))}
+    </ProductsContainer>
+  );
+};
 
 export default Product;

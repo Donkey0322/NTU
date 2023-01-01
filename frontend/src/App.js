@@ -1,4 +1,3 @@
-import logo from "./logo.svg";
 import "./App.css";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import AppFrame from "./container/AppFrame";
@@ -10,22 +9,29 @@ import ProductDetail from "./container/ProductDetail";
 
 const AppContainer = styled.div`
   width: 100vw;
-  height: 100vh;
+  min-height: 100vh;
   display: flex;
-  background-color: aliceblue;
+  justify-content: center;
+  background-color: rgb(242, 233, 223);
 `;
 function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<AppFrame />}>
+        <Route
+          path="/"
+          element={
+            <AppContainer>
+              <AppFrame />
+            </AppContainer>
+          }
+        >
           <Route path="/" element={<MainPage />} />
           <Route path="/signin" element={<SignIn />} />
           <Route path="/products" element={<Products />} />
           <Route path="/product/:id" element={<ProductDetail />} />
           {/* <Route path="/vip" element={<Vip />} /> */}
         </Route>
-
       </Routes>
     </Router>
   );
