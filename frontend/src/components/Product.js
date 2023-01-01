@@ -26,11 +26,11 @@ const Product = () => {
             </SmallProductContainer>
             <SmallProductContainer>
                 <img src={require('../images/canele2.png')} alt="" />
-                <text>抹茶可麗露 $80</text>
+                <text>巧克力可麗露 $80</text>
             </SmallProductContainer>
             <SmallProductContainer>
                 <img src={require('../images/canele3.png')} alt="" />
-                <text>抹茶可麗露 $80</text>
+                <text>香草可麗露 $80</text>
             </SmallProductContainer>
         </OutContainer>
     )
