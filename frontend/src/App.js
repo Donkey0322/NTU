@@ -1,7 +1,7 @@
 import "./App.css";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import AppFrame from "./container/AppFrame";
-import SignUp from "./container/signUp";
+import SignIn from "./container/SignIn";
 import Products from "./container/Products";
 import styled from "styled-components";
 import MainPage from "./container/MainPage";
@@ -57,9 +57,10 @@ function App() {
           }
         >
           <Route path="/" element={<MainPage />} />
-          <Route path="/signUp" element={<SignUp />} />
-          <Route path="/product/:id/*" element={<ProductDetail />} />
-          <Route path="/products" element={<Products />} />
+          <Route path="/signin" element={<SignIn />} />
+          <Route path="/products" element={<Products />}>
+            <Route path=":id" element={<ProductDetail />} />
+          </Route>
           <Route path="/shoppingcart" element={<ShoppingCart />} />
           <Route path="/checkout" element={<Checkout />} />
 

@@ -29,6 +29,7 @@ const WebProvider = (props) => {
   const CRUD =
     (type, path) =>
     async (value = null) => {
+      console.log(type, path);
       switch (type) {
         case "C":
           try {
@@ -51,9 +52,10 @@ const WebProvider = (props) => {
           }
         case "R":
           try {
+            console.log(value);
             const {
               data: { result },
-            } = await instance.get(`${path}`);
+            } = await instance.get(`${path}`, value);
             setTable(result);
             break;
           } catch (error) {
@@ -113,6 +115,6 @@ const WebProvider = (props) => {
   );
 };
 
-const useDB = () => useContext(WebContext);
+const useWeb = () => useContext(WebContext);
 
-export { WebProvider, useDB };
+export { WebProvider, useWeb };
