@@ -6,7 +6,7 @@ const router = express.Router();
 
 const Myquery = (query) => {
     return new Promise((resolve) => {
-        db.query(query,  (err, result) => {
+        db.query(query, (err, result) => {
             if (err) {
                 throw err;
             }else{
@@ -16,78 +16,110 @@ const Myquery = (query) => {
     })
 }
 
-router.delete('/', async (req, res) => {
-    let {id} = req.query;
-    console.log(id)
-    let query = `delete from products
-                 where product_id = ${id}`;
-    await Myquery(query)
-    let return_query = `select * from products
-                        order by selling desc;`;
-    var result = await Myquery(return_query)
-    res.status(200).send({result})
-});
+const sort = (method) => {
+    let sort_by = '';
+    let join = '';
+    switch(method){
+        case 'high_to_low':{
+            sort_by = `order by price desc`;
+            break;
+        }
+        case 'low_to_high':{
+            sort_by = `order by price`;
+            break;
+        }
+        case 'sale':{
+            join = `left join orders_detail on products.product_id = orders_detail.product_id`;
+            sort_by =  `group by products.product_id, products.product_name, products.price, products.description
+                        order by sum(quantity) desc`;
+            break;
+        }
+        default: break;
+    }
+    return [sort_by, join];
+}
 
-router.get("/", async (_, res) => {
-    let query = `select  from products
+router.get("/", async (req, res) => {
+    const {section, method} = req.body;
+    let query = ''
+    let category = ''
+    let sort_by = ''
+    let join = ''
+    if(section === 'hot'){
+        switch( method ){
+            case 'high_to_low':{
+                sort_by = `order by price desc`;
+                break;
+            }
+            case 'low_to_high':{
+                sort_by = `order by price`;
+                break;
+            }
+            case 'sale':{
+                query = `select products.product_id, products.product_name,  products.price, products.description from products
+                    left join orders_detail on products.product_id = orders_detail.product_id
+                    where products.selling = 1
+                    group by products.product_id, products.product_name, products.price, products.description
+                    order by sum(quantity) desc
+                    limit 10;`
+            }
+            case null:
+            default: break;
+        }
+        if(method !== 'sale'){
+            query = `select products.product_id, products.product_name,  products.price, products.description from products
+            inner join 
+                (select products.product_id from products
+                left join orders_detail on products.product_id = orders_detail.product_id
+                group by products.product_id, products.product_name, products.price, products.description
+                order by sum(quantity) desc
+                limit 10) as t2 
+            on products.product_id = t2.product_id
+            where products.selling = 1
+            ${sort_by};`
+        }
+    }else if(section === 'canele'){
+        category = 1
+        let a = sort(method)
+        sort_by = a[0]
+        join = a[1]
+
+    }else if(section === 'cake'){
+        category = 2
+        let a = sort(method)
+        sort_by = a[0]
+        join = a[1]
+
+    }else if(section === 'cookie'){
+        category = 3
+        let a = sort(method)
+        sort_by = a[0]
+        join = a[1]
+
+    }else if(section === 'set'){
+        category = 4
+        let a = sort(method)
+        sort_by = a[0]
+        join = a[1]
+    }else{
+        let a = sort(method)
+        sort_by = a[0]
+        join = a[1]  
+        query = `select products.product_id, products.product_name,  products.price, products.description from products
+                 ${join}
                  where selling = 1
-                 order by selling desc;`;
+                 ${sort_by};`;      
+    }
+    if(category){
+        query = `select products.product_id, products.product_name,  products.price, products.description from products
+        ${join}
+        where products.category = ${category} and products.selling = 1
+        ${sort_by};`
+    }
     var result = await Myquery(query)
     res.status(200).send({result})
 });
 
-router.get('/sort', async(req, res) => {
-    const method = req.body.method;
-    let query = ''
-    if(method === 'high_to_low'){
-        query = `select * from products
-                       where selling = 1
-                       order by price desc`
-    }else if(method === 'low_to_high'){
-        query = `select * from products
-                        where selling = 1
-                        order by price`
-    }else{
-        query = `select products.product_id, products.product_name,  products.price, products.description from orders
-                        left join orders_detail on orders.order_id = orders_detail.order_id
-                        left join products on orders_detail.product_id = products.product_id
-                        left join customers on customers.customer_id = orders.customer
-                        group by products.product_id, products.product_name, products.price, products.description
-                        order by sum(quantity) desc;`
-    }
-    const result = await Myquery(query);
-    console.log(result)
-    res.status(200).send({result})
-})
 
-router.post('/', async (req, res) => {
-    console.log('Product to add:', req.body);
-    let {product_name, price, selling} = req.body;
-    let query = `INSERT INTO products (product_name, price, selling )
-             VALUES("${product_name}", ${price}, ${selling})`;
-    await Myquery(query)
-    let query_return = `select * from products
-                    order by product_id desc
-                    limit 1;`
-    let result = await Myquery(query_return)
-    res.status(200).send({result})
-});
-
-
-
-router.put('/', async (req, res) => {
-    // console.log('Product to update:', req.body.value);
-    let {product_id, product_name, price, selling} = req.body.value;
-    let query = `update products set
-                 product_name = "${product_name}", 
-                 price = ${Number(price)}, 
-                 selling = ${selling}
-             where product_id = ${product_id};`;
-    await Myquery(query)
-    let query_return = `select * from products
-                        where product_id = ${product_id};`
-    let result = await Myquery(query_return)
-    res.status(200).send({result})
-});
 
 export default router;
