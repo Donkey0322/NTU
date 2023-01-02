@@ -6,6 +6,8 @@ import Products from "./container/Products";
 import styled from "styled-components";
 import MainPage from "./container/MainPage";
 import ProductDetail from "./container/ProductDetail";
+import ShoppingCart from "./container/ShoppingCart";
+import Checkout from "./container/Checkout";
 
 const AppContainer = styled.div`
   width: 100vw;
@@ -30,6 +32,8 @@ function App() {
           <Route path="/signin" element={<SignIn />} />
           <Route path="/products" element={<Products />} />
           <Route path="/product/:id" element={<ProductDetail />} />
+          <Route path="/shoppingcart" element={<ShoppingCart />} />
+          <Route path="/checkout" element={<Checkout />} />
           {/* <Route path="/vip" element={<Vip />} /> */}
         </Route>
       </Routes>
