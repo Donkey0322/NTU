@@ -2,7 +2,7 @@ import logo from "./logo.svg";
 import "./App.css";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import AppFrame from "./container/AppFrame";
-import SignIn from "./container/SignIn";
+import SignUp from "./container/signUp";
 import Products from "./container/Products";
 import styled from "styled-components";
 import MainPage from "./container/MainPage";
@@ -20,7 +20,7 @@ function App() {
       <Routes>
         <Route path="/" element={<AppFrame />}>
           <Route path="/" element={<MainPage />} />
-          <Route path="/signin" element={<SignIn />} />
+          <Route path="/signUp" element={<SignUp />} />
           <Route path="/products" element={<Products />} />
           <Route path="/product/:id" element={<ProductDetail />} />
           {/* <Route path="/vip" element={<Vip />} /> */}

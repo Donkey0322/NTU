@@ -5,7 +5,6 @@ import express from 'express';
 const router = express.Router();
 
 const Myquery = (query) => {
-    // console.log(query)
     return new Promise((resolve) => {
         db.query(query,  (err, result) => {
             if (err) {
