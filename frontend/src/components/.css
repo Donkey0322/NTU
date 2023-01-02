@@ -1,3 +1,4 @@
-.test {
-  color: darkgray;
+input::-ms-reveal,
+input::-ms-clear {
+  display: none;
 }
