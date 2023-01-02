@@ -30,11 +30,17 @@ function App() {
         >
           <Route path="/" element={<MainPage />} />
           <Route path="/signin" element={<SignIn />} />
+<<<<<<< HEAD
+          <Route path="/products" element={<Products />}>
+            <Route path=":id" element={<ProductDetail />} />
+          </Route>
+=======
           <Route path="/product/:id/*" element={<ProductDetail />} />
           <Route path="/products" element={<Products />} />
           <Route path="/shoppingcart" element={<ShoppingCart />} />
           <Route path="/checkout" element={<Checkout />} />
 
+>>>>>>> main
           {/* <Route path="/vip" element={<Vip />} /> */}
         </Route>
       </Routes>
