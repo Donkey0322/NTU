@@ -52,6 +52,7 @@ const AppFrame = () => {
           <li onClick={() => navigate("/products")}>產品總覽</li>
           <li onClick={() => navigate("/vip")}>會員專區</li>
           <li onClick={() => navigate("/contactUs")}>聯絡我們</li>
+          <li onClick={() => navigate("/signUp")}>註冊</li>
         </ul>
       </BarContainer>
       <Outlet />
