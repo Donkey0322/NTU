@@ -28,8 +28,9 @@ function App() {
         >
           <Route path="/" element={<MainPage />} />
           <Route path="/signin" element={<SignIn />} />
-          <Route path="/products" element={<ProductDetail />} />
-          <Route path="/product/:id/*" element={<ProductDetail />} />
+          <Route path="/products" element={<Products />}>
+            <Route path=":id" element={<ProductDetail />} />
+          </Route>
           {/* <Route path="/vip" element={<Vip />} /> */}
         </Route>
       </Routes>
