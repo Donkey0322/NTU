@@ -29,11 +29,36 @@ router.delete('/', async (req, res) => {
 });
 
 router.get("/", async (_, res) => {
-    let query = `select * from products
+    let query = `select  from products
+                 where selling = 1
                  order by selling desc;`;
     var result = await Myquery(query)
     res.status(200).send({result})
 });
+
+router.get('/sort', async(req, res) => {
+    const method = req.body.method;
+    let query = ''
+    if(method === 'high_to_low'){
+        query = `select * from products
+                       where selling = 1
+                       order by price desc`
+    }else if(method === 'low_to_high'){
+        query = `select * from products
+                        where selling = 1
+                        order by price`
+    }else{
+        query = `select products.product_id, products.product_name,  products.price, products.description from orders
+                        left join orders_detail on orders.order_id = orders_detail.order_id
+                        left join products on orders_detail.product_id = products.product_id
+                        left join customers on customers.customer_id = orders.customer
+                        group by products.product_id, products.product_name, products.price, products.description
+                        order by sum(quantity) desc;`
+    }
+    const result = await Myquery(query);
+    console.log(result)
+    res.status(200).send({result})
+})
 
 router.post('/', async (req, res) => {
     console.log('Product to add:', req.body);
@@ -47,6 +72,8 @@ router.post('/', async (req, res) => {
     let result = await Myquery(query_return)
     res.status(200).send({result})
 });
+
+
 
 router.put('/', async (req, res) => {
     // console.log('Product to update:', req.body.value);
