@@ -32,7 +32,15 @@ const BoxContainer = styled.div`
   width: 100%;
   margin-top: 10vmin;
 `;
-const PureInput = ({ label, autoComplete, required, show, showclick }) => {
+const PureInput = ({
+  label,
+  autoComplete,
+  required,
+  onChange,
+  show,
+  showclick,
+  name,
+}) => {
   return (
     <FormControl
       sx={{ width: "min(100%, 50vmin)" }}
@@ -42,9 +50,11 @@ const PureInput = ({ label, autoComplete, required, show, showclick }) => {
       <InputLabel htmlFor={label}>{label}</InputLabel>
       <OutlinedInput
         id={label}
+        name={name}
         autoComplete={autoComplete && autoComplete}
         label={label}
-        type={label.includes("密碼") && show ? "text" : "password"}
+        onChange={onChange}
+        type={label.includes("密碼") ? (show ? "text" : "password") : "text"}
         endAdornment={
           label.includes("密碼") && (
             <InputAdornment position="end">
@@ -66,23 +76,22 @@ const Password = styled(PureInput)`
   }
 `;
 
-const LogIn = () => {
-  const [value, setValue] = useState("1");
-  const [showPassword, setShowPassword] = React.useState(false);
-
-  const handleClickShowPassword = () => setShowPassword((show) => !show);
-
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
-
+const LogIn = ({
+  data,
+  mode,
+  showPassword,
+  handleClickShowPassword,
+  handleModeChange,
+  handleInputChange,
+  submit,
+}) => {
   return (
     <BoxContainer>
       <Welcome />
       <Box sx={{ width: "calc(100% - 57vmin)", typography: "body1" }}>
-        <TabContext value={value}>
+        <TabContext value={mode}>
           <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-            <TabList onChange={handleChange} centered>
+            <TabList onChange={handleModeChange} centered>
               <Tab label="會員登入" value="1" />
               <Tab label="註冊會員" value="2" />
             </TabList>
@@ -99,6 +108,8 @@ const LogIn = () => {
                 required={true}
                 label="輸入帳號"
                 autoComplete="username"
+                onChange={handleInputChange}
+                name="customer_mail"
               />
               <Password
                 label="輸入密碼"
@@ -106,11 +117,14 @@ const LogIn = () => {
                 autoComplete="current-password"
                 show={showPassword}
                 showclick={handleClickShowPassword}
+                onChange={handleInputChange}
+                name="customer_password"
               />
               <Button
                 variant="contained"
                 color="success"
                 sx={{ width: "min(10%, 10vmin)" }}
+                onClick={() => submit(data)}
               >
                 登入
               </Button>
@@ -128,6 +142,7 @@ const LogIn = () => {
                 required={true}
                 label="輸入帳號"
                 autoComplete="username"
+                onChange={handleInputChange}
               />
               <Password
                 label="輸入密碼"
@@ -135,6 +150,7 @@ const LogIn = () => {
                 autoComplete="current-password"
                 show={showPassword}
                 showclick={handleClickShowPassword}
+                onChange={handleInputChange}
               />
               <Password
                 label="確認密碼"
@@ -151,6 +167,7 @@ const LogIn = () => {
                 variant="contained"
                 color="info"
                 sx={{ width: "min(10%, 10vmin)" }}
+                onClick={() => submit(data)}
               >
                 註冊
               </Button>
