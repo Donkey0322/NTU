@@ -5,7 +5,6 @@ import moment from "moment";
 const router = express.Router();
 
 const Myquery = (query, detail) => {
-
     return new Promise((resolve) => {
         db.query(query,  (err, result) => {
             if (err) {
@@ -13,13 +12,13 @@ const Myquery = (query, detail) => {
             }else{
                 if(detail){
                     result.map((element) => {
-                        element.issue_date = moment(element.issue_date).utc().format('YYYY-MM-DD')
-                        element.issue_date = new Date(element.issue_date)
-                    })
+                        element.issue_date = moment(element.issue_date).utc().format("YYYY-MM-DD");
+                        element.issue_date = new Date(element.issue_date);})
+                }
                     resolve(result);
                 }
             }
-        })
+        )
     })
 }
 
