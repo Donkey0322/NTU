@@ -1,5 +1,5 @@
-import React from "react";
-import { useState } from "react";
+import React, { useState } from "react";
+import { useParams, Outlet } from "react-router-dom";
 import {
   List,
   ListItem,
@@ -34,6 +34,7 @@ const RightContainer = styled.div`
 
 const Products = () => {
   const [sort, setSort] = useState("");
+  const { id } = useParams();
   const handleChange = (event) => {
     setSort(event.target.value);
   };
@@ -89,21 +90,27 @@ const Products = () => {
         </List>
       </LeftContainer>
       <RightContainer>
-        <FormControl sx={{ minWidth: 120, mb: "2vmin" }} size="small">
-          <InputLabel id="demo-select-small">排序</InputLabel>
-          <Select
-            labelId="demo-select-small"
-            id="demo-select-small"
-            value={sort}
-            label="Age"
-            onChange={handleChange}
-          >
-            <MenuItem value={10}>價格由低到高</MenuItem>
-            <MenuItem value={20}>價格由高到低</MenuItem>
-            <MenuItem value={30}>銷量由高到低</MenuItem>
-          </Select>
-        </FormControl>
-        <Product />
+        {id ? (
+          <Outlet />
+        ) : (
+          <>
+            <FormControl sx={{ minWidth: 120, mb: "2vmin" }} size="small">
+              <InputLabel id="demo-select-small">排序</InputLabel>
+              <Select
+                labelId="demo-select-small"
+                id="demo-select-small"
+                value={sort}
+                label="Age"
+                onChange={handleChange}
+              >
+                <MenuItem value={10}>價格由低到高</MenuItem>
+                <MenuItem value={20}>價格由高到低</MenuItem>
+                <MenuItem value={30}>銷量由高到低</MenuItem>
+              </Select>
+            </FormControl>
+            <Product />
+          </>
+        )}
       </RightContainer>
     </ProductContainer>
   );

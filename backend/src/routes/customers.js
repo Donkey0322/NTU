@@ -41,7 +41,7 @@ router.get("/", async (_, res) => {
 });
 
 router.put("/", async (req, res) => {
-    console.log('Customer to update:', req.body.value);
+    console.log('Customer to update:', req.body);
     let {customer_id, customer_name, gender, birthday, phone_number, mail} = req.body.value;
     let query = `update customers set
                  customer_name = "${customer_name}", 

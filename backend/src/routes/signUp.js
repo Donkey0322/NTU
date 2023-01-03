@@ -1,56 +1,56 @@
-import jwt from 'jsonwebtoken';
+import jwt from "jsonwebtoken";
 import db from "../sql.js";
 import express from "express";
 import moment from "moment";
-import bcrypt from 'bcrypt';
+import bcrypt from "bcrypt";
 const router = express.Router();
 
 // send query
 const Myquery = (query) => {
-    return new Promise((resolve) => {
-        db.query(query,  (err, result) => {
-            if (err) {
-                throw err;
-            }else{
-                resolve(result);
-            }
-        })
-    })
-}
+  return new Promise((resolve) => {
+    db.query(query, (err, result) => {
+      if (err) {
+        throw err;
+      } else {
+        resolve(result);
+      }
+    });
+  });
+};
 
 // check email password valid
 class CheckCustomer {
-    //判斷email格式
-    checkEmailValidation(mail, errors) {
-        const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-        const result = re.test(mail);
-        if(!result){
-            errors.mail = 'The email is not valid!'
-        }
-        return errors
+  //判斷email格式
+  checkEmailValidation(mail, errors) {
+    const re =
+      /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    const result = re.test(mail);
+    if (!result) {
+      errors.mail = "The email is not valid!";
     }
-    async checkEmailUnique(mail, errors){
-        const query = `select * from customers where mail = "${mail}"`;
-        const result = await Myquery(query)
-        if(result.length >= 1){
-            errors.mail = 'The email is already registered!'
-        }
-        return errors
+    return errors;
+  }
+  async checkEmailUnique(mail, errors) {
+    const query = `select * from customers where mail = "${mail}"`;
+    const result = await Myquery(query);
+    if (result.length >= 1) {
+      errors.mail = "The email is already registered!";
     }
-    checkPassword(password, errors){
-        if(password.length < 8){
-            errors.password = 'Minimum password length is 8 characters'
-        }
-        return errors
+    return errors;
+  }
+  checkPassword(password, errors) {
+    if (password.length < 8) {
+      errors.password = "Minimum password length is 8 characters";
     }
+    return errors;
+  }
 }
-
 
 // create json web token
 const maxAge = 3 * 24 * 60 * 60;
 const createToken = (id) => {
-  return jwt.sign({ id }, 'web programming', {
-    expiresIn: maxAge
+  return jwt.sign({ id }, "web programming", {
+    expiresIn: maxAge,
   });
 };
 
@@ -67,27 +67,30 @@ var check = new CheckCustomer();
 // }
 
 router.post("/", async (req, res) => {
-    const { customer_name, gender, birthday, phone_number, mail, password } = req.body;
-    console.log('gio')
-    let errors = { mail: '', password: '' };
-    errors = check.checkEmailValidation(mail, errors);
-    errors = await check.checkEmailUnique(mail, errors);
-    errors = check.checkPassword(password, errors);
-    if(errors.mail || errors.password){
-        console.log(errors)
-        res.status(400).json({ errors });
-    }else{
-      const passwordHash = bcrypt.hashSync(password, 10);
-      const query = `insert into customers (customer_name, gender, birthday, phone_number, mail, password) 
-                    VALUES ("${customer_name}", "${gender}", "${moment(birthday).utc().format("YYYY-MM-DD")}", 
+  const { customer_name, gender, birthday, phone_number, mail, password } =
+    req.body;
+  console.log("gio");
+  let errors = { mail: "", password: "" };
+  errors = check.checkEmailValidation(mail, errors);
+  errors = await check.checkEmailUnique(mail, errors);
+  errors = check.checkPassword(password, errors);
+  if (errors.mail || errors.password) {
+    console.log(errors);
+    res.status(400).json({ errors });
+  } else {
+    const passwordHash = bcrypt.hashSync(password, 10);
+    const query = `insert into customers (customer_name, gender, birthday, phone_number, mail, password) 
+                    VALUES ("${customer_name}", "${gender}", "${moment(birthday)
+      .utc()
+      .format("YYYY-MM-DD")}", 
                             "${phone_number}", "${mail}", "${passwordHash}")`;
-      await Myquery(query);
-      const query_in = `select * from customers where mail = "${mail}"`  
-      const result = await Myquery(query_in)                  
-      const token = createToken(result.id);
-      res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000 });
-      res.status(201).json({ result });
-    } })
-
+    await Myquery(query);
+    const query_in = `select * from customers where mail = "${mail}"`;
+    const result = await Myquery(query_in);
+    const token = createToken(result.id);
+    res.cookie("jwt", token, { httpOnly: true, maxAge: maxAge * 1000 });
+    res.status(201).json({ result });
+  }
+});
 
 export default router;
