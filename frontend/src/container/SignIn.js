@@ -32,8 +32,19 @@ const SignIn = () => {
       return;
     }
     setError(false);
-    const result = await CRUD("C", mode === "1" ? "/logIn" : "/signUp")(data);
+    // const result = await CRUD("C", mode === "1" ? "/logIn" : "/signUp")(data);
+    const res = await fetch('http://localhost:4000/signUp', { 
+      method: 'POST', 
+      body: JSON.stringify({ data }),
+      credentials: 'include',
+      headers: {Accept: "application/json",
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Credentials": true,}
+      
+    });
+    const result = await res.json();
     console.log(result);
+
     if (result.errors) {
       setError(result.errors);
     } else {
