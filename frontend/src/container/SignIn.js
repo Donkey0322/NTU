@@ -42,6 +42,9 @@ const SignIn = () => {
       navigate("/");
     }
   };
+  const handleGoogleClick = () => {
+    window.open("http://localhost:4000/auth/google", "_self");
+  };
   const navigateToForgetPassword = () => navigate("/forget");
   return (
     <LogIn
@@ -52,6 +55,7 @@ const SignIn = () => {
       handleClickShowPassword={handleClickShowPassword}
       handleModeChange={handleModeChange}
       handleInputChange={handleInputChange}
+      handleGoogleClick={handleGoogleClick}
       navigateToForgetPassword={navigateToForgetPassword}
       submit={handleClickSubmit}
     />
