@@ -67,8 +67,8 @@ var check = new CheckCustomer();
 // }
 
 router.post("/", async (req, res) => {
-  const { mail, password } = req.body;
-  console.log("gio");
+    console.log(req.body.data)
+  const { mail, password } = req.body.data;
   let errors = { mail: "", password: "" };
   errors = check.checkEmailValidation(mail, errors);
   errors = await check.checkEmailUnique(mail, errors);
@@ -83,9 +83,10 @@ router.post("/", async (req, res) => {
     await Myquery(query);
     const query_in = `select * from customers where mail = "${mail}"`;
     const result = await Myquery(query_in);
-    const token = createToken(result.id);
+    const token = createToken(result[0].customer_id);
+    console.log(token)
     res.cookie("jwt", token, { httpOnly: true, maxAge: maxAge * 1000 });
-    res.status(201).json({ result });
+    res.status(200).json({ result });
   }
 });
 
