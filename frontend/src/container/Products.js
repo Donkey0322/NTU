@@ -26,7 +26,7 @@ const RightContainer = styled.div`
 
 const Products = () => {
   const [data, setData] = useState({ section: "all", method: null });
-  const [products, setProducts] = useState({});
+  const [products, setProducts] = useState(null);
   const [sort, setSort] = useState("");
   const { id } = useParams();
   const handleSortChange = (event) => {
