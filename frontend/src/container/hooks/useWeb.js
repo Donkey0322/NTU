@@ -32,13 +32,17 @@ const WebProvider = (props) => {
             if (typeof result !== "undefined") {
               return result;
             } else {
-              console.log(result)
+              console.log(result);
               alert("NO Result");
             }
-          } catch (error) {
-            console.log(error)
-            alert("Axios失敗");
-            throw error;
+          } catch (err) {
+            const {
+              data: { errors },
+            } = err.response;
+            if (errors) {
+              console.log(errors);
+              return { errors };
+            } else throw err;
           }
         case "R":
           try {
@@ -51,9 +55,11 @@ const WebProvider = (props) => {
             } else {
               alert("NO Result");
             }
-          } catch (error) {
-            alert("Axios失敗");
-            throw error;
+          } catch (err) {
+            const {
+              data: { error },
+            } = err;
+            return { error };
           }
         case "U":
           try {
@@ -101,6 +107,8 @@ const WebProvider = (props) => {
         setRowsPerPage,
         setPath,
         CRUD,
+        setCustomerID,
+        setLogin,
       }}
       {...props}
     />
