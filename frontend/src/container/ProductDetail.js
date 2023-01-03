@@ -3,6 +3,7 @@ import React from "react";
 import {
   KeyboardDoubleArrowLeft,
   KeyboardDoubleArrowRight,
+  AddShoppingCart,
 } from "@mui/icons-material";
 import {
   Box,
@@ -21,7 +22,7 @@ import {
 const PureInput = ({ label, autoComplete, required }) => {
   return (
     <FormControl
-      sx={{ width: "min(100%, 50vmin)" }}
+      sx={{ width: "min(50%, 50vmin)" }}
       variant="outlined"
       required={Boolean(required)}
     >
@@ -39,61 +40,89 @@ const PureInput = ({ label, autoComplete, required }) => {
 const UpperContainer = styled.div`
   display: flex;
   width: 100%;
-  /* min-height: 50vh; */
+  min-height: 100vmin;
 `;
 const Information = styled(Box)`
   display: flex;
   position: relative;
-  width: 60%;
+  width: calc(100% - 50vmin);
   flex-direction: column;
-  row-gap: 1vmin;
+  row-gap: 3vmin;
   margin-left: 2vmin;
 `;
 const ImageContainer = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
-  width: 35%;
-  img {
-    height: 100%;
-    /* width: 100%; */
+  row-gap: 2vmin;
+  width: 50vmin;
+  .img {
+    width: 50vmin;
+    height: 50vmin;
+    background-size: cover;
+    background-position-x: center;
+    background-position-y: center;
+    background-image: url(${({ img }) => img});
   }
 `;
 const PreviewContainer = styled.div`
   display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 30vmin;
+  position: relative;
+  /* button {
+    background-color: blue;
+    text-align: center;
+    color: white;
+    position: absolute;
+  } */
 `;
 const SmallImgContainer = styled.div`
-  width: 100;
-  display: flex;
-  img {
-    height: 30%;
-    width: 30%;
-  }
+  width: 8vmin;
+  height: 8vmin;
+  background-size: cover;
+  background-position-x: center;
+  background-position-y: center;
+  background-image: url(${({ img }) => img});
 `;
 
 const ProductDetail = () => {
   return (
     <UpperContainer>
-      <ImageContainer>
-        <img src={require("../images/canele-2-1.png")} alt="" />
+      <ImageContainer img={require("../images/canele-2-1.png")}>
+        <div className="img"></div>
         <PreviewContainer>
-          <KeyboardDoubleArrowLeft />
-          <SmallImgContainer>
-            <img src={require("../images/canele-2-1.png")} alt="" />
-            <img src={require("../images/canele-3-1.png")} alt="" />
-          </SmallImgContainer>
-          <KeyboardDoubleArrowRight />
+          <IconButton>
+            <KeyboardDoubleArrowLeft />
+          </IconButton>
+          <SmallImgContainer img={require("../images/canele-2-1.png")} />
+          <SmallImgContainer img={require("../images/canele-3-1.png")} />
+          <IconButton>
+            <KeyboardDoubleArrowRight />
+          </IconButton>
         </PreviewContainer>
       </ImageContainer>
       <Information>
         <Typography variant="h5">抹茶可麗露</Typography>
-        <p>售價：80$</p>
-        <p>
+        <p style={{ color: "darkgray" }}>售價：80$</p>
+        <p style={{ width: "min(50%, 50vmin)" }}>
           抹茶抹茶抹茶抹茶抹茶抹茶抹茶抹茶抹茶抹茶抹茶抹茶抹茶抹茶抹茶抹茶抹茶抹茶抹茶抹茶抹茶抹茶抹茶抹茶抹茶
         </p>
-        <div style={{ bottom: "0", position: "absolute" }}>
-          <PureInput required={true} label="購買數量" />
-        </div>
+
+        <PureInput required={true} label="購買數量" />
+        <Button
+          variant="contained"
+          color="info"
+          sx={{
+            // width: "min(30%, 30vmin, 120px)",
+            position: "absolute",
+            right: "1vmin",
+          }}
+          startIcon={<AddShoppingCart />}
+          // onClick={() => submit(data)}
+        >
+          加入購物車
+        </Button>
       </Information>
     </UpperContainer>
   );

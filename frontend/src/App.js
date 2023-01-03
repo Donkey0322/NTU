@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import AppFrame from "./container/AppFrame";
 import SignIn from "./container/SignIn";
 import Products from "./container/Products";
+import Product from "./components/Product.js";
 import styled from "styled-components";
 import MainPage from "./container/MainPage";
 import ProductDetail from "./container/ProductDetail";
@@ -57,7 +58,23 @@ function App() {
             </AppContainer>
           }
         >
-          <Route path="/" element={<MainPage />} />
+          <Route
+            path="/"
+            element={
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                }}
+              >
+                <MainPage />
+                <Product
+                  style={{ justifyContent: "center", marginTop: "1vmin" }}
+                />
+              </div>
+            }
+          />
           <Route path="/signin" element={<SignIn />} />
           <Route path="/products" element={<Products />}>
             <Route path=":id" element={<ProductDetail />} />
