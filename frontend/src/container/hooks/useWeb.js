@@ -5,26 +5,19 @@ const instance = axios.create({ baseURL: "http://localhost:4000/" });
 const WebContext = createContext({
   page: 0, //顯示是在第幾頁 table
   rowsPerPage: 10, //一頁包含幾個 tuple
-  table: [], //後端回傳的詳細資料
-  indexName: "",
   path: "",
   category: {},
+  customerID: "",
+  login: false,
   CRUD: () => {}, //axios api
 });
 
 const WebProvider = (props) => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
-  const [table, setTable] = useState([]);
-  const [indexName, setIndexName] = useState("");
   const [path, setPath] = useState("");
-
-  useEffect(() => {
-    if (table.length > 0) {
-      const columns = Object.keys(table[0].origin ? table[0].origin : table[0]);
-      setIndexName(columns[columns.findIndex((c) => c.includes("id"))]);
-    }
-  }, [table]);
+  const [customerID, setCustomerID] = useState("");
+  const [login, setLogin] = useState(false);
 
   const CRUD =
     (type, path) =>
@@ -37,17 +30,12 @@ const WebProvider = (props) => {
               data: { result },
             } = await instance.post(`${path}`, value);
             if (typeof result !== "undefined") {
-              if (result[0].origin) {
-                setTable(result);
-              } else {
-                setTable([...result, ...table]);
-              }
+              return result;
+            } else {
+              alert("NO Result");
             }
-            break;
           } catch (error) {
-            // return new Promise((resolve, reject) => {
-            //   reject(new Error("500: Internal Server Error"));
-            // });
+            alert("Axios失敗");
             throw error;
           }
         case "R":
@@ -56,10 +44,14 @@ const WebProvider = (props) => {
             const {
               data: { result },
             } = await instance.get(`${path}`, value);
-            setTable(result);
-            break;
+            if (typeof result !== "undefined") {
+              return result;
+            } else {
+              alert("NO Result");
+            }
           } catch (error) {
-            console.log(error);
+            alert("Axios失敗");
+            throw error;
           }
         case "U":
           try {
@@ -67,18 +59,13 @@ const WebProvider = (props) => {
               data: { result },
             } = await instance.put(`${path}`, { value });
             const newResult = [];
-            if (result[0].origin) {
-              setTable(result);
+            if (typeof result !== "undefined") {
+              return result;
             } else {
-              for (const tuple of table) {
-                newResult.push(
-                  tuple[indexName] === result[0][indexName] ? result[0] : tuple
-                );
-              }
-              setTable(newResult);
+              alert("NO Result");
             }
-            break;
           } catch (error) {
+            alert("Axios失敗");
             throw error;
           }
         case "D":
@@ -86,9 +73,13 @@ const WebProvider = (props) => {
             const {
               data: { result },
             } = await instance.delete(`${path}`, { params: { id: value } });
-            setTable(result);
-            break;
+            if (typeof result !== "undefined") {
+              return result;
+            } else {
+              alert("NO Result");
+            }
           } catch (error) {
+            alert("Axios失敗");
             throw error;
           }
         default:
@@ -101,12 +92,11 @@ const WebProvider = (props) => {
       value={{
         page,
         rowsPerPage,
-        table,
-        indexName,
         path,
+        customerID,
+        login,
         setPage,
         setRowsPerPage,
-        setTable,
         setPath,
         CRUD,
       }}

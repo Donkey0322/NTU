@@ -33,6 +33,7 @@ const ProductsContainer = styled.div`
       }
     }
   }
+  ${({ style }) => ({ ...style })}
 `;
 
 const ProductImgContainer = styled.div`
@@ -49,13 +50,17 @@ const ProductImgContainer = styled.div`
 
 const item = [
   { src: require("../images/canele-1-1.png"), label: "抹茶可麗露", price: 80 },
-  { src: require("../images/canele-2-1.png"), label: "巧克力可麗露", price: 80 },
+  {
+    src: require("../images/canele-2-1.png"),
+    label: "巧克力可麗露",
+    price: 80,
+  },
   { src: require("../images/canele-3-1.png"), label: "香草可麗露", price: 80 },
 ];
 
-const Product = () => {
+const Product = ({ style, data }) => {
   return (
-    <ProductsContainer>
+    <ProductsContainer style={style && style}>
       {item.map((i, index) => (
         <div className="product" key={index}>
           <ProductImgContainer>
