@@ -9,6 +9,7 @@ import ProductDetail from "./container/ProductDetail";
 import ShoppingCart from "./container/ShoppingCart";
 import Checkout from "./container/Checkout";
 import ContactUs from "./container/ContactUs";
+import VipInfo from "./container/VipInfo";
 import { useEffect, useState } from "react";
 
 const AppContainer = styled.div`
@@ -65,6 +66,7 @@ function App() {
           <Route path="/shoppingcart" element={<ShoppingCart />} />
           <Route path="/checkout" element={<Checkout />} />
           <Route path="/contactus" element={<ContactUs />} />
+          <Route path="/vipinfo" element={<VipInfo />} />
 
           {/* <Route path="/vip" element={<Vip />} /> */}
         </Route>

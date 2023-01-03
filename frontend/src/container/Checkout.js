@@ -77,118 +77,120 @@ const Checkout = () => {
     const handlePay = (event) => {
         setPay(event.target.value);
     };
-    return (
-        <BoxContainer>
-            <p>已成功送出訂單～請至會員專區查看訂單詳情</p>
-            <div>
-                <Button variant="contained">至會員專區</Button>
-                <Button variant="contained">返回主頁</Button>
-            </div>
-        </BoxContainer>
-        // <FormContainer>
-        //     <Paper>
-        //         <div className="input">
-        //             <p>訂購人姓名</p>
-        //             <TextField id="standard-basic" label="姓名" variant="standard" />
-        //         </div>   
-        //         <div className="input">
-        //             <p>訂購人手機號碼</p>
-        //             <TextField id="standard-basic" label="手機號碼" variant="standard" />
-        //         </div> 
-        //         <div className="input">
-        //             <p>付款方式</p>
-        //             <FormControl sx={{ minWidth: 120, mb: "2vmin" }} size="small">
-        //                 <InputLabel id="demo-select-small">付款方式</InputLabel>
-        //                 <Select
-        //                     labelId="demo-select-small"
-        //                     id="demo-select-small"
-        //                     value={pay}
-        //                     label="pay"
-        //                     onChange={handlePay}
-        //                 >
-        //                     <MenuItem value={1}>取貨付款</MenuItem>
-        //                     <MenuItem value={2}>銀行轉帳</MenuItem>
+    if(send === true)
+        return (
+            <BoxContainer>
+                <p>已成功送出訂單～請至會員專區查看訂單詳情</p>
+                <div>
+                    <Button variant="contained">至會員專區</Button>
+                    <Button variant="contained">返回主頁</Button>
+                </div>
+            </BoxContainer> );
+    else
+        return ( 
+            <FormContainer>
+                <Paper>
+                    <div className="input">
+                        <p>訂購人姓名</p>
+                        <TextField id="standard-basic" label="姓名" variant="standard" />
+                    </div>   
+                    <div className="input">
+                        <p>訂購人手機號碼</p>
+                        <TextField id="standard-basic" label="手機號碼" variant="standard" />
+                    </div> 
+                    <div className="input">
+                        <p>付款方式</p>
+                        <FormControl sx={{ minWidth: 120, mb: "2vmin" }} size="small">
+                            <InputLabel id="demo-select-small">付款方式</InputLabel>
+                            <Select
+                                labelId="demo-select-small"
+                                id="demo-select-small"
+                                value={pay}
+                                label="pay"
+                                onChange={handlePay}
+                            >
+                                <MenuItem value={1}>取貨付款</MenuItem>
+                                <MenuItem value={2}>銀行轉帳</MenuItem>
 
-        //                 </Select>
-        //             </FormControl>
-        //         </div>
-        //         <div className="input">
-        //             <p>寄送方式</p>
-        //             <FormControl sx={{ minWidth: 120, mb: "2vmin" }} size="small">
-        //                 <InputLabel id="demo-select-small">寄送方式</InputLabel>
-        //                 <Select
-        //                     labelId="demo-select-small"
-        //                     id="demo-select-small"
-        //                     value={deliver}
-        //                     label="deliver"
-        //                     onChange={handleDeliver}
-        //                 >
-        //                     <MenuItem value={1}>面交</MenuItem>
-        //                     <MenuItem value={2}>Lalamove</MenuItem>
-        //                     <MenuItem value={3}>冷藏宅配</MenuItem>
+                            </Select>
+                        </FormControl>
+                    </div>
+                    <div className="input">
+                        <p>寄送方式</p>
+                        <FormControl sx={{ minWidth: 120, mb: "2vmin" }} size="small">
+                            <InputLabel id="demo-select-small">寄送方式</InputLabel>
+                            <Select
+                                labelId="demo-select-small"
+                                id="demo-select-small"
+                                value={deliver}
+                                label="deliver"
+                                onChange={handleDeliver}
+                            >
+                                <MenuItem value={1}>面交</MenuItem>
+                                <MenuItem value={2}>Lalamove</MenuItem>
+                                <MenuItem value={3}>冷藏宅配</MenuItem>
 
-        //                 </Select>
-        //             </FormControl>
-        //         </div>
-        //         {deliver === "" ? <></> : deliver === 1 ? 
-        //             <>
-        //             <div className="input">
-        //                 <p>面交地點</p>
-        //                 <FormControl sx={{ minWidth: 120, mb: "2vmin" }} size="small">
-        //                 <InputLabel id="demo-select-small">面交地點</InputLabel>
-        //                 <Select
-        //                     labelId="demo-select-small"
-        //                     id="demo-select-small"
-        //                     value={place}
-        //                     label="place"
-        //                     onChange={handlePlace}
-        //                 >
-        //                     <MenuItem value={1}>永安市場捷運站</MenuItem>
-        //                     <MenuItem value={2}>公館捷運站</MenuItem>
-        //                     <MenuItem value={3}>科技大樓捷運站</MenuItem>
+                            </Select>
+                        </FormControl>
+                    </div>
+                    {deliver === "" ? <></> : deliver === 1 ? 
+                        <>
+                        <div className="input">
+                            <p>面交地點</p>
+                            <FormControl sx={{ minWidth: 120, mb: "2vmin" }} size="small">
+                            <InputLabel id="demo-select-small">面交地點</InputLabel>
+                            <Select
+                                labelId="demo-select-small"
+                                id="demo-select-small"
+                                value={place}
+                                label="place"
+                                onChange={handlePlace}
+                            >
+                                <MenuItem value={1}>永安市場捷運站</MenuItem>
+                                <MenuItem value={2}>公館捷運站</MenuItem>
+                                <MenuItem value={3}>科技大樓捷運站</MenuItem>
 
-        //                 </Select>
-        //             </FormControl>
-        //             </div>
-        //             <div className="input">
-        //                 <p>面交時間</p>
-        //                 <FormControl sx={{ minWidth: 120, mb: "2vmin" }} size="small">
-        //                 <InputLabel id="demo-select-small">面交時間</InputLabel>
-        //                 <Select
-        //                     labelId="demo-select-small"
-        //                     id="demo-select-small"
-        //                     value={time}
-        //                     label="time"
-        //                     onChange={handleTime}
-        //                 >
-        //                     <MenuItem value={1}>星期一晚上六點</MenuItem>
-        //                     <MenuItem value={2}>星期三晚上六點</MenuItem>
-        //                     <MenuItem value={3}>星期六晚上六點</MenuItem>
+                            </Select>
+                        </FormControl>
+                        </div>
+                        <div className="input">
+                            <p>面交時間</p>
+                            <FormControl sx={{ minWidth: 120, mb: "2vmin" }} size="small">
+                            <InputLabel id="demo-select-small">面交時間</InputLabel>
+                            <Select
+                                labelId="demo-select-small"
+                                id="demo-select-small"
+                                value={time}
+                                label="time"
+                                onChange={handleTime}
+                            >
+                                <MenuItem value={1}>星期一晚上六點</MenuItem>
+                                <MenuItem value={2}>星期三晚上六點</MenuItem>
+                                <MenuItem value={3}>星期六晚上六點</MenuItem>
 
-        //                 </Select>
-        //             </FormControl>
-        //             </div>
-        //             </>
-        //               :
-        //             <div className="input">
-        //                 <p>送貨地址</p>
-        //                 <TextField id="standard-basic" label="送貨地址" variant="standard" />
-        //             </div>
-        //         }  
-        //     </Paper>  
-        //     <DownContainer>
-        //         <FormControlLabel
-        //         control={<Checkbox />}
-        //         label="我同意訂單一旦送出，未經賣家同意不得取消訂單"
-        //         />
-        //         <div>
-        //             <p>總價 NT$ 500</p>
-        //             <Button variant="contained">送出訂單</Button>
-        //         </div>
-                
-        //     </DownContainer>
-        // </FormContainer>
-    );
+                            </Select>
+                        </FormControl>
+                        </div>
+                        </>
+                        :
+                        <div className="input">
+                            <p>送貨地址</p>
+                            <TextField id="standard-basic" label="送貨地址" variant="standard" />
+                        </div>
+                    }  
+                </Paper>  
+                <DownContainer>
+                    <FormControlLabel
+                    control={<Checkbox />}
+                    label="我同意訂單一旦送出，未經賣家同意不得取消訂單"
+                    />
+                    <div>
+                        <p>總價 NT$ 500</p>
+                        <Button variant="contained">送出訂單</Button>
+                    </div>
+                    
+                </DownContainer>
+            </FormContainer> );
   };
   
   export default Checkout;
