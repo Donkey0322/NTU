@@ -50,6 +50,9 @@ const DownContainer = styled.div`
 `;
 const BoxContainer = styled.div`
   margin-top: 10vmin;
+  p {
+    text-align: center;
+  }
   div {
     display: flex;
     justify-content: space-around;
@@ -78,7 +81,10 @@ const Checkout = () => {
   if (send === true)
     return (
       <BoxContainer>
-        <p>已成功送出訂單～請至會員專區查看訂單詳情</p>
+        <p>已成功送出訂單～選擇銀行轉帳的顧客請在三日內將款項匯至 <br />
+            （333）123456654321 <br/> 
+            確認款項後會立即出貨，請至會員專區查看訂單狀況。
+        </p>
         <div>
           <Button variant="contained">至會員專區</Button>
           <Button variant="contained">返回主頁</Button>
