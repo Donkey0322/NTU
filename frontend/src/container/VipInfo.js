@@ -28,6 +28,9 @@ const WholeContainer = styled.div`
         margin-top: 5vmin;
         padding-left: 5vmin;
     }
+    .side {
+        padding: 0.5vmin;
+    }
     h1 {
         border-bottom: 8px solid #57c4d0;
         font-size: 24px;
@@ -55,7 +58,7 @@ const VipInfo = () => {
     return (
         <WholeContainer>
             <Paper className='sideBar'>
-                <div >
+                <div className='side'>
                     <VipSideBar />
                 </div>
                 <div className="info">

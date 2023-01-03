@@ -75,12 +75,12 @@ const ProductDetail = () => {
   return (
     <UpperContainer>
       <ImageContainer>
-        <img src={require("../images/canele1.png")} alt="" />
+        <img src={require("../images/canele-2-1.png")} alt="" />
         <PreviewContainer>
           <KeyboardDoubleArrowLeft />
           <SmallImgContainer>
-            <img src={require("../images/canele1.png")} alt="" />
-            <img src={require("../images/canele2.png")} alt="" />
+            <img src={require("../images/canele-2-1.png")} alt="" />
+            <img src={require("../images/canele-3-1.png")} alt="" />
           </SmallImgContainer>
           <KeyboardDoubleArrowRight />
         </PreviewContainer>

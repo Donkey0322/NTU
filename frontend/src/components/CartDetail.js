@@ -60,7 +60,7 @@ const CartDetail = () => {
         <ItemContainer>
             <LeftContainer>
                 <Checkbox {...label} />
-                <img src={require('../images/canele1.png')} alt="" />
+                <img src={require('../images/canele-2-1.png')} alt="" />
                 <p>抹茶可麗露</p>
             </LeftContainer>
             <RightContainer>

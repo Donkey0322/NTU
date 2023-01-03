@@ -17,5 +17,5 @@ const LogoImg = styled.div`
 `;
 
 export default function Logo({ img }) {
-  return <LogoImg img={img}></LogoImg>;
+  return <LogoImg img={img} ></LogoImg>;
 }
