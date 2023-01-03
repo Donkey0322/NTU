@@ -32,7 +32,8 @@ class CheckCustomer {
   async checkPassword(mail, password, errors) {
     const query = `select * from customers where mail = "${mail}"`;
     const result = await Myquery(query);
-    if (result) {
+    console.log(result.length)
+    if (result.length >= 1) {
       var response = bcrypt.compareSync(password, result[0].password);
       if (!response) {
         errors.password = "The password is incorrect.";

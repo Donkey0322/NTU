@@ -67,8 +67,7 @@ var check = new CheckCustomer();
 // }
 
 router.post("/", async (req, res) => {
-  const { customer_name, gender, birthday, phone_number, mail, password } =
-    req.body;
+  const { mail, password } = req.body;
   console.log("gio");
   let errors = { mail: "", password: "" };
   errors = check.checkEmailValidation(mail, errors);
@@ -79,11 +78,8 @@ router.post("/", async (req, res) => {
     res.status(400).json({ errors });
   } else {
     const passwordHash = bcrypt.hashSync(password, 10);
-    const query = `insert into customers (customer_name, gender, birthday, phone_number, mail, password) 
-                    VALUES ("${customer_name}", "${gender}", "${moment(birthday)
-      .utc()
-      .format("YYYY-MM-DD")}", 
-                            "${phone_number}", "${mail}", "${passwordHash}")`;
+    const query = `insert into customers (mail, password) 
+                    VALUES ( "${mail}", "${passwordHash}")`;
     await Myquery(query);
     const query_in = `select * from customers where mail = "${mail}"`;
     const result = await Myquery(query_in);

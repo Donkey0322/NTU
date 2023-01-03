@@ -32,9 +32,11 @@ const WebProvider = (props) => {
             if (typeof result !== "undefined") {
               return result;
             } else {
+              console.log(result)
               alert("NO Result");
             }
           } catch (error) {
+            console.log(error)
             alert("Axios失敗");
             throw error;
           }
