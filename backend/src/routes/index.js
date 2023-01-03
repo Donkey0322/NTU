@@ -10,6 +10,7 @@ import basket from './basket.js';
 import products from './products.js';
 import purchases from './purchases.js';
 import auth from './auth.js';
+import password from './password.js';
 
 
 const router = Router();
@@ -21,7 +22,7 @@ router.use('/products', products)
 router.use('/purchases', purchases)
 router.use('/orders_manage', orders_manage)
 router.use('/basket', basket)
-
+router.use('/password', password)
 router.use('/signUp', signUp);
 router.use('/auth', auth);
 router.use('/logIn', logIn);
