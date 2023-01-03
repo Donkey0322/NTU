@@ -4,6 +4,7 @@ import cors from "cors";
 import { dataInit } from "./upload.js";
 import passport from "passport";
 import cookieSession from "cookie-session";
+import cookieParser from 'cookie-parser';
 import router from "./routes/index.js";
 import bodyparser from 'body-parser';
 
@@ -21,6 +22,7 @@ app.use(
 
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(cookieParser());
 
 // init middleware
 app.use(cors({
