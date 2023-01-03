@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { useNavigate, Outlet } from "react-router-dom";
 import Logo from "../components/Logo";
+
 // import { Outlet } from "react-router-dom";
 
 const AppContainer = styled.div`
@@ -10,6 +11,9 @@ const AppContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  .logo {
+    cursor: pointer;
+}
 `;
 
 const BarContainer = styled.div`
@@ -22,7 +26,7 @@ const BarContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  ul {
+  ul.big{
     display: flex;
     li {
       list-style: none;
@@ -31,28 +35,33 @@ const BarContainer = styled.div`
       cursor: pointer;
     }
   }
-  // ul {
-  //     margin: 3% 30%;
-  //     justify-content: space-between;
-  // }
-  // li {
-  //     list-style: none;
-  //     display: inline-block;
-  //     color: #ccc;
-  // }
+  .hide {
+    display: none;
+    &:hover {
+      display:block;
+    }
+  }
+  .member:hover ~ .member{
+    display:block;
+  }
+  
 `;
 
 const AppFrame = () => {
   const navigate = useNavigate();
   return (
     <AppContainer>
-      <Logo img={require("../images/logo.jpg")} />
+      <div className="logo" onClick={() => navigate("/")}>
+        <Logo img={require("../images/logo.jpg")}/>
+      </div>
+      
       <BarContainer>
-        <ul>
-          <li onClick={() => navigate("/products")}>產品總覽</li>
-          <li onClick={() => navigate("/vipinfo")}>會員專區</li>
-          <li onClick={() => navigate("/contactUs")}>聯絡我們</li>
-          <li onClick={() => navigate("/signIn")}>登入</li>
+        <ul className="big">
+          <li onClick={() => navigate("/products")}><p>產品總覽</p></li>
+          <li onClick={() => navigate("/vipinfo")}><p>會員專區</p></li>
+          <li onClick={() => navigate("/contactUs")}><p>聯絡我們</p></li>
+          <li onClick={() => navigate("/shoppingcart")}><p>購物車</p></li>
+          
         </ul>
       </BarContainer>
       <Outlet />
