@@ -23,7 +23,12 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // init middleware
-app.use(cors());
+app.use(cors({
+  origin: "http://localhost:3000",
+  methods: "GET,POST,PUT,DELETE",
+  credentials: true,
+}
+));
 app.use(bodyparser.urlencoded({extended:false}))
 app.use(bodyparser.json())
 // define routes

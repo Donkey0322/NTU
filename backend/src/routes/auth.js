@@ -10,7 +10,7 @@ router.get("/login/success", (req, res) => {
       success: true,
       message: "successfull",
       result: req.result,
-      //   cookies: req.cookies
+      cookies: req.cookies
     });
   }
 });
