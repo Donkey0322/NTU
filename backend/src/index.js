@@ -14,9 +14,9 @@ sql.connect(function (err) {
 });
 
 const app = express();
-
+app.set("view engine", "ejs");
 app.use(
-  cookieSession({ name: "session", keys: ["lama"], maxAge: 24 * 60 * 60 * 100 })
+  cookieSession({ name: "session", keys: ["lama"], maxAge: 3 * 24 * 60 * 60 * 100 })
 );
 
 app.use(passport.initialize());
@@ -29,6 +29,7 @@ app.use(cors({
   credentials: true,
 }
 ));
+app.use(express.urlencoded({ extended: false }));
 app.use(bodyparser.urlencoded({extended:false}))
 app.use(bodyparser.json())
 // define routes

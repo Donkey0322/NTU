@@ -42,13 +42,11 @@ router.get("/", async (_, res) => {
 
 router.put("/", async (req, res) => {
     console.log('Customer to update:', req.body);
-    let {customer_id, customer_name, gender, birthday, phone_number, mail} = req.body.value;
+    let {customer_id, customer_name, birthday, phone_number} = req.body;
     let query = `update customers set
                  customer_name = "${customer_name}", 
-                 gender = "${gender}", 
                  birthday = "${moment(birthday).utc().format("YYYY-MM-DD")}",
-                 phone_number = "${phone_number}",
-                 mail = "${mail}"
+                 phone_number = "${phone_number}"
              where customer_id = ${customer_id}`;
     await Myquery(query);
     let query_return = `select * from customers

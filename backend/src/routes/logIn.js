@@ -4,7 +4,7 @@ import express from "express";
 import moment from "moment";
 import bcrypt from "bcrypt";
 const router = express.Router();
-
+const CLIENT_URL = "http://localhost:3000/";
 // send query
 const Myquery = (query) => {
   return new Promise((resolve) => {
@@ -32,7 +32,6 @@ class CheckCustomer {
   async checkPassword(mail, password, errors) {
     const query = `select * from customers where mail = "${mail}"`;
     const result = await Myquery(query);
-    console.log(result.length)
     if (result.length >= 1) {
       var response = bcrypt.compareSync(password, result[0].password);
       if (!response) {
@@ -76,7 +75,7 @@ router.post("/", async (req, res) => {
 router.get("/", (req, res) => {
   console.log(1);
   res.cookie("jwt", "", { maxAge: 1 });
-  res.redirect("/");
+  res.redirect(CLIENT_URL);
 });
 
 export default router;
