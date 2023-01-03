@@ -8,7 +8,7 @@ const WebContext = createContext({
   table: [], //後端回傳的詳細資料
   indexName: "",
   path: "",
-  category: new Object(),
+  category: {},
   CRUD: () => {}, //axios api
 });
 

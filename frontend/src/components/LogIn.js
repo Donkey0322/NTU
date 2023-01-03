@@ -12,7 +12,6 @@ import {
 } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { TabList, TabContext, TabPanel } from "@mui/lab";
-import React, { useState } from "react";
 import styled from "styled-components";
 import "./.css";
 
@@ -28,10 +27,18 @@ const Welcome = styled.div`
 
 const BoxContainer = styled.div`
   display: flex;
-  justify-content: Center;
+  justify-content: center;
   width: 100%;
   margin-top: 10vmin;
 `;
+
+const CustomedTabPanel = styled(TabPanel)`
+  display: flex;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+`;
+
 const PureInput = ({
   label,
   autoComplete,
@@ -96,7 +103,7 @@ const LogIn = ({
               <Tab label="註冊會員" value="2" />
             </TabList>
           </Box>
-          <TabPanel value="1">
+          <CustomedTabPanel value="1" sx={{ display: mode !== "1" && "none" }}>
             <Box
               sx={{
                 display: "flex",
@@ -109,7 +116,7 @@ const LogIn = ({
                 label="輸入帳號"
                 autoComplete="username"
                 onChange={handleInputChange}
-                name="customer_mail"
+                name="mail"
               />
               <Password
                 label="輸入密碼"
@@ -118,7 +125,7 @@ const LogIn = ({
                 show={showPassword}
                 showclick={handleClickShowPassword}
                 onChange={handleInputChange}
-                name="customer_password"
+                name="password"
               />
               <Button
                 variant="contained"
@@ -129,13 +136,13 @@ const LogIn = ({
                 登入
               </Button>
             </Box>
-          </TabPanel>
-          <TabPanel value="2">
+          </CustomedTabPanel>
+          <CustomedTabPanel value="2">
             <Box
               sx={{
                 display: "flex",
                 flexDirection: "column",
-                rowGap: "10px",
+                rowGap: "2vmin",
               }}
             >
               <PureInput
@@ -172,7 +179,7 @@ const LogIn = ({
                 註冊
               </Button>
             </Box>
-          </TabPanel>
+          </CustomedTabPanel>
         </TabContext>
       </Box>
     </BoxContainer>

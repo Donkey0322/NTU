@@ -1,10 +1,8 @@
 import LogIn from "../components/LogIn";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useWeb } from "./hooks/useWeb";
-import { useLocation } from "react-router-dom";
 
 const SignIn = () => {
-  const currentPath = useLocation().pathname;
   const { CRUD } = useWeb();
   const [data, setData] = useState({});
   const [mode, setMode] = useState("1");
