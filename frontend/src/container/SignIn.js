@@ -5,6 +5,7 @@ import { useWeb } from "./hooks/useWeb";
 const SignIn = () => {
   const { CRUD } = useWeb();
   const [data, setData] = useState({});
+  const [login, setLogin] = useState();
   const [mode, setMode] = useState("1");
   const [showPassword, setShowPassword] = useState(false);
   const handleClickShowPassword = () => setShowPassword((show) => !show);
@@ -24,6 +25,8 @@ const SignIn = () => {
     <LogIn
       data={data}
       mode={mode}
+      // result={result}
+      // setResult={setResult}
       showPassword={showPassword}
       handleClickShowPassword={handleClickShowPassword}
       handleModeChange={handleModeChange}
