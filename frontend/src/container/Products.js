@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams, Outlet } from "react-router-dom";
 import styled from "styled-components";
-import { ProductsWithSortBar, Filter } from "../components/Products";
+import { ProductsWithSortBar, Filter } from "../components/Products/index.js";
 import { useWeb } from "./hooks/useWeb";
 
 const ProductContainer = styled.div`

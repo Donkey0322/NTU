@@ -1,3 +1,3 @@
-export { default as ProductsWithSortBar } from "./Products";
-export { default as ProductWithoutSortBar } from "./Product";
-export { default as Filter } from "./Filter";
+export { default as ProductsWithSortBar } from "./Products.js";
+export { default as ProductWithoutSortBar } from "./Product.js";
+export { default as Filter } from "./Filter.js";
