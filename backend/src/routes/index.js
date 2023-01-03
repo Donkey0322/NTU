@@ -9,6 +9,7 @@ import orders_manage from './orders_manage.js';
 import basket from './basket.js';
 import products from './products.js';
 import purchases from './purchases.js';
+import auth from './auth.js';
 
 
 const router = Router();
@@ -22,8 +23,7 @@ router.use('/orders_manage', orders_manage)
 router.use('/basket', basket)
 
 router.use('/signUp', signUp);
+router.use('/auth', auth);
 router.use('/logIn', logIn);
-
-
 
 export default router;

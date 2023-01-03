@@ -2,7 +2,8 @@ import sql from "./sql.js";
 import express from "express";
 import cors from "cors";
 import { dataInit } from "./upload.js";
-import test from "./test.js";
+import passport from "passport";
+import cookieSession from "cookie-session";
 import router from "./routes/index.js";
 import bodyparser from 'body-parser';
 
@@ -13,6 +14,14 @@ sql.connect(function (err) {
 });
 
 const app = express();
+
+app.use(
+  cookieSession({ name: "session", keys: ["lama"], maxAge: 24 * 60 * 60 * 100 })
+);
+
+app.use(passport.initialize());
+app.use(passport.session());
+
 // init middleware
 app.use(cors());
 app.use(bodyparser.urlencoded({extended:false}))
