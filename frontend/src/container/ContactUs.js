@@ -33,7 +33,9 @@ const ContactUs = () => {
       <Welcome />
       <div className="box">
         <Chip icon={<InstagramIcon />} label="Instagram" variant="outlined" />
+        <a href="https://instagram.com/gros_patisserie?igshid=YmMyMTA2M2Y=">gros_patisserie</a>
         <Chip icon={<EmailIcon />} label="Email" variant="outlined" />
+        <p>grospatisserie@gmail.com</p>
       </div>
     </BoxContainer>
   );
