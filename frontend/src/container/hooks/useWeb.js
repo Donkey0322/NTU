@@ -19,6 +19,34 @@ const WebProvider = (props) => {
   const [customerID, setCustomerID] = useState("");
   const [login, setLogin] = useState(false);
 
+  useEffect(() => {
+    const getUser = () => {
+      fetch("http://localhost:4000/auth/login/success", {
+        method: "GET",
+        credentials: "include",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Credentials": true,
+        },
+      })
+        .then((response) => {
+          console.log(response);
+          if (response.status === 200) return response.json();
+          throw new Error("authentication has been failed!");
+        })
+        .then((resObject) => {
+          console.log(resObject);
+          setCustomerID(resObject.result[0].customer_id);
+          setLogin(true);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    };
+    getUser();
+  }, []);
+
   const CRUD =
     (type, path) =>
     async (value = null) => {
