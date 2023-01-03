@@ -49,9 +49,14 @@ const DownContainer = styled.div`
     }
 `;
 const BoxContainer = styled.div`
-  display: flex;
-  justify-content: Center;
+//   display: flex;
+//   justify-content: Center;
   margin-top: 10vmin;
+  div {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 3vmin;
+  }
 `;
 
 const Checkout = () => {
@@ -75,6 +80,10 @@ const Checkout = () => {
     return (
         <BoxContainer>
             <p>已成功送出訂單～請至會員專區查看訂單詳情</p>
+            <div>
+                <Button variant="contained">至會員專區</Button>
+                <Button variant="contained">返回主頁</Button>
+            </div>
         </BoxContainer>
         // <FormContainer>
         //     <Paper>

@@ -1,13 +1,14 @@
 import "./App.css";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import AppFrame from "./container/AppFrame";
-import SignUp from "./container/signUp";
+import SignIn from "./container/SignIn";
 import Products from "./container/Products";
 import styled from "styled-components";
 import MainPage from "./container/MainPage";
 import ProductDetail from "./container/ProductDetail";
 import ShoppingCart from "./container/ShoppingCart";
 import Checkout from "./container/Checkout";
+import ContactUs from "./container/ContactUs";
 
 const AppContainer = styled.div`
   width: 100vw;
@@ -34,6 +35,7 @@ function App() {
           <Route path="/products" element={<Products />} />
           <Route path="/shoppingcart" element={<ShoppingCart />} />
           <Route path="/checkout" element={<Checkout />} />
+          <Route path="/contactus" element={<ContactUs />} />
 
           {/* <Route path="/vip" element={<Vip />} /> */}
         </Route>
