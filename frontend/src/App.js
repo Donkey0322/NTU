@@ -10,6 +10,7 @@ import ProductDetail from "./container/ProductDetail";
 import ShoppingCart from "./container/ShoppingCart";
 import Checkout from "./container/Checkout";
 import ContactUs from "./container/ContactUs";
+import Google from "./container/Google";
 import VipInfo from "./container/VipInfo";
 import { useEffect, useState } from "react";
 
@@ -75,6 +76,7 @@ function App() {
               </div>
             }
           />
+          <Route path="/google" element={<Google />} />
           <Route path="/signin" element={<SignIn />} />
           <Route path="/products" element={<Products />}>
             <Route path=":id" element={<ProductDetail />} />
