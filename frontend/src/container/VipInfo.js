@@ -5,6 +5,17 @@ import Paper from '@mui/material/Paper';
 import VipSideBar from './VipSideBar';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
+import {
+    List,
+    ListItem,
+    ListItemButton,
+    ListItemText,
+    InputLabel,
+    MenuItem,
+    FormControl,
+    Select,
+  } from "@mui/material";
+import FormHelperText from '@mui/material/FormHelperText';
 
 const WholeContainer = styled.div`
     width: 100%;
@@ -55,6 +66,10 @@ const WholeContainer = styled.div`
 
 const VipInfo = () => {
     const [edit, setEdit] = useState(true);
+    const [gender, setGender] = useState("");
+    const handleChange = (event) => {
+        setGender(event.target.value);
+    };
     return (
         <WholeContainer>
             <Paper className='sideBar'>
@@ -66,17 +81,35 @@ const VipInfo = () => {
                         <h1>會員資料</h1>
                     </div>  
                     <div className="input">
-                        <p>會員姓名</p>
+                        <p>姓名</p>
                         <TextField className='text' label="" variant="standard" defaultValue="王小明" />
                     </div> 
                     <div className="input">
-                        <p>會員信箱</p>
+                        <p>信箱</p>
                         <TextField  className="text" variant="standard" defaultValue="abc@gmail.com" disabled/>
                     </div> 
                     <div className="input">
-                        <p>會員手機號碼</p>
+                        <p>手機號碼</p>
                         <TextField className="text" label="" variant="standard" />
                     </div> 
+                    <div className="input">
+                        <p>性別</p>
+                        <FormControl sx={{ minWidth: 80 }} className="text">
+                            <Select
+                            value={gender}
+                            onChange={handleChange}
+                            displayEmpty
+                            variant="standard"
+                            inputProps={{ 'aria-label': 'Without label' }}
+                            >
+                            <MenuItem value="">
+                                <em>性別</em>
+                            </MenuItem>
+                            <MenuItem value={10}>男</MenuItem>
+                            <MenuItem value={20}>女</MenuItem>
+                            </Select>
+                        </FormControl>
+                    </div>
                     <div className="input">
                         <p>會員生日</p>
                         <TextField
