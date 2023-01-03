@@ -32,7 +32,10 @@ const BoxContainer = styled.div`
   width: 100%;
   margin-top: 10vmin;
   .button {
+    margin-top: 2vmin;
+    width: min(100%, 50vmin);
     display: flex;
+    justify-content: space-around;
   }
 `;
 
@@ -51,6 +54,8 @@ const PureInput = ({
   show,
   showclick,
   name,
+  result,
+  setResult,
 }) => {
   return (
     <FormControl
@@ -142,14 +147,14 @@ const LogIn = ({
                   登入
                 </Button>
                 <Button
-                  variant="contained"
+                  variant="outlined"
+                  color="error"
                   sx={{ width: "min(45%, 20vmin)" }}
                   onClick={() => navigate("/forget")}
                 >
                   忘記密碼？
                 </Button>
               </div>
-              
             </Box>
           </CustomedTabPanel>
           <CustomedTabPanel value="2">

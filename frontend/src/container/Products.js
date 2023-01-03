@@ -1,4 +1,3 @@
-// import { set } from "mongoose";
 import React, { useEffect, useState } from "react";
 import { useParams, Outlet } from "react-router-dom";
 import styled from "styled-components";
