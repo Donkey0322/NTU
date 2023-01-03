@@ -20,7 +20,6 @@ const AppContainer = styled.div`
   background-color: rgb(242, 233, 223);
 `;
 
-
 function App() {
   const [user, setUser] = useState(null);
   useEffect(() => {

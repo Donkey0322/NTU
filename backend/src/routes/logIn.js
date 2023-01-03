@@ -73,6 +73,7 @@ router.post("/", async (req, res) => {
 });
 
 router.get("/", (req, res) => {
+  console.log(1);
   res.cookie("jwt", "", { maxAge: 1 });
   res.redirect("/");
 });
