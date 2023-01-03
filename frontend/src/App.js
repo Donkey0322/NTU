@@ -13,6 +13,7 @@ import ContactUs from "./container/ContactUs";
 import Google from "./container/Google";
 import VipInfo from "./container/VipInfo";
 import { useEffect, useState } from "react";
+import Reset from "./container/Reset";
 
 const AppContainer = styled.div`
   width: 100vw;
@@ -85,6 +86,7 @@ function App() {
           <Route path="/checkout" element={<Checkout />} />
           <Route path="/contactus" element={<ContactUs />} />
           <Route path="/vipinfo" element={<VipInfo />} />
+          <Route path="/reset" element={<Reset />} />
 
           {/* <Route path="/vip" element={<Vip />} /> */}
         </Route>
