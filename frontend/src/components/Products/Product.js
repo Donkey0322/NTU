@@ -49,27 +49,45 @@ const ProductImgContainer = styled.div`
 `;
 
 const item = [
-  { src: require("../images/canele-1-1.png"), label: "抹茶可麗露", price: 80 },
   {
-    src: require("../images/canele-2-1.png"),
+    src: require("../../images/canele-1-1.png"),
+    label: "抹茶可麗露",
+    price: 80,
+  },
+  {
+    src: require("../../images/canele-2-1.png"),
     label: "巧克力可麗露",
     price: 80,
   },
-  { src: require("../images/canele-3-1.png"), label: "香草可麗露", price: 80 },
+  {
+    src: require("../../images/canele-3-1.png"),
+    label: "香草可麗露",
+    price: 80,
+  },
 ];
 
-const Product = ({ style, data }) => {
+const Product = ({ style, products }) => {
   return (
     <ProductsContainer style={style && style}>
-      {item.map((i, index) => (
-        <div className="product" key={index}>
-          <ProductImgContainer>
-            <img src={i.src} alt="" />
-          </ProductImgContainer>
-          <p className="label">{i.label}</p>
-          <p className="price">${i.price}</p>
-        </div>
-      ))}
+      {products
+        ? products.map((i, index) => (
+            <div className="product" key={index}>
+              <ProductImgContainer>
+                <img src={i.src} alt="" />
+              </ProductImgContainer>
+              <p className="label">{i.label}</p>
+              <p className="price">${i.price}</p>
+            </div>
+          ))
+        : item.map((i, index) => (
+            <div className="product" key={index}>
+              <ProductImgContainer>
+                <img src={i.src} alt="" />
+              </ProductImgContainer>
+              <p className="label">{i.label}</p>
+              <p className="price">${i.price}</p>
+            </div>
+          ))}
     </ProductsContainer>
   );
 };

@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import AppFrame from "./container/AppFrame";
 import SignIn from "./container/SignIn";
 import Products from "./container/Products";
-import Product from "./components/Product.js";
+import { ProductWithoutSortBar } from "./components/Products";
 import styled from "styled-components";
 import MainPage from "./container/MainPage";
 import ProductDetail from "./container/ProductDetail";
@@ -70,7 +70,7 @@ function App() {
                 }}
               >
                 <MainPage />
-                <Product
+                <ProductWithoutSortBar
                   style={{ justifyContent: "center", marginTop: "1vmin" }}
                 />
               </div>
