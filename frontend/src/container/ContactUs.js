@@ -27,14 +27,6 @@ const BoxContainer = styled.div`
 `;
 
 const ContactUs = () => {
-  const [value, setValue] = useState("1");
-  const [showPassword, setShowPassword] = React.useState(false);
-
-  const handleClickShowPassword = () => setShowPassword((show) => !show);
-
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
 
   return (
     <BoxContainer>
