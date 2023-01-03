@@ -8,6 +8,7 @@ import MainPage from "./container/MainPage";
 import ProductDetail from "./container/ProductDetail";
 import ShoppingCart from "./container/ShoppingCart";
 import Checkout from "./container/Checkout";
+import ContactUs from "./container/ContactUs";
 import { useEffect, useState } from "react";
 
 const AppContainer = styled.div`
@@ -63,6 +64,7 @@ function App() {
           </Route>
           <Route path="/shoppingcart" element={<ShoppingCart />} />
           <Route path="/checkout" element={<Checkout />} />
+          <Route path="/contactus" element={<ContactUs />} />
 
           {/* <Route path="/vip" element={<Vip />} /> */}
         </Route>
