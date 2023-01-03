@@ -9,12 +9,31 @@ import {
   OutlinedInput,
   FormControl,
   FormControlLabel,
+  Typography,
 } from "@mui/material";
-import { useNavigate, Outlet } from "react-router-dom";
+import PropTypes from "prop-types";
+import { useNavigate } from "react-router-dom";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { TabList, TabContext, TabPanel } from "@mui/lab";
 import styled from "styled-components";
 import "./.css";
+
+function HelperText({ color, children }) {
+  return (
+    <Typography color={color} variant="caption">
+      {children}
+    </Typography>
+  );
+}
+
+HelperText.propTypes = {
+  color: PropTypes.string,
+  children: PropTypes.node.isRequired,
+};
+
+HelperText.defaultProps = {
+  color: "default",
+};
 
 const Welcome = styled.div`
   width: 52vmin;
@@ -54,8 +73,7 @@ const PureInput = ({
   show,
   showclick,
   name,
-  result,
-  setResult,
+  error,
 }) => {
   return (
     <FormControl
@@ -70,6 +88,7 @@ const PureInput = ({
         autoComplete={autoComplete && autoComplete}
         label={label}
         onChange={onChange}
+        color={error && error[name] ? "error" : "primary"}
         type={label.includes("密碼") ? (show ? "text" : "password") : "text"}
         endAdornment={
           label.includes("密碼") && (
@@ -81,6 +100,9 @@ const PureInput = ({
           )
         }
       />
+      {error && error[name] && (
+        <HelperText color="error">{error[name]}</HelperText>
+      )}
     </FormControl>
   );
 };
@@ -100,6 +122,8 @@ const LogIn = ({
   handleModeChange,
   handleInputChange,
   submit,
+  error,
+  navigateToForgetPassword,
 }) => {
   const navigate = useNavigate();
   return (
@@ -127,6 +151,7 @@ const LogIn = ({
                 autoComplete="username"
                 onChange={handleInputChange}
                 name="mail"
+                error={error}
               />
               <Password
                 label="輸入密碼"
@@ -136,13 +161,14 @@ const LogIn = ({
                 showclick={handleClickShowPassword}
                 onChange={handleInputChange}
                 name="password"
+                error={error}
               />
               <div className="button">
                 <Button
                   variant="contained"
                   color="success"
                   sx={{ width: "min(10%, 10vmin)" }}
-                  onClick={() => submit(data)}
+                  onClick={submit}
                 >
                   登入
                 </Button>
@@ -150,7 +176,7 @@ const LogIn = ({
                   variant="outlined"
                   color="error"
                   sx={{ width: "min(45%, 20vmin)" }}
-                  onClick={() => navigate("/forget")}
+                  onClick={navigateToForgetPassword}
                 >
                   忘記密碼？
                 </Button>
@@ -170,6 +196,8 @@ const LogIn = ({
                 label="輸入帳號"
                 autoComplete="username"
                 onChange={handleInputChange}
+                error={error}
+                name="mail"
               />
               <Password
                 label="輸入密碼"
@@ -178,6 +206,8 @@ const LogIn = ({
                 show={showPassword}
                 showclick={handleClickShowPassword}
                 onChange={handleInputChange}
+                error={error}
+                name="password"
               />
               <Password
                 label="確認密碼"
@@ -194,7 +224,7 @@ const LogIn = ({
                 variant="contained"
                 color="info"
                 sx={{ width: "min(10%, 10vmin)" }}
-                onClick={() => submit(data)}
+                onClick={submit}
               >
                 註冊
               </Button>
