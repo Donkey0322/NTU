@@ -38,11 +38,13 @@ function App() {
         },
       })
         .then((response) => {
+          console.log(response)
           if (response.status === 200) return response.json();
           throw new Error("authentication has been failed!");
         })
         .then((resObject) => {
-          setUser(resObject.user);
+          console.log(resObject)
+          setUser(resObject.result[0].customer_name);
         })
         .catch((err) => {
           console.log(err);
@@ -50,6 +52,7 @@ function App() {
     };
     getUser();
   }, []);
+  console.log(user)
   return (
     <Router>
       <Routes>
