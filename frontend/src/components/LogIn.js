@@ -10,6 +10,7 @@ import {
   FormControl,
   FormControlLabel,
 } from "@mui/material";
+import { useNavigate, Outlet } from "react-router-dom";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { TabList, TabContext, TabPanel } from "@mui/lab";
 import styled from "styled-components";
@@ -30,6 +31,9 @@ const BoxContainer = styled.div`
   justify-content: center;
   width: 100%;
   margin-top: 10vmin;
+  .button {
+    display: flex;
+  }
 `;
 
 const CustomedTabPanel = styled(TabPanel)`
@@ -92,6 +96,7 @@ const LogIn = ({
   handleInputChange,
   submit,
 }) => {
+  const navigate = useNavigate();
   return (
     <BoxContainer>
       <Welcome />
@@ -127,14 +132,24 @@ const LogIn = ({
                 onChange={handleInputChange}
                 name="password"
               />
-              <Button
-                variant="contained"
-                color="success"
-                sx={{ width: "min(10%, 10vmin)" }}
-                onClick={() => submit(data)}
-              >
-                登入
-              </Button>
+              <div className="button">
+                <Button
+                  variant="contained"
+                  color="success"
+                  sx={{ width: "min(10%, 10vmin)" }}
+                  onClick={() => submit(data)}
+                >
+                  登入
+                </Button>
+                <Button
+                  variant="contained"
+                  sx={{ width: "min(45%, 20vmin)" }}
+                  onClick={() => navigate("/forget")}
+                >
+                  忘記密碼？
+                </Button>
+              </div>
+              
             </Box>
           </CustomedTabPanel>
           <CustomedTabPanel value="2">
