@@ -42,7 +42,7 @@ const WholeContainer = styled.div`
 const Forget = () => {
   const { CRUD } = useWeb();
   const [data, setData] = useState({});
-  const Query = CRUD("W", "/password/forgot-password");
+  const Query = CRUD("C", "/password/forgot-password");
 
   const handleInputChange = (event) => {
     const { value } = event.target;

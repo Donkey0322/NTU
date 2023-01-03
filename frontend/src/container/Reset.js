@@ -45,7 +45,7 @@ const WholeContainer = styled.div`
 const Reset = () => {
   const { CRUD } = useWeb();
   const [data, setData] = useState({});
-  const Query = CRUD("W", "/password/reset-password");
+  const Query = CRUD("C", "/password/reset-password");
 
   const handleInputChange = (event) => {
     const { value } = event.target;

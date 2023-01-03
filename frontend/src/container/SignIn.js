@@ -28,10 +28,7 @@ const SignIn = () => {
       handleClickShowPassword={handleClickShowPassword}
       handleModeChange={handleModeChange}
       handleInputChange={handleInputChange}
-      submit={CRUD(
-        mode === "1" ? "C" : "W",
-        mode === "1" ? "/logIn" : "/signUp"
-      )}
+      submit={CRUD("C", mode === "1" ? "/logIn" : "/signUp")}
     />
   );
 };
