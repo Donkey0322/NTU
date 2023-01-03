@@ -29,7 +29,7 @@ const SignIn = () => {
       handleModeChange={handleModeChange}
       handleInputChange={handleInputChange}
       submit={CRUD(
-        mode === "1" ? "R" : "W",
+        mode === "1" ? "C" : "W",
         mode === "1" ? "/logIn" : "/signUp"
       )}
     />
