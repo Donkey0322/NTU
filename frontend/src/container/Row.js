@@ -17,9 +17,6 @@ import Chip from "@mui/joy/Chip";
 function Row({ item, id }) {
   const [open, setOpen] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
-  //   const { page, rowsPerPage, path, indexName, CRUD } = useDB();
-
-  //   const Query = CRUD("D", path);
 
   const onCollapse = () => {
     setOpen((open) => !open);
