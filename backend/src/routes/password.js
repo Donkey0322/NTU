@@ -38,7 +38,8 @@ router.post("/forgot-password", async (req, res) => {
       const token = jwt.sign({ email: result[0].mail, id: result[0].customer_id }, secret, {
         expiresIn: "5m",
       });
-      const link = `http://localhost:4000/password/reset-password/${result[0].customer_id}/${token}`;
+      // const link = `http://localhost:4000/password/reset-password/${result[0].customer_id}/${token}`;
+      const link = `http://localhost:3000/reset?customer_id=${result[0].customer_id}&token=${token}`;
       var transporter = nodemailer.createTransport({
         service: "gmail",
         auth: {
@@ -96,10 +97,13 @@ router.post("/forgot-password", async (req, res) => {
     try {
       const verify = jwt.verify(token, secret);
       const encryptedPassword = await bcrypt.hash(password, 10);
-      query = `update cusotmers set
+      query = `update customers set
                password = "${encryptedPassword}"
                where customer_id = ${id}; `
-      res.render("index", { email: verify.email, status: "verified" });
+      // res.render("index", { email: verify.email, status: "verified" });
+      const result = await Myquery(query)
+      // console.log(query)
+      res.json({ result });
     } catch (error) {
       console.log(error);
       res.json({ status: "Something Went Wrong" });

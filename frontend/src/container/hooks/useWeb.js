@@ -74,6 +74,7 @@ const WebProvider = (props) => {
               return { errors };
             } else throw err;
           }
+          break;
         case "R":
           try {
             console.log(value);
@@ -95,6 +96,7 @@ const WebProvider = (props) => {
               return { errors };
             } else throw err;
           }
+          break;
         case "U":
           try {
             const {
@@ -110,6 +112,7 @@ const WebProvider = (props) => {
             alert("Axios失敗");
             throw error;
           }
+          break;
         case "D":
           try {
             const {
@@ -124,6 +127,7 @@ const WebProvider = (props) => {
             alert("Axios失敗");
             throw error;
           }
+          break;
         default:
           break;
       }

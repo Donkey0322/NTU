@@ -4,6 +4,8 @@ const ProductsContainer = styled.div`
   width: 100%;
   display: flex;
   flex-wrap: wrap;
+  padding-right: 5vmin;
+  justify-content: space-between;
   gap: 2vmin 2%;
   div.product {
     display: flex;
@@ -38,8 +40,8 @@ const ProductsContainer = styled.div`
 
 const ProductImgContainer = styled.div`
   overflow: hidden;
-  width: 30vmin;
-  height: 30vmin;
+  width: 25vmin;
+  height: 25vmin;
   img {
     width: 100%;
     height: 100%;
@@ -48,34 +50,15 @@ const ProductImgContainer = styled.div`
   }
 `;
 
-const item = [
-  {
-    src: require("../../images/canele-1-1.png"),
-    label: "抹茶可麗露",
-    price: 80,
-  },
-  {
-    src: require("../../images/canele-2-1.png"),
-    label: "巧克力可麗露",
-    price: 80,
-  },
-  {
-    src: require("../../images/canele-3-1.png"),
-    label: "香草可麗露",
-    price: 80,
-  },
-];
-
 const Product = ({ style, products, handleNavigateToDetail }) => {
   console.log(
     products && products[0].img[0].replace(".png", "").replace("../../", "")
   );
   return (
     <ProductsContainer style={style && style}>
-      {products
-        ? products.map(
+      {products && products.map(
             (i, index) =>
-              index !== 11 && (
+              (
                 <div
                   className="product"
                   key={index}
@@ -89,15 +72,7 @@ const Product = ({ style, products, handleNavigateToDetail }) => {
                 </div>
               )
           )
-        : item.map((i, index) => (
-            <div className="product" key={index}>
-              <ProductImgContainer>
-                <img src={i.src} alt="" />
-              </ProductImgContainer>
-              <p className="label">{i.label}</p>
-              <p className="price">${i.price}</p>
-            </div>
-          ))}
+        }
     </ProductsContainer>
   );
 };

@@ -21,6 +21,7 @@ const RightContainer = styled.div`
   width: calc(100% - 180px);
   margin-top: 2vmin;
   margin-left: min(2vmin, 10px);
+  margin-bottom: 5vmin;
 `;
 
 const Products = () => {
