@@ -4,7 +4,7 @@ import { useWeb } from "./hooks/useWeb";
 import { useNavigate } from "react-router-dom";
 
 const SignIn = () => {
-  const { CRUD, setLogin, setCustomerID, login } = useWeb();
+  const { CRUD, setLogin, login, setCookie } = useWeb();
   const [data, setData] = useState({});
   const [error, setError] = useState(false);
   const [mode, setMode] = useState("1");
@@ -47,14 +47,16 @@ const SignIn = () => {
 
       }
     );
-    const result = await res.json();
+    const { result } = await res.json();
     console.log(result);
 
     if (result.errors) {
       setError(result.errors);
     } else {
       setLogin(true);
-      setCustomerID(result.customer_id);
+      console.log(result[0]);
+      // setCustomerID(result[0].customer_id);
+      setCookie('customer_id', result[0].customer_id, { path: '/' })
       navigate("/");
     }
   };
