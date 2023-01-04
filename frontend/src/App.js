@@ -11,6 +11,7 @@ import ShoppingCart from "./container/ShoppingCart";
 import Checkout from "./container/Checkout";
 import ContactUs from "./container/ContactUs";
 import VipInfo from "./container/VipInfo";
+import Order from "./container/Order";
 import { useEffect, useState } from "react";
 import Reset from "./container/Reset";
 import Forget from "./container/Forget";
@@ -58,6 +59,7 @@ function App() {
             <Route path=":id" element={<ProductDetail />} />
           </Route>
           <Route path="/shoppingcart" element={<ShoppingCart />} />
+          <Route path="/order" element={<Order />} />
           <Route path="/checkout" element={<Checkout />} />
           <Route path="/contactus" element={<ContactUs />} />
           <Route path="/vipinfo" element={<VipInfo />} />
