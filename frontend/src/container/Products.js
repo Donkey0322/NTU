@@ -44,17 +44,8 @@ const Products = () => {
 
   const handleSectionSubmit = async (section) => {
     try {
-      const result = await CRUD(
-        "R",
-        "/products"
-      )({
-        ...data,
-        section,
-      });
-      setData({
-        ...data,
-        section,
-      });
+      const result = await CRUD("R", "/products")({ ...data, section });
+      setData({ ...data, section });
       setProducts(result);
     } catch (err) {
       alert("有問題");
