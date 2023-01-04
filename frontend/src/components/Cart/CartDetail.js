@@ -1,10 +1,13 @@
-import Checkbox from "@mui/material/Checkbox";
 import styled from "styled-components";
-import React from "react";
-import IconButton from "@mui/material/IconButton";
 import HighlightOffOutlinedIcon from "@mui/icons-material/HighlightOffOutlined";
-import { useState } from "react";
-import { InputLabel, MenuItem, FormControl, Select } from "@mui/material";
+import {
+  IconButton,
+  Checkbox,
+  InputLabel,
+  MenuItem,
+  FormControl,
+  Select,
+} from "@mui/material";
 const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
 const ItemContainer = styled.div`
@@ -39,29 +42,26 @@ const npArange = (num) => {
 };
 
 const CartDetail = ({
-  cart_id,
-  name,
+  basket_id,
+  product_name,
   src,
   price,
-  summary,
   quantity,
+  number,
   handleCartDetailCheck,
   handleCartDetailNum,
+  handleDeleteCart,
 }) => {
-  const [num, setNum] = useState(quantity);
-  const handleChange = (event) => {
-    setNum(event.target.value);
-  };
-  const summaryArr = npArange(summary);
+  const summaryArr = npArange(quantity);
   return (
     <ItemContainer>
       <LeftContainer>
         <Checkbox
           {...label}
-          onChange={(e) => handleCartDetailCheck(cart_id)(e)}
+          onChange={(e) => handleCartDetailCheck(basket_id)(e)}
         />
         <img src={src} alt="" />
-        <p>{name}</p>
+        <p>{product_name}</p>
       </LeftContainer>
       <RightContainer>
         <p>NT${price}</p>
@@ -70,11 +70,10 @@ const CartDetail = ({
             <InputLabel id="demo-select-small">數量</InputLabel>
             <Select
               labelId="demo-select-small"
-              value={num}
+              value={number}
               label="數量"
               onChange={(e) => {
-                handleChange(e);
-                handleCartDetailNum(cart_id)(e);
+                handleCartDetailNum(basket_id)(e);
               }}
             >
               {summaryArr.map((m, index) => (
@@ -85,7 +84,7 @@ const CartDetail = ({
             </Select>
           </FormControl>
         )}
-        <IconButton aria-label="delete">
+        <IconButton aria-label="delete" onClick={handleDeleteCart}>
           <HighlightOffOutlinedIcon />
         </IconButton>
       </RightContainer>
