@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { useNavigate, Outlet } from "react-router-dom";
 import Logo from "../components/Logo";
+import { useWeb } from "./hooks/useWeb";
 
 const AppContainer = styled.div`
   width: 80%;
@@ -46,6 +47,15 @@ const BarContainer = styled.div`
 
 const AppFrame = () => {
   const navigate = useNavigate();
+  const { CRUD, login } = useWeb();
+  const checkLogin = () => {
+    if(login){
+      navigate("/vipinfo")
+    }
+    else{
+      navigate("/signin")
+    }
+  }
   return (
     <AppContainer>
       <div className="logo" onClick={() => navigate("/")}>
@@ -57,7 +67,7 @@ const AppFrame = () => {
           <li onClick={() => navigate("/products")}>
             <p>產品總覽</p>
           </li>
-          <li onClick={() => navigate("/vipinfo")}>
+          <li onClick={() => checkLogin()}>
             <p>會員專區</p>
           </li>
           <li onClick={() => navigate("/contactUs")}>

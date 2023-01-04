@@ -3,6 +3,11 @@ import { List, ListItem, ListItemButton, ListItemText } from "@mui/material";
 const Filter = ({ data, submit, setProducts }) => {
   const filter = [
     {
+      section: "all",
+      src: require("../../icons/all.png"),
+      primary: "全部商品",
+    },
+    {
       section: "hot",
       src: require("../../icons/top.png"),
       primary: "熱門商品",
@@ -23,8 +28,8 @@ const Filter = ({ data, submit, setProducts }) => {
       primary: "餅乾",
     },
     {
-      section: "hot",
-      src: null,
+      section: "set",
+      src: require("../../icons/set.png"),
       primary: "組合",
     },
   ];
