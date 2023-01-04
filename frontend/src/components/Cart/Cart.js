@@ -31,10 +31,9 @@ const Cart = ({
             <CartDetail
               basket_id={i.basket_id}
               product_name={i.product_name}
-              src={i.src}
+              src={i.img}
               price={i.price}
               quantity={i.quantity}
-              number={i.number}
               key={index}
               handleCartDetailCheck={handleCartDetailCheck}
               handleCartDetailNum={handleCartDetailNum}

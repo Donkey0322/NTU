@@ -4,9 +4,8 @@ import {
   IconButton,
   Checkbox,
   InputLabel,
-  MenuItem,
   FormControl,
-  Select,
+  OutlinedInput,
 } from "@mui/material";
 const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
@@ -21,7 +20,7 @@ const LeftContainer = styled.div`
   display: flex;
   align-items: center;
   height: 100%;
-  column-gap: 2vmin;
+  column-gap: 5vmin;
   img {
     height: 80%;
   }
@@ -33,26 +32,16 @@ const RightContainer = styled.div`
   justify-content: flex-end;
 `;
 
-const npArange = (num) => {
-  const result = [];
-  for (let i = 0; i < num + 1; i++) {
-    result.push(i);
-  }
-  return result;
-};
-
 const CartDetail = ({
   basket_id,
   product_name,
   src,
   price,
   quantity,
-  number,
   handleCartDetailCheck,
   handleCartDetailNum,
   handleDeleteCart,
 }) => {
-  const summaryArr = npArange(quantity);
   return (
     <ItemContainer>
       <LeftContainer>
@@ -60,30 +49,25 @@ const CartDetail = ({
           {...label}
           onChange={(e) => handleCartDetailCheck(basket_id)(e)}
         />
-        <img src={src} alt="" />
+        <img src={src && require("../../" + src + ".png")} alt="" />
         <p>{product_name}</p>
       </LeftContainer>
       <RightContainer>
         <p>NT${price}</p>
-        {summaryArr.length > 0 && (
-          <FormControl sx={{ minWidth: 70 }} size="small">
-            <InputLabel id="demo-select-small">數量</InputLabel>
-            <Select
-              labelId="demo-select-small"
-              value={number}
-              label="數量"
-              onChange={(e) => {
-                handleCartDetailNum(basket_id)(e);
-              }}
-            >
-              {summaryArr.map((m, index) => (
-                <MenuItem value={m} key={index}>
-                  {m}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-        )}
+
+        <FormControl sx={{ maxWidth: "50vmin" }} size="small">
+          <InputLabel id="demo-select-small">數量</InputLabel>
+          <OutlinedInput
+            // labelId="demo-select-small"
+            label="數量"
+            type="number"
+            onChange={(e) => {
+              handleCartDetailNum(basket_id)(e);
+            }}
+            value={quantity}
+          />
+        </FormControl>
+
         <IconButton aria-label="delete" onClick={handleDeleteCart}>
           <HighlightOffOutlinedIcon />
         </IconButton>
