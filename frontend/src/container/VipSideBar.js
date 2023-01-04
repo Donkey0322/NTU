@@ -14,7 +14,7 @@ import {
   DialogContentText,
   DialogTitle
 } from "@mui/material";
-
+import { useWeb } from "./hooks/useWeb";
 const items = [
   {
     name: "會員資料",
@@ -36,6 +36,7 @@ const items = [
 function VipSideBar() {
   const location = useLocation();
   const currentPath = location.pathname;
+  const {removeCookie, setLogin} = useWeb();
   // console.log(Link);
   const navigate = useNavigate();
   const [open, setOpen] = React.useState(false);
@@ -46,6 +47,8 @@ function VipSideBar() {
     setOpen(false);
   };
   const toMain = () => {
+      removeCookie('customer_id', { path: '/' });
+      setLogin(false);
       navigate("/");
     };
   return (
