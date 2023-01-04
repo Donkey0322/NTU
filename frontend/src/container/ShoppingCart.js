@@ -55,7 +55,7 @@ const ShoppingCart = () => {
   const [items, setItems] = useState(item);
   const [sum, setSum] = useState(0);
   const { CRUD, customer_id, login } = useWeb();
-
+  console.log(customer_id)
   useEffect(() => {
     const Render = async () => {
       try {

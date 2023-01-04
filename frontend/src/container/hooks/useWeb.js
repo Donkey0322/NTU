@@ -7,7 +7,6 @@ import {
 } from "react";
 import axios from "axios";
 const instance = axios.create({ baseURL: "http://localhost:4000/" });
-
 const WebContext = createContext({
   page: 0, //顯示是在第幾頁 table
   rowsPerPage: 10, //一頁包含幾個 tuple
@@ -55,7 +54,8 @@ const WebProvider = (props) => {
   //   if (!login) {
   //     getUser();
   //   }
-  // }, []);
+  // }, [google]);
+
 
   const CRUD =
     (type, path) =>
@@ -85,10 +85,10 @@ const WebProvider = (props) => {
           break;
         case "R":
           try {
-            console.log(value);
             const {
               data: { result },
-            } = await instance.get(`${path}`, { params: value });
+            } = await instance.get(`${path}`, {params: value});
+
             if (typeof result !== "undefined") {
               console.log(result);
               return result;
