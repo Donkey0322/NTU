@@ -56,6 +56,7 @@ router.post('/', async(req, res) => {
     update = update + `order by basket.basket_id desc
                        limit 1`;
     const result = await Myquery(update)
+    console.log(update)
     res.status(200).send({result}); 
 })
 
@@ -84,7 +85,8 @@ router.put("/", async (req, res) => {
                     quantity = ${quantity}
                     where basket_id = ${basket_id}`;
 
-    await Myquery(query);
+  await Myquery(query);
+  res.status(200).send()
 })
 
 

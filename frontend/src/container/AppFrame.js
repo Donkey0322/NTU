@@ -16,18 +16,22 @@ const AppContainer = styled.div`
 `;
 
 const BarContainer = styled.div`
-  width: 80%;
+  width: 100%;
   height: 10vmin;
-  min-height: 50px;
-
-  padding-top: 30px;
-
-  border-bottom: 2px solid gray;
-  color: black;
+  min-height:80px;
+  /* margin-bottom: 5%; */
+  color: white;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  font-size: 20px;
+  font-weight: 900;
   ul.big {
+    width: 100%;
+    height: 50%; 
+    align-items: center;
+    justify-content: center;
+    background-color: RosyBrown;
     display: flex;
     li {
       list-style: none;
@@ -36,9 +40,9 @@ const BarContainer = styled.div`
       cursor: pointer;
       transition: all 200ms;
       &:hover {
-        text-shadow: 0 0 5px #ffa500, 0 0 15px #ffa500, 0 0 20px #ffa500,
-          0 0 40px #ffa500, 0 0 60px #ff0000, 0 0 10px #ff8d00, 0 0 98px #ff0000;
-        color: #fff6a9;
+        /* text-shadow: 0 0 5px #ffa500, 0 0 15px #ffa500, 0 0 20px #ffa500,
+          0 0 40px #ffa500, 0 0 60px #ff0000, 0 0 10px #ff8d00, 0 0 98px #ff0000; */
+        color: black;
       }
     }
   }
@@ -54,7 +58,7 @@ const BarContainer = styled.div`
 `;
 
 const Header = styled.div`
-  background-color: beige;
+  background-color: OldLace;
   width: 100vw;
   display: flex;
   flex-direction: column;
@@ -63,7 +67,7 @@ const Header = styled.div`
   position: sticky;
   top: -10px;
   z-index: 100;
-  /* height: 40vmin; */
+  height: 20vmin; 
 `;
 
 const AppFrame = () => {
