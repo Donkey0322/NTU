@@ -64,10 +64,10 @@ const Arrow = ({ icon, style, onClick }) => {
 const Autoslider = forwardRef(({ style, prevSlide, nextSlide }, ref) => (
   <AutoSlide id="slider" ref={ref}>
     <ul id="slideWrap" style={style}>
-      <SlideImg img={require("../images/canele-1-1.png")} />
-      <SlideImg img={require("../images/canele-2-1.png")} />
-      <SlideImg img={require("../images/canele-3-1.png")} />
-      <SlideImg img={require("../images/canele-4-1.png")} />
+      <SlideImg img={require("../images/main-1.png")} />
+      <SlideImg img={require("../images/main-2.png")} />
+      <SlideImg img={require("../images/main-3.png")} />
+      <SlideImg img={require("../images/main-4.png")} />
     </ul>
     <Arrow
       icon={<KeyboardArrowLeft />}

@@ -69,20 +69,6 @@ const Product = ({ style, products, handleNavigateToDetail }) => {
             <p className="price">${i.price}</p>
           </div>
         ))}
-      {products &&
-        products.map((i, index) => (
-          <div
-            className="product"
-            key={index}
-            onClick={() => handleNavigateToDetail(i.product_id)}
-          >
-            <ProductImgContainer>
-              <img src={require("../../" + i.img[0] + ".png")} alt="" />
-            </ProductImgContainer>
-            <p className="label">{i.product_name}</p>
-            <p className="price">${i.price}</p>
-          </div>
-        ))}
     </ProductsContainer>
   );
 };
