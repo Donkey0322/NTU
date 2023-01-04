@@ -10,7 +10,7 @@ const ProductContainer = styled.div`
   background-color: white;
 `;
 const LeftContainer = styled.div`
-  border-top: 2px solid black;
+  /* border-top: 2px solid black; */
   .icon {
     width: 20px;
     margin-right: 10px;

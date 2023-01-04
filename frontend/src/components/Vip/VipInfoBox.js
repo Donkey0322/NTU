@@ -1,11 +1,4 @@
-import {
-  InputLabel,
-  MenuItem,
-  FormControl,
-  OutlinedInput,
-  Select,
-  Input,
-} from "@mui/material";
+import { InputLabel, FormControl, OutlinedInput, Input } from "@mui/material";
 import styled from "styled-components";
 
 const PureInput = ({
@@ -30,6 +23,7 @@ const PureInput = ({
           name={name}
           autoComplete={autoComplete && autoComplete}
           label={label}
+          value={value}
           onChange={onChange}
           defaultValue={value}
           color={error && error[name] ? "error" : "primary"}
@@ -41,6 +35,7 @@ const PureInput = ({
           autoComplete={autoComplete && autoComplete}
           label={label}
           onChange={onChange}
+          value={value}
           color={error && error[name] ? "error" : "primary"}
         />
       ) : null}
