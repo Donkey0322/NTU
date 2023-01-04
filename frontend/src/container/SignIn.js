@@ -4,7 +4,7 @@ import { useWeb } from "./hooks/useWeb";
 import { useNavigate } from "react-router-dom";
 
 const SignIn = () => {
-  const { CRUD, setLogin, login, setCookie } = useWeb();
+  const { CRUD, setLogin, login, setCookie} = useWeb();
   const [data, setData] = useState({});
   const [error, setError] = useState(false);
   const [mode, setMode] = useState("1");
@@ -13,6 +13,7 @@ const SignIn = () => {
   const handleClickShowPassword = () => setShowPassword((show) => !show);
   const handleModeChange = (_, newValue) => {
     setMode(newValue);
+    setError(false)
   };
   const handleInputChange = (event) => {
     // console.log(event.target.value);
@@ -62,17 +63,8 @@ const SignIn = () => {
   };
   const handleGoogleClick = async() => {
     window.open("http://localhost:4000/auth/google", "_self");
-    const res = await  fetch("http://localhost:4000/auth/login/success", {
-      method: "GET",
-      credentials: "include",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Credentials": true,
-      },
-    })
-    console.log(res);
   };
+
 
   useEffect(() => {
     if (login) {

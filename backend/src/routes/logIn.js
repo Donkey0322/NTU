@@ -60,21 +60,23 @@ router.post("/", async (req, res) => {
   errors = await check.checkPassword(mail, password, errors);
   if (errors.mail || errors.password) {
     console.log(errors);
-    res.status(400).json({ errors });
+    res.status(400).json({ result: {errors} });
   } else {
     console.log("logIn succeed");
     const query_in = `select * from customers where mail = "${mail}"`;
     const result = await Myquery(query_in);
     const token = createToken(result[0].customer_id);
-    res.cookie("jwt", token, { httpOnly: true, maxAge: maxAge * 1000 });
+    res.cookie("jwt", token, { httpOnly: false, maxAge: maxAge * 1000 });
     res.status(200).json({ result });
   }
 });
 
-router.get("/", (req, res) => {
-  console.log(1);
-  res.cookie("jwt", "", { maxAge: 1 });
-  res.redirect(CLIENT_URL);
-});
+// router.get("/", (req, res) => {
+//   console.log(1);
+//   console.log('logOut')
+//   res.cookie("jwt", "", { maxAge: 1 });
+// //   res.status(200).json({result: "success"});
+//   res.redirect(CLIENT_URL);
+// });
 
 export default router;

@@ -17,7 +17,7 @@ sql.connect(function (err) {
 
 const app = express();
 app.set("view engine", "ejs");
-app.use(cookieSession({ name: "session", keys: ["lama"], maxAge: 3 * 24 * 60 * 60 * 100 }));
+app.use(cookieSession({ name: "session", keys: ["web programming"], maxAge: 3 * 24 * 60 * 60 * 100 , httpOnly: false}));
 
 app.use(passport.initialize());
 app.use(passport.session());

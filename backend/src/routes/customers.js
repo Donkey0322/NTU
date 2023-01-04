@@ -33,9 +33,10 @@ router.delete("/", async (req, res) => {
   res.status(200).send({ result });
 });
 
-router.get("/", async (_, res) => {
+router.get("/", async (req, res) => {
+  const {customer_id} = req.query
   let query = `select * from customers
-    order by customer_id desc;`;
+               where customer_id = ${customer_id};`;
   var result = await Myquery(query);
   res.status(200).send({ result });
 });
