@@ -7,9 +7,26 @@ const SignIn = () => {
   const { setLogin, login, setCookie} = useWeb();
   const [data, setData] = useState({});
   const [error, setError] = useState(false);
+  const [pass1, setPass1] = useState('');
+  const [pass2, setPass2] = useState('');
   const [mode, setMode] = useState("1");
+  const [checked, setChecked] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
+  const handleInputChange1 = (event) => {
+    setPass1(event.target.value);
+    const { name, value } = event.target;
+    setData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+  const handleInputChange2 = (event) => {
+    setPass2(event.target.value);
+  };
+  const handleChange = () => {
+    setChecked(!checked);
+  };
   const handleClickShowPassword = () => setShowPassword((show) => !show);
   const handleModeChange = (_, newValue) => {
     setMode(newValue);
@@ -24,6 +41,7 @@ const SignIn = () => {
     }));
   };
   const handleClickSubmit = async () => {
+    if(pass1 !== pass2) return
     if (!data.mail || !data.password) {
       setError(false);
       if (!data.mail)
@@ -49,7 +67,7 @@ const SignIn = () => {
       }
     )
     const { result } = await res.json();
-    console.log(result);
+    console.log('login~~', result);
 
     if (result.errors) {
       setError(result.errors);
@@ -85,6 +103,12 @@ const SignIn = () => {
       handleGoogleClick={handleGoogleClick}
       navigateToForgetPassword={navigateToForgetPassword}
       submit={handleClickSubmit}
+      handleChange={handleChange}
+      checked={checked}
+      handleInputChange1={handleInputChange1}
+      handleInputChange2={handleInputChange2}
+      pass1={pass1}
+      pass2={pass2}
     />
   );
 };
