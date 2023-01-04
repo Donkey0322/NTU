@@ -77,7 +77,6 @@ const WebProvider = (props) => {
             const {
               data: { result },
             } = await instance.put(`${path}`, value);
-            const newResult = [];
             if (typeof result !== "undefined") {
               return result;
             } else {

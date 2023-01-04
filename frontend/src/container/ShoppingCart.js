@@ -4,56 +4,8 @@ import { useWeb } from "./hooks/useWeb";
 import Cart from "../components/Cart";
 import { useNavigate } from "react-router-dom";
 
-const item = [
-  {
-    basket_id: 1,
-    product_name: "抹茶可麗露",
-    src: require("../images/canele-2-1.png"),
-    price: 80,
-    quantity: 5,
-    number: 0,
-    chosen: false,
-  },
-  {
-    basket_id: 2,
-    product_name: "抹茶可麗露",
-    src: require("../images/canele-2-1.png"),
-    price: 80,
-    quantity: 8,
-    number: 0,
-    chosen: false,
-  },
-  {
-    basket_id: 3,
-    product_name: "抹茶可麗露",
-    src: require("../images/canele-2-1.png"),
-    price: 80,
-    quantity: 15,
-    number: 0,
-    chosen: false,
-  },
-  {
-    basket_id: 4,
-    product_name: "抹茶可麗露",
-    src: require("../images/canele-2-1.png"),
-    price: 80,
-    quantity: 1,
-    number: 0,
-    chosen: false,
-  },
-  {
-    basket_id: 5,
-    product_name: "抹茶可麗露",
-    src: require("../images/canele-2-1.png"),
-    price: 80,
-    quantity: 4,
-    number: 0,
-    chosen: false,
-  },
-];
-
 const ShoppingCart = () => {
-  const [items, setItems] = useState(item);
+  const [items, setItems] = useState(null);
   const [sum, setSum] = useState(0);
   const [basket_id, setBasketID] = useState([]);
   const { CRUD, cookies } = useWeb();
@@ -65,8 +17,8 @@ const ShoppingCart = () => {
           "R",
           "/basket"
         )({ customer_id: cookies.customer_id });
-
-        setItems(newItem.map((m) => ({ ...m, number: 0 })));
+        console.log(newItem);
+        setItems(newItem);
       } catch (err) {
         console.log("有問題");
       }
@@ -89,7 +41,7 @@ const ShoppingCart = () => {
     if (basket_id.length > 0) {
       console.log(basket_id);
       navigate("/checkout", {
-        state: { basket_id },
+        state: { basket_id, sum },
       });
     }
   };
@@ -113,22 +65,31 @@ const ShoppingCart = () => {
     setItems(newitems);
   };
 
-  const handleCartDetailNum = (basket_id) => (event) => {
-    let newitems = items.map((m) => {
-      if (m.basket_id === basket_id) {
-        return { ...m, number: event.target.value };
-      }
-      return m;
-    });
-    setItems(newitems);
+  const handleCartDetailNum = (basket_id) => async (event) => {
+    try {
+      if (event.target.value < 1) return;
+      let newitems = items.map((m) => {
+        if (m.basket_id === basket_id) {
+          return { ...m, quantity: Number(event.target.value) };
+        }
+        return m;
+      });
+      console.log(newitems);
+      setItems(newitems);
+      await CRUD("U", "/basket")({ basket_id, quantity: event.target.value });
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   useEffect(() => {
     let temp = 0;
-    for (const i of items) {
-      if (i.chosen) temp += i.price * i.number;
+    if (items) {
+      for (const i of items) {
+        if (i.chosen) temp += i.price * i.quantity;
+      }
+      setSum(temp);
     }
-    setSum(temp);
   }, [items]);
 
   return (

@@ -88,7 +88,13 @@ const meetForm = [
   },
 ];
 
-const Checkout = ({ send, data, handleInputChange, handleCheckoutSubmit }) => {
+const Checkout = ({
+  send,
+  data,
+  handleInputChange,
+  handleCheckoutSubmit,
+  sum,
+}) => {
   if (send === true)
     return (
       <BoxContainer>
@@ -156,7 +162,7 @@ const Checkout = ({ send, data, handleInputChange, handleCheckoutSubmit }) => {
             label="我同意訂單一旦送出，未經賣家同意不得取消訂單"
           />
           <div>
-            <p>總價 NT$ 500</p>
+            <p>總價 NT$ {sum}</p>
             <Button variant="contained" onClick={handleCheckoutSubmit}>
               送出訂單
             </Button>

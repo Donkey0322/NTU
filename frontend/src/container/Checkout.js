@@ -5,7 +5,7 @@ import { useLocation } from "react-router-dom";
 
 const Checkout = () => {
   const {
-    state: { basket_id },
+    state: { basket_id, sum },
   } = useLocation();
   const { cookies, CRUD } = useWeb();
   const [data, setData] = useState({
@@ -29,11 +29,8 @@ const Checkout = () => {
 
   const handleCheckoutSubmit = async () => {
     try {
-      const result = await CRUD(
-        "C",
-        "/orders_create"
-      )({ ...data, order_date: new Date() });
       setSend(true);
+      await CRUD("C", "/orders_create")({ ...data, order_date: new Date() });
     } catch (err) {
       alert("有問題");
     }
@@ -42,6 +39,7 @@ const Checkout = () => {
     <Checkout_Board
       send={send}
       data={data}
+      sum={sum}
       handleInputChange={handleInputChange}
       handleCheckoutSubmit={handleCheckoutSubmit}
     />
