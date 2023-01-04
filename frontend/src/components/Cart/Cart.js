@@ -15,22 +15,29 @@ const DownContainer = styled.div`
   column-gap: 3vmin;
 `;
 
-const Cart = ({ items, sum, handleCartDetailCheck, handleCartDetailNum }) => {
+const Cart = ({
+  items,
+  sum,
+  handleCartDetailCheck,
+  handleCartDetailNum,
+  handleDeleteCart,
+}) => {
   return (
     <WholeContainer>
       <Paper>
         {items &&
           items.map((i, index) => (
             <CartDetail
-              cart_id={i.cart_id}
-              name={i.name}
+              basket_id={i.basket_id}
+              product_name={i.product_name}
               src={i.src}
               price={i.price}
-              summary={i.summary}
               quantity={i.quantity}
+              number={i.number}
               key={index}
               handleCartDetailCheck={handleCartDetailCheck}
               handleCartDetailNum={handleCartDetailNum}
+              handleDeleteCart={handleDeleteCart}
             />
           ))}
       </Paper>

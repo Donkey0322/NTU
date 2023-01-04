@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams, Outlet } from "react-router-dom";
+import { useParams, Outlet, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { ProductsWithSortBar, Filter } from "../components/Products/index.js";
 import { useWeb } from "./hooks/useWeb";
@@ -28,6 +28,8 @@ const Products = () => {
   const [products, setProducts] = useState(null);
   const [sort, setSort] = useState("");
   const { id } = useParams();
+  const navigate = useNavigate();
+
   const handleSortChange = (event) => {
     setSort(event.target.value);
     setData((prev) => ({
@@ -38,10 +40,21 @@ const Products = () => {
   const { CRUD } = useWeb();
   const Query = CRUD("R", "/products");
 
-  // useEffect(() => {
-  //   const result = Query(data);
-  //   setProducts(result);
-  // }, []);
+  const handleNavigateToDetail = (product_id) => {
+    navigate("/products/" + product_id);
+  };
+
+  useEffect(() => {
+    const Render = async () => {
+      try {
+        const result = await CRUD("R", "/products")(data);
+        setProducts(result);
+      } catch (err) {
+        alert("有問題");
+      }
+    };
+    Render();
+  }, []);
 
   return (
     <ProductContainer>
@@ -55,6 +68,7 @@ const Products = () => {
           <ProductsWithSortBar
             sort={sort}
             handleSortChange={handleSortChange}
+            handleNavigateToDetail={handleNavigateToDetail}
             products={products}
           />
         )}

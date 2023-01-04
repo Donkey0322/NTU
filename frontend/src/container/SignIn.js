@@ -1,10 +1,10 @@
 import LogIn from "../components/LogIn";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useWeb } from "./hooks/useWeb";
 import { useNavigate } from "react-router-dom";
 
 const SignIn = () => {
-  const { CRUD, setLogin, setCustomerID } = useWeb();
+  const { CRUD, setLogin, setCustomerID, login } = useWeb();
   const [data, setData] = useState({});
   const [error, setError] = useState(false);
   const [mode, setMode] = useState("1");
@@ -33,15 +33,19 @@ const SignIn = () => {
     }
     setError(false);
     // const result = await CRUD("C", mode === "1" ? "/logIn" : "/signUp")(data);
-    const res = await fetch('http://localhost:4000/signUp', { 
-      method: 'POST', 
-      body: JSON.stringify({ data }),
-      credentials: 'include',
-      headers: {Accept: "application/json",
-      "Content-Type": "application/json",
-      "Access-Control-Allow-Credentials": true,}
-      
-    });
+    const res = await fetch(
+      `http://localhost:4000/${mode === "1" ? "/logIn" : "/signUp"}`,
+      {
+        method: "POST",
+        body: JSON.stringify({ data }),
+        credentials: "include",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Credentials": true,
+        },
+      }
+    );
     const result = await res.json();
     console.log(result);
 
@@ -56,6 +60,11 @@ const SignIn = () => {
   const handleGoogleClick = () => {
     window.open("http://localhost:4000/auth/google", "_self");
   };
+  useEffect(() => {
+    if (login) {
+      navigate("/");
+    }
+  }, [login]);
   const navigateToForgetPassword = () => navigate("/forget");
   return (
     <LogIn

@@ -1,51 +1,52 @@
 import React from "react";
 import { useState, useEffect } from "react";
+import { useWeb } from "./hooks/useWeb";
 import Cart from "../components/Cart";
 
 const item = [
   {
-    cart_id: 1,
-    name: "抹茶可麗露",
+    basket_id: 1,
+    product_name: "抹茶可麗露",
     src: require("../images/canele-2-1.png"),
     price: 80,
-    summary: 5,
-    quantity: 0,
+    quantity: 5,
+    number: 0,
     chosen: false,
   },
   {
-    cart_id: 2,
-    name: "抹茶可麗露",
+    basket_id: 2,
+    product_name: "抹茶可麗露",
     src: require("../images/canele-2-1.png"),
     price: 80,
-    summary: 8,
-    quantity: 0,
+    quantity: 8,
+    number: 0,
     chosen: false,
   },
   {
-    cart_id: 3,
-    name: "抹茶可麗露",
+    basket_id: 3,
+    product_name: "抹茶可麗露",
     src: require("../images/canele-2-1.png"),
     price: 80,
-    summary: 15,
-    quantity: 0,
+    quantity: 15,
+    number: 0,
     chosen: false,
   },
   {
-    cart_id: 4,
-    name: "抹茶可麗露",
+    basket_id: 4,
+    product_name: "抹茶可麗露",
     src: require("../images/canele-2-1.png"),
     price: 80,
-    summary: 1,
-    quantity: 0,
+    quantity: 1,
+    number: 0,
     chosen: false,
   },
   {
-    cart_id: 5,
-    name: "抹茶可麗露",
+    basket_id: 5,
+    product_name: "抹茶可麗露",
     src: require("../images/canele-2-1.png"),
     price: 80,
-    summary: 4,
-    quantity: 0,
+    quantity: 4,
+    number: 0,
     chosen: false,
   },
 ];
@@ -53,9 +54,35 @@ const item = [
 const ShoppingCart = () => {
   const [items, setItems] = useState(item);
   const [sum, setSum] = useState(0);
-  const handleCartDetailCheck = (cart_id) => (event) => {
+  const { CRUD, customer_id } = useWeb;
+
+  useEffect(() => {
+    const Render = async () => {
+      try {
+        const newItem = await CRUD("R", "/basket")({ customer_id });
+        setItems(newItem);
+      } catch (err) {
+        console.log("有問題");
+      }
+    };
+    console.log(customer_id);
+    if (customer_id) {
+      Render();
+    }
+  }, [customer_id]);
+
+  const handleDeleteCart = async (basket_id) => {
+    try {
+      const newItem = await CRUD("D", "/basket")(basket_id);
+      setItems(newItem);
+    } catch (err) {
+      alert("有問題");
+    }
+  };
+
+  const handleCartDetailCheck = (basket_id) => (event) => {
     let newitems = items.map((m) => {
-      if (m.cart_id === cart_id) {
+      if (m.basket_id === basket_id) {
         return { ...m, chosen: event.target.checked };
       }
       return m;
@@ -63,10 +90,10 @@ const ShoppingCart = () => {
     setItems(newitems);
   };
 
-  const handleCartDetailNum = (cart_id) => (event) => {
+  const handleCartDetailNum = (basket_id) => (event) => {
     let newitems = items.map((m) => {
-      if (m.cart_id === cart_id) {
-        return { ...m, quantity: event.target.value };
+      if (m.basket_id === basket_id) {
+        return { ...m, number: event.target.value };
       }
       return m;
     });
@@ -76,7 +103,7 @@ const ShoppingCart = () => {
   useEffect(() => {
     let temp = 0;
     for (const i of items) {
-      if (i.chosen) temp += i.price * i.quantity;
+      if (i.chosen) temp += i.price * i.number;
     }
     setSum(temp);
   }, [items]);
@@ -87,6 +114,7 @@ const ShoppingCart = () => {
       sum={sum}
       handleCartDetailCheck={handleCartDetailCheck}
       handleCartDetailNum={handleCartDetailNum}
+      handleDeleteCart={handleDeleteCart}
     />
   );
 };

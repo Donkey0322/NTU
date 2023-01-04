@@ -66,19 +66,29 @@ const item = [
   },
 ];
 
-const Product = ({ style, products }) => {
+const Product = ({ style, products, handleNavigateToDetail }) => {
+  console.log(
+    products && products[0].img[0].replace(".png", "").replace("../../", "")
+  );
   return (
     <ProductsContainer style={style && style}>
       {products
-        ? products.map((i, index) => (
-            <div className="product" key={index}>
-              <ProductImgContainer>
-                <img src={i.src} alt="" />
-              </ProductImgContainer>
-              <p className="label">{i.label}</p>
-              <p className="price">${i.price}</p>
-            </div>
-          ))
+        ? products.map(
+            (i, index) =>
+              index !== 11 && (
+                <div
+                  className="product"
+                  key={index}
+                  onClick={() => handleNavigateToDetail(i.product_id)}
+                >
+                  <ProductImgContainer>
+                    <img src={require("../../" + i.img[0] + ".png")} alt="" />
+                  </ProductImgContainer>
+                  <p className="label">{i.product_name}</p>
+                  <p className="price">${i.price}</p>
+                </div>
+              )
+          )
         : item.map((i, index) => (
             <div className="product" key={index}>
               <ProductImgContainer>

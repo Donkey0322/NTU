@@ -39,7 +39,7 @@ const Filter = ({ data, submit, setProducts }) => {
       aria-label="secondary mailbox folders"
     >
       {filter.map((f, index) => (
-        <ListItem disablePadding>
+        <ListItem disablePadding key={index}>
           <ListItemButton
             onClick={() => {
               const result = submit({

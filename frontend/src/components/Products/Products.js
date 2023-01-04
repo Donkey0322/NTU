@@ -3,7 +3,12 @@
 import { InputLabel, MenuItem, FormControl, Select } from "@mui/material";
 import Product from "./Product";
 
-const Products = ({ sort, handleSortChange, products }) => {
+const Products = ({
+  sort,
+  handleSortChange,
+  products,
+  handleNavigateToDetail,
+}) => {
   return (
     <>
       <FormControl sx={{ minWidth: 120, mb: "2vmin" }} size="small">
@@ -20,7 +25,10 @@ const Products = ({ sort, handleSortChange, products }) => {
           <MenuItem value={30}>銷量由高到低</MenuItem>
         </Select>
       </FormControl>
-      <Product products={products} />
+      <Product
+        products={products}
+        handleNavigateToDetail={handleNavigateToDetail}
+      />
     </>
   );
 };
