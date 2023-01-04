@@ -93,24 +93,6 @@ const VipInfo = () => {
                         <TextField className="text" label="" variant="standard" />
                     </div> 
                     <div className="input">
-                        <p>性別</p>
-                        <FormControl sx={{ minWidth: 80 }} className="text">
-                            <Select
-                            value={gender}
-                            onChange={handleChange}
-                            displayEmpty
-                            variant="standard"
-                            inputProps={{ 'aria-label': 'Without label' }}
-                            >
-                            <MenuItem value="">
-                                <em>性別</em>
-                            </MenuItem>
-                            <MenuItem value={10}>男</MenuItem>
-                            <MenuItem value={20}>女</MenuItem>
-                            </Select>
-                        </FormControl>
-                    </div>
-                    <div className="input">
                         <p>會員生日</p>
                         <TextField
                             className="text"

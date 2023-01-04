@@ -1,5 +1,6 @@
 import Chip from "@mui/material/Chip";
 import React, { useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import styled from "styled-components";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import EmailIcon from "@mui/icons-material/Email";
@@ -45,11 +46,13 @@ const WholeContainer = styled.div`
 const Reset = () => {
   const { CRUD } = useWeb();
   const [data, setData] = useState({});
-  const Query = CRUD("C", "/password/reset-password");
-
+  const [searchParams, setSearchParams] = useSearchParams();
+  const customer_id = searchParams.get("customer_id")
+  const token = searchParams.get("token")
+  const Query = CRUD("C", `/password/reset-password/${customer_id}/${token}`);
   const handleInputChange = (event) => {
     const { value } = event.target;
-    setData({ email: value });
+    setData({ password: value });
   };
   return (
     <WholeContainer>

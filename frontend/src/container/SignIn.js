@@ -34,7 +34,7 @@ const SignIn = () => {
     setError(false);
     // const result = await CRUD("C", mode === "1" ? "/logIn" : "/signUp")(data);
     const res = await fetch(
-      `http://localhost:4000/${mode === "1" ? "/logIn" : "/signUp"}`,
+      `http://localhost:4000${mode === "1" ? "/logIn" : "/signUp"}`,
       {
         method: "POST",
         body: JSON.stringify({ data }),
