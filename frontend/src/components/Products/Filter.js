@@ -45,15 +45,7 @@ const Filter = ({ data, submit, setProducts }) => {
     >
       {filter.map((f, index) => (
         <ListItem disablePadding key={index}>
-          <ListItemButton
-            onClick={() => {
-              const result = submit({
-                ...data,
-                section: f.section,
-              });
-              setProducts(result);
-            }}
-          >
+          <ListItemButton onClick={() => submit(f.section)}>
             <img className="icon" src={f.src} alt="" />
             <ListItemText primary={f.primary} />
           </ListItemButton>
