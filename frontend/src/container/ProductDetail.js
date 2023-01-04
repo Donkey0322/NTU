@@ -1,5 +1,7 @@
 import styled from "styled-components";
 import React from "react";
+import { useWeb } from "./hooks/useWeb";
+import { useNavigate } from "react-router-dom";
 import {
   KeyboardDoubleArrowLeft,
   KeyboardDoubleArrowRight,
@@ -16,6 +18,11 @@ import {
   FormControl,
   FormControlLabel,
   Typography,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle
 } from "@mui/material";
 // import "./.css";
 
@@ -87,6 +94,22 @@ const SmallImgContainer = styled.div`
 `;
 
 const ProductDetail = () => {
+    const navigate = useNavigate();
+    const { CRUD, login } = useWeb();
+    const [open, setOpen] = React.useState(false);
+    const handleClickOpen = () => {
+      if(!login)
+        setOpen(true)
+    //   else
+    //     submit(data)
+    };
+    const handleClose = () => {
+      setOpen(false);
+    };
+    const toSignIn = () => {
+        navigate("/signin");
+      };
+
   return (
     <UpperContainer>
       <ImageContainer img={require("../images/canele-2-1.png")}>
@@ -119,10 +142,31 @@ const ProductDetail = () => {
             right: "1vmin",
           }}
           startIcon={<AddShoppingCart />}
-          // onClick={() => submit(data)}
+          onClick={handleClickOpen}
         >
           加入購物車
         </Button>
+        <Dialog
+            open={open}
+            onClose={handleClose}
+            aria-labelledby="alert-dialog-title"
+            aria-describedby="alert-dialog-description"
+        >
+            <DialogTitle id="alert-dialog-title">
+            {"想購買商品嗎？"}
+            </DialogTitle>
+            <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+                請先登入再將商品加入購物車。
+            </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+            <Button onClick={handleClose}>取消</Button>
+            <Button onClick={toSignIn} autoFocus>
+                登入/註冊
+            </Button>
+            </DialogActions>
+        </Dialog>
       </Information>
     </UpperContainer>
   );
