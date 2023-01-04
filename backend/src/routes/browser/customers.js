@@ -9,22 +9,25 @@ const Myquery = (query) => {
       if (err) {
         throw err;
       } else {
-        if(result.affectedRows !== 1){
-            console.log(result)
-            result.map((element) => {
-                element.birthday = moment(element.birthday).utc().format("YYYY-MM-DD");
-                element.birthday = new Date(element.birthday);})
+        console.log(result.affectedRows);
+        if (result.affectedRows !== 1) {
+          console.log(result);
+          result.map((element) => {
+            element.birthday = moment(element.birthday)
+              .utc()
+              .format("YYYY-MM-DD");
+            element.birthday = new Date(element.birthday);
+          });
         }
-          resolve(result);
-        }
+        console.log(result);
+        resolve(result);
       }
-    );
-})
+    });
+  });
 };
 
-
 router.get("/", async (req, res) => {
-  const {customer_id} = req.query
+  const { customer_id } = req.query;
   let query = `select * from customers
                where customer_id = ${customer_id};`;
   var result = await Myquery(query);
@@ -32,17 +35,17 @@ router.get("/", async (req, res) => {
 });
 
 router.put("/", async (req, res) => {
-    console.log('Customer to update:', req.body);
-    let {customer_id, customer_name, birthday, phone_number} = req.body;
-    let query = `update customers set
+  console.log("Customer to update:", req.body);
+  let { customer_id, customer_name, birthday, phone_number } = req.body;
+  let query = `update customers set
                  customer_name = "${customer_name}", 
                  birthday = "${moment(birthday).utc().format("YYYY-MM-DD")}",
                  phone_number = "${phone_number}"
              where customer_id = ${customer_id}`;
-    await Myquery(query);
-    let query_return = `select * from customers
+  await Myquery(query);
+  let query_return = `select * from customers
                             where customer_id = ${customer_id};`;
-    let result = await Myquery(query_return);
-    res.status(200).send({ result });
+  let result = await Myquery(query_return);
+  res.status(200).send({ result });
 });
 export default router;

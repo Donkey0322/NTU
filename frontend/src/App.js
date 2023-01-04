@@ -23,13 +23,14 @@ const AppContainer = styled.div`
   display: flex;
   justify-content: center;
   background-color: rgb(242, 233, 223);
+  background-color: white;
 `;
 
 function App() {
-  const {setLogin,setCookie} = useWeb();
+  const { setLogin, setCookie } = useWeb();
   useEffect(() => {
     const getUser = () => {
-        fetch("http://localhost:4000/auth/login/success", {
+      fetch("http://localhost:4000/auth/login/success", {
         method: "GET",
         credentials: "include",
         headers: {
@@ -44,9 +45,11 @@ function App() {
           throw new Error("authentication has been failed!");
         })
         .then((resObject) => {
-          console.log(resObject)
+          console.log(resObject);
           setLogin(true);
-          setCookie('customer_id',resObject.result[0].customer_id, { path: '/' });
+          setCookie("customer_id", resObject.result[0].customer_id, {
+            path: "/",
+          });
         })
         .catch((err) => {
           console.log(err);

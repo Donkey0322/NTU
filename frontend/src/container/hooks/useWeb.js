@@ -50,6 +50,7 @@ const WebProvider = (props) => {
           break;
         case "R":
           try {
+            console.log(value);
             const {
               data: { result },
             } = await instance.get(`${path}`, { params: value });
@@ -72,9 +73,10 @@ const WebProvider = (props) => {
           break;
         case "U":
           try {
+            console.log(value);
             const {
               data: { result },
-            } = await instance.put(`${path}`, { value });
+            } = await instance.put(`${path}`, value);
             const newResult = [];
             if (typeof result !== "undefined") {
               return result;
