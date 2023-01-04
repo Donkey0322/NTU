@@ -2,6 +2,7 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { useWeb } from "./hooks/useWeb";
 import Cart from "../components/Cart";
+import { useNavigate } from "react-router-dom";
 
 const item = [
   {
@@ -54,19 +55,22 @@ const item = [
 const ShoppingCart = () => {
   const [items, setItems] = useState(item);
   const [sum, setSum] = useState(0);
-  const { CRUD, cookies, login } = useWeb();
-  console.log(cookies.customer_id)
+  const [basket_id, setBasketID] = useState([]);
+  const { CRUD, cookies } = useWeb();
+  const navigate = useNavigate();
   useEffect(() => {
     const Render = async () => {
       try {
-        const newItem = await CRUD("R", "/basket")({ customer_id: cookies.customer_id });
+        const newItem = await CRUD(
+          "R",
+          "/basket"
+        )({ customer_id: cookies.customer_id });
 
         setItems(newItem.map((m) => ({ ...m, number: 0 })));
       } catch (err) {
         console.log("有問題");
       }
     };
-    console.log(cookies.customer_id);
     if (cookies.customer_id) {
       Render();
     }
@@ -81,9 +85,27 @@ const ShoppingCart = () => {
     }
   };
 
+  const handleCartSubmit = () => {
+    if (basket_id.length > 0) {
+      console.log(basket_id);
+      navigate("/checkout", {
+        state: { basket_id },
+      });
+    }
+  };
+
   const handleCartDetailCheck = (basket_id) => (event) => {
     let newitems = items.map((m) => {
       if (m.basket_id === basket_id) {
+        if (event.target.checked) {
+          setBasketID((prev) => [...prev, basket_id]);
+        } else {
+          setBasketID((prev) =>
+            prev.filter((value) => {
+              return value !== basket_id;
+            })
+          );
+        }
         return { ...m, chosen: event.target.checked };
       }
       return m;
@@ -116,6 +138,7 @@ const ShoppingCart = () => {
       handleCartDetailCheck={handleCartDetailCheck}
       handleCartDetailNum={handleCartDetailNum}
       handleDeleteCart={handleDeleteCart}
+      handleCartSubmit={handleCartSubmit}
     />
   );
 };

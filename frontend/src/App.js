@@ -10,7 +10,7 @@ import ProductDetail from "./container/ProductDetail";
 import ShoppingCart from "./container/ShoppingCart";
 import Checkout from "./container/Checkout";
 import ContactUs from "./container/ContactUs";
-import VipInfo from "./container/VipInfo";
+import VipInfo from "./container/Vip";
 import Order from "./container/Order";
 import { useEffect, useState } from "react";
 import Reset from "./container/Reset";
@@ -39,12 +39,12 @@ function App() {
         },
       })
         .then((response) => {
-          console.log(response)
+          console.log(response);
           if (response.status === 200) return response.json();
           throw new Error("authentication has been failed!");
         })
         .then((resObject) => {
-          console.log(resObject)
+          console.log(resObject);
           setUser(resObject.result[0].customer_name);
         })
         .catch((err) => {

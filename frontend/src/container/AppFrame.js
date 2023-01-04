@@ -48,23 +48,42 @@ const BarContainer = styled.div`
 
 const AppFrame = () => {
   const navigate = useNavigate();
-  const { CRUD, login } = useWeb();
-  const checkLogin1 = () => {
-    if(login){
-      navigate("/vipinfo")
-    }
-    else{
-      navigate("/signin")
+  const { CRUD, login, cookies } = useWeb();
+  const checkLogin1 = async () => {
+    try {
+      if (login) {
+        const result = await CRUD(
+          "R",
+          "/customers"
+        )({ customer_id: cookies.customer_id });
+        navigate("/vipinfo", { state: { result } });
+      } else {
+        navigate("/signin");
+      }
+    } catch (err) {
+      alert("有問題");
     }
   };
   const checkLogin2 = () => {
-    if(login){
-      navigate("/shoppingcart")
+    if (login) {
+      navigate("/shoppingcart");
+    } else {
+      navigate("/signin");
     }
-    else{
-      navigate("/signin")
+  };
+
+  const handleInFo = async () => {
+    try {
+      const result = await CRUD(
+        "R",
+        "/customers"
+      )({ customer_id: cookies.customer_id });
+      navigate("/", { state: { result } });
+    } catch (err) {
+      alert("有問題");
     }
-  }
+  };
+
   return (
     <AppContainer>
       <div className="logo" onClick={() => navigate("/")}>
