@@ -62,7 +62,6 @@ const Forget = () => {
             label=""
             variant="standard"
             defaultValue=""
-            type="password"
             onChange={handleInputChange}
           />
         </div>

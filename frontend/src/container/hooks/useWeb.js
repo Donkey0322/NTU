@@ -7,8 +7,9 @@ const WebContext = createContext({
   rowsPerPage: 10, //一頁包含幾個 tuple
   path: "",
   category: {},
-  customerID: "",
+  customer_id: "",
   login: false,
+  cartNumber: 0,
   CRUD: () => {}, //axios api
 });
 
@@ -16,8 +17,39 @@ const WebProvider = (props) => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [path, setPath] = useState("");
-  const [customerID, setCustomerID] = useState("");
+  const [customer_id, setCustomerID] = useState("");
   const [login, setLogin] = useState(false);
+  const [cartNumber, setCartNumber] = useState();
+
+  useEffect(() => {
+    const getUser = () => {
+      fetch("http://localhost:4000/auth/login/success", {
+        method: "GET",
+        credentials: "include",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Credentials": true,
+        },
+      })
+        .then((response) => {
+          console.log(response);
+          if (response.status === 200) return response.json();
+          throw new Error("authentication has been failed!");
+        })
+        .then((resObject) => {
+          console.log(resObject);
+          setCustomerID(resObject.result[0].customer_id);
+          setLogin(true);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    };
+    if (!customer_id) {
+      getUser();
+    }
+  }, []);
 
   const CRUD =
     (type, path) =>
@@ -44,6 +76,7 @@ const WebProvider = (props) => {
               return { errors };
             } else throw err;
           }
+          break;
         case "R":
           try {
             console.log(value);
@@ -51,16 +84,21 @@ const WebProvider = (props) => {
               data: { result },
             } = await instance.get(`${path}`, value);
             if (typeof result !== "undefined") {
+              console.log(result);
               return result;
             } else {
               alert("NO Result");
             }
           } catch (err) {
             const {
-              data: { error },
+              data: { errors },
             } = err;
-            return { error };
+            if (errors) {
+              console.log(errors);
+              return { errors };
+            } else throw err;
           }
+          break;
         case "U":
           try {
             const {
@@ -76,6 +114,7 @@ const WebProvider = (props) => {
             alert("Axios失敗");
             throw error;
           }
+          break;
         case "D":
           try {
             const {
@@ -90,6 +129,7 @@ const WebProvider = (props) => {
             alert("Axios失敗");
             throw error;
           }
+          break;
         default:
           break;
       }
@@ -101,8 +141,10 @@ const WebProvider = (props) => {
         page,
         rowsPerPage,
         path,
-        customerID,
+        customer_id,
         login,
+        cartNumber,
+        setCartNumber,
         setPage,
         setRowsPerPage,
         setPath,

@@ -54,7 +54,7 @@ var check = new CheckCustomer();
 
 router.post("/", async (req, res) => {
   console.log(req.body);
-  const { mail, password } = req.body.data;
+  const { data: {mail, password} } = req.body;
   let errors = { mail: "", password: "" };
   errors = await check.checkEmail(mail, errors);
   errors = await check.checkPassword(mail, password, errors);

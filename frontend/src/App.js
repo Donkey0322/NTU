@@ -10,11 +10,11 @@ import ProductDetail from "./container/ProductDetail";
 import ShoppingCart from "./container/ShoppingCart";
 import Checkout from "./container/Checkout";
 import ContactUs from "./container/ContactUs";
-import Google from "./container/Google";
 import VipInfo from "./container/VipInfo";
 import { useEffect, useState } from "react";
 import Reset from "./container/Reset";
 import Forget from "./container/Forget";
+import { useWeb } from "./container/hooks/useWeb";
 
 const AppContainer = styled.div`
   width: 100vw;
@@ -53,7 +53,6 @@ function App() {
     getUser();
   }, []);
 
-
   return (
     <Router>
       <Routes>
@@ -82,7 +81,6 @@ function App() {
               </div>
             }
           />
-          <Route path="/google" element={<Google />} />
           <Route path="/signin" element={<SignIn />} />
           <Route path="/products" element={<Products />}>
             <Route path=":id" element={<ProductDetail />} />

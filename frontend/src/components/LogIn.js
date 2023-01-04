@@ -12,7 +12,6 @@ import {
   Typography,
 } from "@mui/material";
 import PropTypes from "prop-types";
-import { useNavigate } from "react-router-dom";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { TabList, TabContext, TabPanel } from "@mui/lab";
 import styled from "styled-components";
@@ -49,7 +48,7 @@ const BoxContainer = styled.div`
   display: flex;
   justify-content: center;
   width: 100%;
-  margin-top: 10vmin;
+  margin-top: 5vmin;
   .button {
     margin-top: 2vmin;
     width: min(100%, 50vmin);
@@ -63,6 +62,33 @@ const CustomedTabPanel = styled(TabPanel)`
   justify-content: center;
   margin: 0;
   padding: 0;
+`;
+
+const GoogleLogin = styled.button`
+  background: #fff;
+  font-size: min(3vmin, 20px);
+  border-radius: 25vmin;
+  border: 1px solid #d4d3e8;
+  text-transform: uppercase;
+  font-weight: 700;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* padding-left: 2vmin; */
+  width: max(30%, 30vmin);
+  min-width: 250px;
+  height: min(10vmin, 60px);
+  color: #4c489d;
+  box-shadow: 0px 2px 2px #5c5696;
+  cursor: pointer;
+  transition: all 0.2s;
+
+  &:active,
+  &:focus,
+  &:hover {
+    border-color: #6a679e;
+    outline: none;
+  }
 `;
 
 const PureInput = ({
@@ -83,7 +109,6 @@ const PureInput = ({
     >
       <InputLabel htmlFor={label}>{label}</InputLabel>
       <OutlinedInput
-        id={label}
         name={name}
         autoComplete={autoComplete && autoComplete}
         label={label}
@@ -121,17 +146,25 @@ const LogIn = ({
   handleClickShowPassword,
   handleModeChange,
   handleInputChange,
+  handleGoogleClick,
   submit,
   error,
   navigateToForgetPassword,
 }) => {
-  const navigate = useNavigate();
   return (
     <BoxContainer>
       <Welcome />
-      <Box sx={{ width: "calc(100% - 57vmin)", typography: "body1" }}>
+      <Box
+        sx={{
+          width: "calc(100% - 57vmin)",
+          typography: "body1",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
+      >
         <TabContext value={mode}>
-          <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+          <Box sx={{ borderBottom: 1, borderColor: "divider", width: "100%" }}>
             <TabList onChange={handleModeChange} centered>
               <Tab label="會員登入" value="1" />
               <Tab label="註冊會員" value="2" />
@@ -142,7 +175,7 @@ const LogIn = ({
               sx={{
                 display: "flex",
                 flexDirection: "column",
-                rowGap: "10px",
+                rowGap: "2vmin",
               }}
             >
               <PureInput
@@ -183,7 +216,7 @@ const LogIn = ({
               </div>
             </Box>
           </CustomedTabPanel>
-          <CustomedTabPanel value="2">
+          <CustomedTabPanel value="2" sx={{ display: mode !== "2" && "none" }}>
             <Box
               sx={{
                 display: "flex",
@@ -230,6 +263,17 @@ const LogIn = ({
               </Button>
             </Box>
           </CustomedTabPanel>
+          <GoogleLogin onClick={handleGoogleClick}>
+            <img
+              src="https://img.icons8.com/color/48/null/google-logo.png"
+              style={{
+                marginRight: "1vmin",
+                height: "8vmin",
+                maxHeight: "35px",
+              }}
+            />
+            <p>Login with Google</p>
+          </GoogleLogin>
         </TabContext>
       </Box>
     </BoxContainer>
