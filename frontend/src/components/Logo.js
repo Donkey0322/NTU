@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import "./.css";
+import "./style.css";
 
 const LogoImg = styled.div`
   margin: 2vmin;

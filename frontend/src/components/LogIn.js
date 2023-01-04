@@ -15,7 +15,7 @@ import PropTypes from "prop-types";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { TabList, TabContext, TabPanel } from "@mui/lab";
 import styled from "styled-components";
-import "./.css";
+import "./style.css";
 
 function HelperText({ color, children }) {
   return (
