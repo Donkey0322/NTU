@@ -1,4 +1,4 @@
-import db from "../sql.js";
+import db from "../../sql.js";
 import express from "express";
 import moment from "moment";
 
@@ -22,16 +22,6 @@ const Myquery = (query) => {
 })
 };
 
-router.delete("/", async (req, res) => {
-  console.log(req.body);
-  let {id} = req.query;
-  let query = `delete from customers
-                 where customer_id = ${id}`;
-  await Myquery(query);
-  let return_query = `select * from customers;`;
-  var result = await Myquery(return_query);
-  res.status(200).send({ result });
-});
 
 router.get("/", async (req, res) => {
   const {customer_id} = req.query

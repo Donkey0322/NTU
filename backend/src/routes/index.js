@@ -1,16 +1,16 @@
 import {Router} from 'express';
 import customer_service from './customer_services.js';
-import signUp from './signUp.js';
-import logIn from './logIn.js';
-import customers from './customers.js';
+import signUp from './register/signUp.js';
+import logIn from './register/logIn.js';
+import customers from './browser/customers.js';
 import employees from './employees.js';
-import orders_create from './orders_create.js';
-import orders_manage from './orders_manage.js';
-import basket from './basket.js';
-import products from './products.js';
+import orders_create from './shopping/orders_create.js';
+import orders_manage from './shopping/orders_manage.js';
+import basket from './shopping/basket.js';
+import products from './browser/products.js';
 import purchases from './purchases.js';
-import auth from './auth.js';
-import password from './password.js';
+import auth from './register/auth.js';
+import password from './register/password.js';
 
 
 const router = Router();

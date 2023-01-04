@@ -1,6 +1,6 @@
 import passport from "passport";
 import express from "express";
-import '../middleware/passport.js';
+import '../../middleware/passport.js';
 const router = express.Router();
 const CLIENT_URL = "http://localhost:3000/";
 
