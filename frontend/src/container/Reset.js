@@ -58,10 +58,10 @@ const Reset = () => {
   const handleInputChange1 = (event) => {
     const { value } = event.target;
     setData({ password: value });
-    setPass1(event.target);
+    setPass1(event.target.value);
   };
   const handleInputChange2 = (event) => {
-    setPass2(event.target);
+    setPass2(event.target.value);
   };
   const resetPassword = () => {
     if(pass1 === pass2) {
@@ -69,6 +69,7 @@ const Reset = () => {
         navigate("/signin") 
     }
     else {
+        console.log(pass1, pass2);
         setSame(false);
     }
   }

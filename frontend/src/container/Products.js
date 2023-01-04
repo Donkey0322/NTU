@@ -43,6 +43,7 @@ const Products = () => {
   };
 
   const handleSectionSubmit = async (section) => {
+    navigate("/products");
     try {
       const result = await CRUD("R", "/products")({ ...data, section });
       setData({ ...data, section });

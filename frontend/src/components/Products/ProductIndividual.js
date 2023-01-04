@@ -100,10 +100,10 @@ const ProductIndividual = ({
           <IconButton onClick={prevImg}>
             <KeyboardDoubleArrowLeft />
           </IconButton>
-          {item.img.length > 1 &&
+          {
             item.img.map(
               (i, index) =>
-                index !== 0 && (
+                 (
                   <SmallImgContainer
                     img={require("../../" + i + ".png")}
                     key={index}
