@@ -54,7 +54,7 @@ const item = [
 const ShoppingCart = () => {
   const [items, setItems] = useState(item);
   const [sum, setSum] = useState(0);
-  const { CRUD, customer_id } = useWeb;
+  const { CRUD, customer_id, login } = useWeb();
 
   useEffect(() => {
     const Render = async () => {
@@ -67,6 +67,7 @@ const ShoppingCart = () => {
     };
     console.log(customer_id);
     if (customer_id) {
+      console.log(customer_id);
       Render();
     }
   }, [customer_id]);

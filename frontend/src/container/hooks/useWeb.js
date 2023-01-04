@@ -1,4 +1,10 @@
-import { useState, useEffect, useContext, createContext } from "react";
+import {
+  useState,
+  useEffect,
+  useContext,
+  createContext,
+  useCallback,
+} from "react";
 import axios from "axios";
 const instance = axios.create({ baseURL: "http://localhost:4000/" });
 
@@ -17,7 +23,7 @@ const WebProvider = (props) => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [path, setPath] = useState("");
-  const [customer_id, setCustomerID] = useState("");
+  const [customer_id, setCustomerID] = useState(0);
   const [login, setLogin] = useState(false);
   const [cartNumber, setCartNumber] = useState();
 
@@ -33,12 +39,12 @@ const WebProvider = (props) => {
         },
       })
         .then((response) => {
-          console.log(response);
+          // console.log(response);
           if (response.status === 200) return response.json();
           throw new Error("authentication has been failed!");
         })
         .then((resObject) => {
-          console.log(resObject);
+          console.log(resObject.result[0].customer_id);
           setCustomerID(resObject.result[0].customer_id);
           setLogin(true);
         })
@@ -46,7 +52,7 @@ const WebProvider = (props) => {
           console.log(err);
         });
     };
-    if (!customer_id) {
+    if (!login) {
       getUser();
     }
   }, []);

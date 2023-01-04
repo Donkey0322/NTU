@@ -5,7 +5,6 @@ const ProductsContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
   padding-right: 5vmin;
-  justify-content: space-between;
   gap: 2vmin 2%;
   div.product {
     display: flex;
@@ -17,6 +16,9 @@ const ProductsContainer = styled.div`
     }
     .label {
       font-size: large;
+      max-width: 25vmin;
+      text-align: center;
+      /* font-size: ; */
       font-weight: 500;
     }
     &:hover {
@@ -53,23 +55,20 @@ const ProductImgContainer = styled.div`
 const Product = ({ style, products, handleNavigateToDetail }) => {
   return (
     <ProductsContainer style={style && style}>
-      {products && products.map(
-            (i, index) =>
-              (
-                <div
-                  className="product"
-                  key={index}
-                  onClick={() => handleNavigateToDetail(i.product_id)}
-                >
-                  <ProductImgContainer>
-                    <img src={require("../../" + i.img[0] + ".png")} alt="" />
-                  </ProductImgContainer>
-                  <p className="label">{i.product_name}</p>
-                  <p className="price">${i.price}</p>
-                </div>
-              )
-          )
-        }
+      {products &&
+        products.map((i, index) => (
+          <div
+            className="product"
+            key={index}
+            onClick={() => handleNavigateToDetail(i.product_id)}
+          >
+            <ProductImgContainer>
+              <img src={require("../../" + i.img[0] + ".png")} alt="" />
+            </ProductImgContainer>
+            <p className="label">{i.product_name}</p>
+            <p className="price">${i.price}</p>
+          </div>
+        ))}
     </ProductsContainer>
   );
 };
