@@ -3,59 +3,32 @@ import {
   useEffect,
   useContext,
   createContext,
-  useCallback,
+  useCallback
 } from "react";
 import axios from "axios";
+import {useCookies} from 'react-cookie'
 const instance = axios.create({ baseURL: "http://localhost:4000/" });
-
 const WebContext = createContext({
   page: 0, //顯示是在第幾頁 table
   rowsPerPage: 10, //一頁包含幾個 tuple
   path: "",
   category: {},
-  customer_id: "",
-  login: true,
+  // customer_id: "",
+  login: false,
   cartNumber: 0,
   CRUD: () => {}, //axios api
 });
+
 
 const WebProvider = (props) => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [path, setPath] = useState("");
-  const [customer_id, setCustomerID] = useState(0);
-  const [login, setLogin] = useState(false);
+  // const [customer_id, setCustomerID] = useState(0);
+  const [cookies, setCookie, removeCookie] = useCookies(['customer_id']);
+  const [login, setLogin] = useState(cookies.customer_id ? true : false);
   const [cartNumber, setCartNumber] = useState();
 
-  // useEffect(() => {
-  //   const getUser = () => {
-  //     fetch("http://localhost:4000/auth/login/success", {
-  //       method: "GET",
-  //       credentials: "include",
-  //       headers: {
-  //         Accept: "application/json",
-  //         "Content-Type": "application/json",
-  //         "Access-Control-Allow-Credentials": true,
-  //       },
-  //     })
-  //       .then((response) => {
-  //         // console.log(response);
-  //         if (response.status === 200) return response.json();
-  //         throw new Error("authentication has been failed!");
-  //       })
-  //       .then((resObject) => {
-  //         console.log(resObject.result[0].customer_id);
-  //         setCustomerID(resObject.result[0].customer_id);
-  //         setLogin(true);
-  //       })
-  //       .catch((err) => {
-  //         console.log(err);
-  //       });
-  //   };
-  //   if (!login) {
-  //     getUser();
-  //   }
-  // }, []);
 
   const CRUD =
     (type, path) =>
@@ -85,10 +58,10 @@ const WebProvider = (props) => {
           break;
         case "R":
           try {
-            console.log(value);
             const {
               data: { result },
-            } = await instance.get(`${path}`, { params: value });
+            } = await instance.get(`${path}`, {params: value});
+
             if (typeof result !== "undefined") {
               console.log(result);
               return result;
@@ -147,16 +120,19 @@ const WebProvider = (props) => {
         page,
         rowsPerPage,
         path,
-        customer_id,
+        // customer_id,
         login,
         cartNumber,
+        cookies,
         setCartNumber,
         setPage,
         setRowsPerPage,
         setPath,
         CRUD,
-        setCustomerID,
+        // setCustomerID,
         setLogin,
+        setCookie,
+        removeCookie
       }}
       {...props}
     />

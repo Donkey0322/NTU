@@ -15,20 +15,23 @@ import { useWeb } from "./hooks/useWeb";
 import Row from "./Row";
 
 function Order() {
-  const { CRUD, customer_id } = useWeb();
+  const { CRUD, cookies } = useWeb();
   const [order, setOrder] = useState([]);
 
   useEffect(() => {
     const Render = async () => {
       try {
-        const result = await CRUD("R", "/orders_manage")({ customer_id });
+        const result = await CRUD(
+          "R",
+          "/orders_create"
+        )({ customer_id: cookies.customer_id });
         setOrder(result);
       } catch (err) {
         alert("有問題");
       }
     };
-    if (customer_id) Render();
-  }, [customer_id]);
+    if (cookies.customer_id) Render();
+  }, [cookies.customer_id]);
 
   return (
     <Paper className="p-4" sx={{ overflowX: "hidden" }}>

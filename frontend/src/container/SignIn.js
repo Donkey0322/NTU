@@ -4,7 +4,7 @@ import { useWeb } from "./hooks/useWeb";
 import { useNavigate } from "react-router-dom";
 
 const SignIn = () => {
-  const { CRUD, setLogin, setCustomerID, login } = useWeb();
+  const { CRUD, setLogin, login, setCookie } = useWeb();
   const [data, setData] = useState({});
   const [error, setError] = useState(false);
   const [mode, setMode] = useState("1");
@@ -44,6 +44,7 @@ const SignIn = () => {
           "Content-Type": "application/json",
           "Access-Control-Allow-Credentials": true,
         },
+
       }
     );
     const { result } = await res.json();
@@ -54,18 +55,31 @@ const SignIn = () => {
     } else {
       setLogin(true);
       console.log(result[0]);
-      setCustomerID(result[0].customer_id);
+      // setCustomerID(result[0].customer_id);
+      setCookie('customer_id', result[0].customer_id, { path: '/' })
       navigate("/");
     }
   };
-  const handleGoogleClick = () => {
+  const handleGoogleClick = async() => {
     window.open("http://localhost:4000/auth/google", "_self");
+    const res = await  fetch("http://localhost:4000/auth/login/success", {
+      method: "GET",
+      credentials: "include",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Credentials": true,
+      },
+    })
+    console.log(res);
   };
+
   useEffect(() => {
     if (login) {
       navigate("/");
     }
   }, [login]);
+
   const navigateToForgetPassword = () => navigate("/forget");
   return (
     <LogIn

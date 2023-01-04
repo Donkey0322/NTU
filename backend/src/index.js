@@ -7,6 +7,7 @@ import cookieSession from "cookie-session";
 import cookieParser from 'cookie-parser';
 import router from "./routes/index.js";
 import bodyparser from 'body-parser';
+import {requireAuth, checkUser } from './middleware/authMiddleWare.js';
 
 sql.connect(function (err) {
   if (err) throw err;
@@ -16,9 +17,7 @@ sql.connect(function (err) {
 
 const app = express();
 app.set("view engine", "ejs");
-app.use(
-  cookieSession({ name: "session", keys: ["lama"], maxAge: 3 * 24 * 60 * 60 * 100 })
-);
+app.use(cookieSession({ name: "session", keys: ["lama"], maxAge: 3 * 24 * 60 * 60 * 100 }));
 
 app.use(passport.initialize());
 app.use(passport.session());
@@ -36,9 +35,13 @@ app.use(bodyparser.urlencoded({
   extended: true
 }));
 app.use(bodyparser.json())
+
 // define routes
-// app.use("/", test);
+app.use("*", checkUser);
 app.use("/", router);
+
+
+
 
 // define server
 const port = process.env.PORT || 4000;
