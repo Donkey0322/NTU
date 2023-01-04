@@ -27,35 +27,35 @@ const WebProvider = (props) => {
   const [login, setLogin] = useState(false);
   const [cartNumber, setCartNumber] = useState();
 
-  useEffect(() => {
-    const getUser = () => {
-      fetch("http://localhost:4000/auth/login/success", {
-        method: "GET",
-        credentials: "include",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-          "Access-Control-Allow-Credentials": true,
-        },
-      })
-        .then((response) => {
-          // console.log(response);
-          if (response.status === 200) return response.json();
-          throw new Error("authentication has been failed!");
-        })
-        .then((resObject) => {
-          console.log(resObject.result[0].customer_id);
-          setCustomerID(resObject.result[0].customer_id);
-          setLogin(true);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    };
-    if (!login) {
-      getUser();
-    }
-  }, []);
+  // useEffect(() => {
+  //   const getUser = () => {
+  //     fetch("http://localhost:4000/auth/login/success", {
+  //       method: "GET",
+  //       credentials: "include",
+  //       headers: {
+  //         Accept: "application/json",
+  //         "Content-Type": "application/json",
+  //         "Access-Control-Allow-Credentials": true,
+  //       },
+  //     })
+  //       .then((response) => {
+  //         // console.log(response);
+  //         if (response.status === 200) return response.json();
+  //         throw new Error("authentication has been failed!");
+  //       })
+  //       .then((resObject) => {
+  //         console.log(resObject.result[0].customer_id);
+  //         setCustomerID(resObject.result[0].customer_id);
+  //         setLogin(true);
+  //       })
+  //       .catch((err) => {
+  //         console.log(err);
+  //       });
+  //   };
+  //   if (!login) {
+  //     getUser();
+  //   }
+  // }, []);
 
   const CRUD =
     (type, path) =>

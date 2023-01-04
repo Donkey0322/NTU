@@ -46,14 +46,15 @@ const SignIn = () => {
         },
       }
     );
-    const result = await res.json();
+    const { result } = await res.json();
     console.log(result);
 
     if (result.errors) {
       setError(result.errors);
     } else {
       setLogin(true);
-      setCustomerID(result.customer_id);
+      console.log(result[0]);
+      setCustomerID(result[0].customer_id);
       navigate("/");
     }
   };
