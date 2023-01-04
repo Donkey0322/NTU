@@ -54,23 +54,23 @@ const item = [
 const ShoppingCart = () => {
   const [items, setItems] = useState(item);
   const [sum, setSum] = useState(0);
-  const { CRUD, customer_id, login } = useWeb();
-  console.log(customer_id)
+  const { CRUD, cookies, login } = useWeb();
+  console.log(cookies.customer_id)
   useEffect(() => {
     const Render = async () => {
       try {
-        const newItem = await CRUD("R", "/basket")({ customer_id });
+        const newItem = await CRUD("R", "/basket")({ customer_id: cookies.customer_id });
 
         setItems(newItem.map((m) => ({ ...m, number: 0 })));
       } catch (err) {
         console.log("有問題");
       }
     };
-    console.log(customer_id);
-    if (customer_id) {
+    console.log(cookies.customer_id);
+    if (cookies.customer_id) {
       Render();
     }
-  }, [customer_id]);
+  }, [cookies.customer_id]);
 
   const handleDeleteCart = async (basket_id) => {
     try {
