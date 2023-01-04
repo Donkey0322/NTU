@@ -55,19 +55,19 @@ const ShoppingCart = () => {
   const [items, setItems] = useState(item);
   const [sum, setSum] = useState(0);
   const { CRUD, customer_id, login } = useWeb();
-
+  console.log(customer_id)
   useEffect(() => {
     const Render = async () => {
       try {
         const newItem = await CRUD("R", "/basket")({ customer_id });
-        setItems(newItem);
+
+        setItems(newItem.map((m) => ({ ...m, number: 0 })));
       } catch (err) {
         console.log("有問題");
       }
     };
     console.log(customer_id);
     if (customer_id) {
-      console.log(customer_id);
       Render();
     }
   }, [customer_id]);

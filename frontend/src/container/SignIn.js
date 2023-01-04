@@ -44,27 +44,41 @@ const SignIn = () => {
           "Content-Type": "application/json",
           "Access-Control-Allow-Credentials": true,
         },
+
       }
     );
-    const result = await res.json();
+    const { result } = await res.json();
     console.log(result);
 
     if (result.errors) {
       setError(result.errors);
     } else {
       setLogin(true);
-      setCustomerID(result.customer_id);
+      console.log(result[0]);
+      setCustomerID(result[0].customer_id);
       navigate("/");
     }
   };
-  const handleGoogleClick = () => {
+  const handleGoogleClick = async() => {
     window.open("http://localhost:4000/auth/google", "_self");
+    const res = await  fetch("http://localhost:4000/auth/login/success", {
+      method: "GET",
+      credentials: "include",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Credentials": true,
+      },
+    })
+    console.log(res);
   };
+
   useEffect(() => {
     if (login) {
       navigate("/");
     }
   }, [login]);
+
   const navigateToForgetPassword = () => navigate("/forget");
   return (
     <LogIn

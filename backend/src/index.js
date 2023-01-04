@@ -7,6 +7,7 @@ import cookieSession from "cookie-session";
 import cookieParser from 'cookie-parser';
 import router from "./routes/index.js";
 import bodyparser from 'body-parser';
+import {requireAuth, checkUser } from './middleware/authMiddleWare.js';
 
 sql.connect(function (err) {
   if (err) throw err;
@@ -38,7 +39,12 @@ app.use(bodyparser.urlencoded({
 app.use(bodyparser.json())
 // define routes
 // app.use("/", test);
+// app.get('*', checkUser);
+app.get("*", checkUser);
 app.use("/", router);
+
+
+
 
 // define server
 const port = process.env.PORT || 4000;
