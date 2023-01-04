@@ -20,6 +20,7 @@ const BarContainer = styled.div`
   height: 10vmin;
   min-height: 50px;
   position: sticky;
+  top: 0;
   background-color: #06065e;
   color: white;
   display: flex;
@@ -48,9 +49,17 @@ const BarContainer = styled.div`
 const AppFrame = () => {
   const navigate = useNavigate();
   const { CRUD, login } = useWeb();
-  const checkLogin = () => {
+  const checkLogin1 = () => {
     if(login){
       navigate("/vipinfo")
+    }
+    else{
+      navigate("/signin")
+    }
+  };
+  const checkLogin2 = () => {
+    if(login){
+      navigate("/shoppingcart")
     }
     else{
       navigate("/signin")
@@ -67,13 +76,13 @@ const AppFrame = () => {
           <li onClick={() => navigate("/products")}>
             <p>產品總覽</p>
           </li>
-          <li onClick={() => checkLogin()}>
+          <li onClick={() => checkLogin1()}>
             <p>會員專區</p>
           </li>
           <li onClick={() => navigate("/contactUs")}>
             <p>聯絡我們</p>
           </li>
-          <li onClick={() => navigate("/shoppingcart")}>
+          <li onClick={() => checkLogin2()}>
             <p>購物車</p>
           </li>
         </ul>
