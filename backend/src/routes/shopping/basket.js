@@ -40,8 +40,8 @@ let query = (customer_id) => {
 }
 
 router.get('/', async(req, res) => {
+  console.log(res.locals)
     const {customer_id} = req.query;
-
     let get = query(customer_id)
     const result = await Myquery(get);
     res.status(200).send({result})

@@ -4,7 +4,7 @@ import { useWeb } from "./hooks/useWeb";
 import { useNavigate } from "react-router-dom";
 
 const SignIn = () => {
-  const { CRUD, setLogin, login, setCookie} = useWeb();
+  const { setLogin, login, setCookie} = useWeb();
   const [data, setData] = useState({});
   const [error, setError] = useState(false);
   const [mode, setMode] = useState("1");
@@ -47,7 +47,7 @@ const SignIn = () => {
         },
 
       }
-    );
+    )
     const { result } = await res.json();
     console.log(result);
 

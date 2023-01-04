@@ -1,22 +1,21 @@
 import sql from "./sql.js";
 import express from "express";
 import cors from "cors";
-import { dataInit } from "./upload.js";
 import passport from "passport";
 import cookieSession from "cookie-session";
 import cookieParser from 'cookie-parser';
 import router from "./routes/index.js";
 import bodyparser from 'body-parser';
 import {requireAuth, checkUser } from './middleware/authMiddleWare.js';
+import * as path from 'path';
 
 sql.connect(function (err) {
   if (err) throw err;
   console.log("Connected!");
-  dataInit(sql);
+  // dataInit(sql);
 });
 
 const app = express();
-app.set("view engine", "ejs");
 app.use(cookieSession({ name: "session", keys: ["web programming"], maxAge: 3 * 24 * 60 * 60 * 100 , httpOnly: false}));
 
 app.use(passport.initialize());
@@ -31,16 +30,19 @@ app.use(cors({
 }
 ));
 app.use(express.urlencoded({ extended: false }));
-app.use(bodyparser.urlencoded({
-  extended: true
-}));
+app.use(bodyparser.urlencoded({extended: true}));
 app.use(bodyparser.json())
 
 // define routes
-app.use("*", checkUser);
+app.use("/*", checkUser);
 app.use("/", router);
 
 
+// const __dirname = "../frontend"
+// app.use(express.static(path.join(__dirname, "build")))
+// app.get("/*", function(req, res){
+//   res.sendFile('index.html', {root: __dirname + "build"})
+// })
 
 
 // define server

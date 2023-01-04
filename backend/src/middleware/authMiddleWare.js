@@ -39,20 +39,18 @@ const checkUser = async (req, res, next) => {
       if (err) {
         console.log('err')
         res.locals.user = null;
-        next();
       } else {
         console.log('success')
         let query = `select * from customers where customer_id = ${decodedToken.id}`
         const result = await Myquery(query)
         res.locals.user = result[0].customer_id;
         console.log(res.locals.user)
-        next();
       }
     });
   } else {
     res.locals.user = null;
-    next();
   }
+  next();
 };
 
 
