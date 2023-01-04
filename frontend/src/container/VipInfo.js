@@ -62,8 +62,6 @@ const WholeContainer = styled.div`
     }
 `;
 
-
-
 const VipInfo = () => {
     const [edit, setEdit] = useState(true);
     const [gender, setGender] = useState("");

@@ -21,7 +21,10 @@ function Order() {
   useEffect(() => {
     const Render = async () => {
       try {
-        const result = await CRUD("R", "/orders_create")({ customer_id: cookies.customer_id });
+        const result = await CRUD(
+          "R",
+          "/orders_create"
+        )({ customer_id: cookies.customer_id });
         setOrder(result);
       } catch (err) {
         alert("有問題");
