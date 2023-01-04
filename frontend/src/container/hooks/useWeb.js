@@ -56,6 +56,7 @@ const WebProvider = (props) => {
   //   }
   // }, [google]);
 
+
   const CRUD =
     (type, path) =>
     async (value = null) => {
