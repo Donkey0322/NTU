@@ -53,7 +53,7 @@ const sort = (method) => {
 };
 
 router.get("/", async (req, res) => {
-    console.log(res.locals)
+    // console.log(res.locals)
     const {section, method} = req.query;
     let query = ''
     let category = ''

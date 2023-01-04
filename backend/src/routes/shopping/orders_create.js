@@ -50,6 +50,7 @@ router.post('/', async (req, res) => {
     query = `delete from basket where basket_id = ${basket_id}`;
     await Myquery(query);
   })
+  res.status(200).send()
   // query =`select basket_id, customers.customer_id, customers.customer_name, products.product_id, products.product_name, basket.quantity, products.price
   // from basket
   // left join customers on customers.customer_id = basket.customer_id

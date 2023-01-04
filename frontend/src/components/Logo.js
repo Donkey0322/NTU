@@ -2,12 +2,12 @@ import styled from "styled-components";
 import "./style.css";
 
 const LogoImg = styled.div`
-  margin: 2vmin;
+  margin-top: 2vmin;
   width: max(120px, 32vmin);
-  height: calc(max(120px, 32vmin) * 0.75);
+  height: calc(max(10px, 15vmin) * 0.75);
   position: relative;
-  border-radius: 50%;
-  border-width: 1vmin;
+  border-radius: 10px;
+  border-width: 0.5vmin;
   border-style: double;
   border-color: darkgoldenrod;
   background-size: cover;

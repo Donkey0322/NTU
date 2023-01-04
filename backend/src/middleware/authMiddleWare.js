@@ -37,14 +37,14 @@ const checkUser = async (req, res, next) => {
   if (token) {
     jwt.verify(token, 'web programming', async (err, decodedToken) => {
       if (err) {
-        console.log('err')
+        // console.log('err')
         res.locals.user = null;
       } else {
-        console.log('success')
+        // console.log('success')
         let query = `select * from customers where customer_id = ${decodedToken.id}`
         const result = await Myquery(query)
         res.locals.user = result[0].customer_id;
-        console.log(res.locals.user)
+        // console.log(res.locals.user)
       }
     });
   } else {
