@@ -150,6 +150,12 @@ const LogIn = ({
   submit,
   error,
   navigateToForgetPassword,
+  handleChange,
+  checked,
+  handleInputChange1,
+  handleInputChange2,
+  pass1,
+  pass2
 }) => {
   return (
     <BoxContainer>
@@ -238,23 +244,27 @@ const LogIn = ({
                 autoComplete="current-password"
                 show={showPassword}
                 showclick={handleClickShowPassword}
-                onChange={handleInputChange}
+                onChange={handleInputChange1}
                 error={error}
                 name="password"
               />
               <Password
+                color={!(pass1 === pass2) ? "error" : "primary"} // pass1 pass2 是兩次的密碼
                 label="確認密碼"
                 required={true}
                 autoComplete="current-password"
+                onChange={handleInputChange2}
                 show={showPassword}
                 showclick={handleClickShowPassword}
+                helperText={!(pass1 === pass2) ? "請輸入相同密碼" : ""}
               />
               <FormControlLabel
-                control={<Checkbox />}
+                control={<Checkbox checked={checked} onChange={handleChange}/>}
                 label="我同意網站服務條款及隱私權政策"
               />
               <Button
                 variant="contained"
+                disabled={!checked}
                 color="info"
                 sx={{ width: "min(10%, 10vmin)" }}
                 onClick={submit}

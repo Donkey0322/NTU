@@ -26,10 +26,10 @@ const AppContainer = styled.div`
 `;
 
 function App() {
-  const [user, setUser] = useState(null);
+  const {setLogin,setCookie} = useWeb();
   useEffect(() => {
     const getUser = () => {
-      fetch("http://localhost:4000/auth/login/success", {
+        fetch("http://localhost:4000/auth/login/success", {
         method: "GET",
         credentials: "include",
         headers: {
@@ -44,8 +44,9 @@ function App() {
           throw new Error("authentication has been failed!");
         })
         .then((resObject) => {
-          console.log(resObject);
-          setUser(resObject.result[0].customer_name);
+          console.log(resObject)
+          setLogin(true);
+          setCookie('customer_id',resObject.result[0].customer_id, { path: '/' });
         })
         .catch((err) => {
           console.log(err);

@@ -1,4 +1,4 @@
-import db from "../sql.js";
+import db from "../../sql.js";
 import express from "express";
 import moment from "moment";
 

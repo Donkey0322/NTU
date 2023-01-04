@@ -36,7 +36,7 @@ const items = [
 function VipSideBar() {
   const location = useLocation();
   const currentPath = location.pathname;
-  const {removeCookie, setLogin} = useWeb();
+  const {removeCookie, setLogin, CRUD} = useWeb();
   // console.log(Link);
   const navigate = useNavigate();
   const [open, setOpen] = React.useState(false);
@@ -46,11 +46,15 @@ function VipSideBar() {
   const handleClose = () => {
     setOpen(false);
   };
-  const toMain = () => {
+  const toMain = async() => {
       removeCookie('customer_id', { path: '/' });
       setLogin(false);
-      navigate("/");
+      removeCookie("jwt")
+      removeCookie("session")
+      removeCookie("session.sig")
+      navigate('/')
     };
+    
   return (
     <>
       {items.map((item) => (
