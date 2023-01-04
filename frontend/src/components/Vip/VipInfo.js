@@ -75,7 +75,7 @@ const info = [
 ];
 
 const VipInfo = ({ SIDEBAR, INFO }) => {
-  const { edit, data, handleInputChange } = INFO;
+  const { edit, data, handleInputChange, handleUpdateInfo } = INFO;
 
   return (
     <WholeContainer>
@@ -96,7 +96,11 @@ const VipInfo = ({ SIDEBAR, INFO }) => {
             />
           ))}
           <div className="edit">
-            <Button variant="contained" disabled={!edit}>
+            <Button
+              variant="contained"
+              disabled={!edit}
+              onClick={handleUpdateInfo}
+            >
               儲存變更
             </Button>
           </div>

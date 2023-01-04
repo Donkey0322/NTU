@@ -20,7 +20,7 @@ const items = [
   {
     name: "訂單查詢",
     icon: <ShoppingBag />,
-    to: "/customer-services",
+    to: "/order",
   },
   {
     name: "登出",
@@ -30,7 +30,14 @@ const items = [
 ];
 
 function VipSideBar({ SIDEBAR }) {
-  const { currentPath, open, handleClickOpen, handleClose, toMain } = SIDEBAR;
+  const {
+    currentPath,
+    open,
+    handleClickOpen,
+    handleClose,
+    toMain,
+    handleGetInfo,
+  } = SIDEBAR;
   return (
     <>
       {items.map((item) => (
@@ -39,7 +46,13 @@ function VipSideBar({ SIDEBAR }) {
           component={Link}
           to={item.to}
           selected={currentPath === item.to}
-          onClick={item.name === "登出" ? handleClickOpen : null}
+          onClick={
+            item.name === "登出"
+              ? handleClickOpen
+              : item.name === "會員資料"
+              ? handleGetInfo
+              : null
+          }
         >
           <ListItemIcon>{item.icon}</ListItemIcon>
           <ListItemText primary={item.name} />

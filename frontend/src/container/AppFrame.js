@@ -21,6 +21,7 @@ const BarContainer = styled.div`
   min-height: 50px;
   position: sticky;
   top: 0;
+  z-index: 100;
   background-color: #06065e;
   color: white;
   display: flex;

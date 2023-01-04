@@ -7,7 +7,7 @@ const VipInfo = () => {
   //sideBar
   const location = useLocation();
   const currentPath = location.pathname;
-  const { cookies, removeCookie, setLogin } = useWeb();
+  const { cookies, removeCookie, setLogin, CRUD } = useWeb();
   // console.log(Link);
   const navigate = useNavigate();
   const [open, setOpen] = React.useState(false);
@@ -22,23 +22,36 @@ const VipInfo = () => {
     setLogin(false);
     navigate("/");
   };
+  const handleGetInfo = async () => {
+    try {
+      const result = await CRUD(
+        "R",
+        "/customers"
+      )({ customer_id: cookies.customer_id });
+      setValue(result[0]);
+    } catch (err) {
+      alert("有問題");
+    }
+  };
   const SIDEBAR = {
     currentPath,
     open,
     handleClickOpen,
     handleClose,
     toMain,
+    handleGetInfo,
   };
   //end sideBar
-  console.log(location.state);
-
-  const [edit, setEdit] = useState(true);
+  const [edit, setEdit] = useState(false);
+  const [value, setValue] = useState(
+    location.state && location.state.result[0] ? location.state.result[0] : null
+  );
   const [data, setData] = useState({
-    // customer_id: cookies.customer_id,
-    // customer_name: result.customer_name,
-    // mail: result.mail,
-    // phone_number: result.phone_number,
-    // birthday: result.birthday,
+    customer_id: cookies.customer_id,
+    customer_name: value.customer_name,
+    mail: value.mail,
+    phone_number: value.phone_number,
+    birthday: value.birthday,
   });
   const handleInputChange = (event) => {
     // console.log(event.target.value);
@@ -49,11 +62,21 @@ const VipInfo = () => {
     }));
     setEdit(true);
   };
+  const handleUpdateInfo = async () => {
+    try {
+      const result = await CRUD("U", "/customers")(data);
+      setValue(result[0]);
+      setEdit(false);
+    } catch (err) {
+      alert("有問題");
+    }
+  };
 
   const INFO = {
     edit,
     data,
     handleInputChange,
+    handleUpdateInfo,
   };
 
   return <Vip SIDEBAR={SIDEBAR} INFO={INFO} />;
