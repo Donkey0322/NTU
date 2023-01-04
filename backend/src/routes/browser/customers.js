@@ -9,6 +9,7 @@ const Myquery = (query) => {
       if (err) {
         throw err;
       } else {
+
         console.log(result.affectedRows);
         if (result.affectedRows !== 1) {
           console.log(result);
@@ -35,6 +36,7 @@ router.get("/", async (req, res) => {
 });
 
 router.put("/", async (req, res) => {
+
   console.log("Customer to update:", req.body);
   let { customer_id, customer_name, birthday, phone_number } = req.body;
   let query = `update customers set
