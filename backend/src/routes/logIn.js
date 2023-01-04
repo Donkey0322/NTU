@@ -63,12 +63,11 @@ router.post("/", async (req, res) => {
     res.status(400).json({ errors });
   } else {
     console.log("logIn succeed");
-    // res.redirect('/');
     const query_in = `select * from customers where mail = "${mail}"`;
     const result = await Myquery(query_in);
-    const token = createToken(result.id);
+    const token = createToken(result[0].customer_id);
     res.cookie("jwt", token, { httpOnly: true, maxAge: maxAge * 1000 });
-    res.status(201).json({ result });
+    res.status(200).json({ result });
   }
 });
 
