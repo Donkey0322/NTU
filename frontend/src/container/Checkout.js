@@ -1,16 +1,20 @@
 import React, { useState } from "react";
 import Checkout_Board from "../components/Checkout";
 import { useWeb } from "./hooks/useWeb";
+import { useLocation } from "react-router-dom";
 
 const Checkout = () => {
-  const { customer_id } = useWeb();
+  const {
+    state: { basket_id },
+  } = useLocation();
+  const { cookies, CRUD } = useWeb();
   const [data, setData] = useState({
     order_date: new Date(),
     deliver_date: null,
-    customer: customer_id,
+    customer: cookies.customer_id,
     order_status: "備貨中",
     notes: null,
-    basket_id: [],
+    basket_id,
   });
   const [send, setSend] = useState(false);
 
