@@ -67,9 +67,6 @@ const item = [
 ];
 
 const Product = ({ style, products, handleNavigateToDetail }) => {
-  console.log(
-    products && products[0].img[0].replace(".png", "").replace("../../", "")
-  );
   return (
     <ProductsContainer style={style && style}>
       {products

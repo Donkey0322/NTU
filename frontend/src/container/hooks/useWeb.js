@@ -9,6 +9,7 @@ const WebContext = createContext({
   category: {},
   customer_id: "",
   login: false,
+  cartNumber: 0,
   CRUD: () => {}, //axios api
 });
 
@@ -18,6 +19,7 @@ const WebProvider = (props) => {
   const [path, setPath] = useState("");
   const [customer_id, setCustomerID] = useState("");
   const [login, setLogin] = useState(false);
+  const [cartNumber, setCartNumber] = useState();
 
   useEffect(() => {
     const getUser = () => {
@@ -137,6 +139,8 @@ const WebProvider = (props) => {
         path,
         customer_id,
         login,
+        cartNumber,
+        setCartNumber,
         setPage,
         setRowsPerPage,
         setPath,
