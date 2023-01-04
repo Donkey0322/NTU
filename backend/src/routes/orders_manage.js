@@ -32,8 +32,6 @@ const make_dict = (array_c, detail) => {
       return arr
   }
 
-
-  
   
   const Myquery = (query,  detail) => {
     return new Promise((resolve) => {
