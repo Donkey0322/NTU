@@ -14,7 +14,7 @@ const WebContext = createContext({
   path: "",
   category: {},
   customer_id: "",
-  login: false,
+  login: true,
   cartNumber: 0,
   CRUD: () => {}, //axios api
 });
