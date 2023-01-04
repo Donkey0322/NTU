@@ -21,6 +21,7 @@ const Cart = ({
   handleCartDetailCheck,
   handleCartDetailNum,
   handleDeleteCart,
+  handleCartSubmit,
 }) => {
   return (
     <WholeContainer>
@@ -43,7 +44,9 @@ const Cart = ({
       </Paper>
       <DownContainer>
         <p>總價 NT$ {sum}</p>
-        <Button variant="contained">前往結帳</Button>
+        <Button variant="contained" onClick={handleCartSubmit}>
+          前往結帳
+        </Button>
       </DownContainer>
     </WholeContainer>
   );

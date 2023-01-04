@@ -1,16 +1,4 @@
-import {
-  FormControlLabel,
-  InputLabel,
-  MenuItem,
-  FormControl,
-  OutlinedInput,
-  Select,
-  Button,
-  Checkbox,
-  Paper,
-  TextField,
-  Input,
-} from "@mui/material";
+import { FormControlLabel, Button, Checkbox, Paper } from "@mui/material";
 import styled from "styled-components";
 import CheckoutForm from "./CheckoutForm";
 
@@ -77,7 +65,7 @@ const form = [
   {
     title: "寄送方式",
     label: "寄送方式",
-    name: "deliverBy",
+    name: "deliver_method",
     inputType: "select",
     select: ["面交", "Lalamove", "冷藏宅配"],
   },
@@ -134,7 +122,7 @@ const Checkout = ({ send, data, handleInputChange, handleCheckoutSubmit }) => {
               value={data[f.name] && data[f.name]}
             />
           ))}
-          {data.deliverBy === "面交" ? (
+          {data.deliver_method === "面交" ? (
             <>
               {meetForm.map((f, index) => (
                 <CheckoutForm
@@ -150,7 +138,7 @@ const Checkout = ({ send, data, handleInputChange, handleCheckoutSubmit }) => {
                 />
               ))}
             </>
-          ) : data.deliverBy ? (
+          ) : data.deliver_method ? (
             <CheckoutForm
               title={"送貨地址"}
               label={"送貨地址"}

@@ -39,6 +39,8 @@ const Filter = ({ data, submit, setProducts }) => {
         width: "180px",
         // maxWidth: "150px",
         bgcolor: "background.paper",
+        position: "sticky",
+        top: "10vmin",
       }}
       component="nav"
       aria-label="secondary mailbox folders"

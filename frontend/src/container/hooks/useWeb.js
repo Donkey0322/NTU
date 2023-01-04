@@ -1,12 +1,6 @@
-import {
-  useState,
-  useEffect,
-  useContext,
-  createContext,
-  useCallback
-} from "react";
+import { useState, useContext, createContext } from "react";
 import axios from "axios";
-import {useCookies} from 'react-cookie'
+import { useCookies } from "react-cookie";
 const instance = axios.create({ baseURL: "http://localhost:4000/" });
 const WebContext = createContext({
   page: 0, //顯示是在第幾頁 table
@@ -19,16 +13,14 @@ const WebContext = createContext({
   CRUD: () => {}, //axios api
 });
 
-
 const WebProvider = (props) => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [path, setPath] = useState("");
   // const [customer_id, setCustomerID] = useState(0);
-  const [cookies, setCookie, removeCookie] = useCookies(['customer_id']);
+  const [cookies, setCookie, removeCookie] = useCookies(["customer_id"]);
   const [login, setLogin] = useState(cookies.customer_id ? true : false);
   const [cartNumber, setCartNumber] = useState();
-
 
   const CRUD =
     (type, path) =>
@@ -58,9 +50,10 @@ const WebProvider = (props) => {
           break;
         case "R":
           try {
+            console.log(value);
             const {
               data: { result },
-            } = await instance.get(`${path}`, {params: value});
+            } = await instance.get(`${path}`, { params: value });
 
             if (typeof result !== "undefined") {
               console.log(result);
@@ -80,9 +73,10 @@ const WebProvider = (props) => {
           break;
         case "U":
           try {
+            console.log(value);
             const {
               data: { result },
-            } = await instance.put(`${path}`, { value });
+            } = await instance.put(`${path}`, value);
             const newResult = [];
             if (typeof result !== "undefined") {
               return result;
@@ -132,7 +126,7 @@ const WebProvider = (props) => {
         // setCustomerID,
         setLogin,
         setCookie,
-        removeCookie
+        removeCookie,
       }}
       {...props}
     />

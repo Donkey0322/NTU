@@ -9,9 +9,7 @@ import {
   TablePagination,
 } from "@mui/material";
 import { useEffect, useState } from "react";
-// import { useLocation } from "react-router-dom";
 import { useWeb } from "./hooks/useWeb";
-// import Title from "../Title";
 import Row from "./Row";
 
 function Order() {
@@ -23,7 +21,7 @@ function Order() {
       try {
         const result = await CRUD(
           "R",
-          "/orders_create"
+          "/orders_manage"
         )({ customer_id: cookies.customer_id });
         setOrder(result);
       } catch (err) {
