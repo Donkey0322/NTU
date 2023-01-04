@@ -96,7 +96,7 @@ const make_dict = (array_c, detail) => {
   });
   
   router.get("/", async (req, res) => {
-    const {customer_id} = req.body;
+    const {customer_id} = req.query;
     var result = await queryOrder(customer_id);
     res.status(200).send({ result });
   });

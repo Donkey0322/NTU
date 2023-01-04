@@ -85,10 +85,9 @@ const WebProvider = (props) => {
           break;
         case "R":
           try {
-            console.log(value);
             const {
               data: { result },
-            } = await instance.get(`${path}`, value);
+            } = await instance.get(`${path}`, {params: value});
             if (typeof result !== "undefined") {
               console.log(result);
               return result;
