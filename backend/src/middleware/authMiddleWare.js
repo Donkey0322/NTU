@@ -11,7 +11,7 @@ const Myquery = (query) => {
         }
       );
   })
-  };
+};
 
 const requireAuth = (req, res, next) => {
   const token = req.cookies.jwt;
@@ -46,7 +46,7 @@ const checkUser = async (req, res, next) => {
         const result = await Myquery(query)
         res.locals.user = result[0].customer_id;
         console.log(res.locals.user)
-        await next();
+        next();
       }
     });
   } else {
