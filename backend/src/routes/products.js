@@ -53,23 +53,24 @@ const sort = (method) => {
 };
 
 router.get("/", async (req, res) => {
-  const { section, method } = req.body;
-  let query = "";
-  let category = "";
-  let sort_by = "";
-  let join = "";
-  if (section === "hot") {
-    switch (method) {
-      case "high_to_low": {
-        sort_by = `order by price desc`;
-        break;
-      }
-      case "low_to_high": {
-        sort_by = `order by price`;
-        break;
-      }
-      case "sale": {
-        query = `select products.product_id, products.product_name,  products.price, products.description from products
+    const {section, method} = req.body;
+    console.log(req)
+    let query = ''
+    let category = ''
+    let sort_by = ''
+    let join = ''
+    if(section === 'hot'){
+        switch( method ){
+            case 'high_to_low':{
+                sort_by = `order by price desc`;
+                break;
+            }
+            case 'low_to_high':{
+                sort_by = `order by price`;
+                break;
+            }
+            case 'sale':{
+                query = `select products.product_id, products.product_name,  products.price, products.description from products
                     left join orders_detail on products.product_id = orders_detail.product_id
                     where products.selling = 1
                     group by products.product_id, products.product_name, products.price, products.description

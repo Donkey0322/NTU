@@ -32,6 +32,7 @@ router.get("/", async (_, res) => {
     let query = `select products.product_id, products.product_name,  products.price, products.description from products
                  where selling = 1;`;
     var result = await Myquery(query)
+    console.log(result)
     res.status(200).send({result})
 });
 

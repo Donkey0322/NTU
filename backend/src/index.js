@@ -32,7 +32,9 @@ app.use(cors({
 }
 ));
 app.use(express.urlencoded({ extended: false }));
-app.use(bodyparser.urlencoded({extended:false}))
+app.use(bodyparser.urlencoded({
+  extended: true
+}));
 app.use(bodyparser.json())
 // define routes
 // app.use("/", test);
