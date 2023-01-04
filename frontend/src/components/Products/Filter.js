@@ -40,7 +40,7 @@ const Filter = ({ data, submit, setProducts }) => {
         // maxWidth: "150px",
         bgcolor: "background.paper",
         position: "sticky",
-        top: "10vmin",
+        top: "calc(calc(max(120px, 32vmin) * 0.75) + 10vmin + 40px)",
       }}
       component="nav"
       aria-label="secondary mailbox folders"

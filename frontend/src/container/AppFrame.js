@@ -16,14 +16,14 @@ const AppContainer = styled.div`
 `;
 
 const BarContainer = styled.div`
-  width: 100%;
+  width: 80%;
   height: 10vmin;
   min-height: 50px;
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  background-color: #06065e;
-  color: white;
+
+  padding-top: 30px;
+
+  border-bottom: 2px solid gray;
+  color: black;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -34,6 +34,12 @@ const BarContainer = styled.div`
       display: table;
       margin: 0 auto;
       cursor: pointer;
+      transition: all 200ms;
+      &:hover {
+        text-shadow: 0 0 5px #ffa500, 0 0 15px #ffa500, 0 0 20px #ffa500,
+          0 0 40px #ffa500, 0 0 60px #ff0000, 0 0 10px #ff8d00, 0 0 98px #ff0000;
+        color: #fff6a9;
+      }
     }
   }
   .hide {
@@ -45,6 +51,19 @@ const BarContainer = styled.div`
   .member:hover ~ .member {
     display: block;
   }
+`;
+
+const Header = styled.div`
+  background-color: beige;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow-x: visible;
+  position: sticky;
+  top: -10px;
+  z-index: 100;
+  /* height: 40vmin; */
 `;
 
 const AppFrame = () => {
@@ -73,40 +92,30 @@ const AppFrame = () => {
     }
   };
 
-  const handleInFo = async () => {
-    try {
-      const result = await CRUD(
-        "R",
-        "/customers"
-      )({ customer_id: cookies.customer_id });
-      navigate("/", { state: { result } });
-    } catch (err) {
-      alert("有問題");
-    }
-  };
-
   return (
     <AppContainer>
-      <div className="logo" onClick={() => navigate("/")}>
-        <Logo img={require("../images/logo.jpg")} />
-      </div>
+      <Header>
+        <div className="logo" onClick={() => navigate("/")}>
+          <Logo img={require("../images/logo.jpg")} />
+        </div>
 
-      <BarContainer>
-        <ul className="big">
-          <li onClick={() => navigate("/products")}>
-            <p>產品總覽</p>
-          </li>
-          <li onClick={() => checkLogin1()}>
-            <p>會員專區</p>
-          </li>
-          <li onClick={() => navigate("/contactUs")}>
-            <p>聯絡我們</p>
-          </li>
-          <li onClick={() => checkLogin2()}>
-            <p>購物車</p>
-          </li>
-        </ul>
-      </BarContainer>
+        <BarContainer>
+          <ul className="big">
+            <li onClick={() => navigate("/products")}>
+              <p>產品總覽</p>
+            </li>
+            <li onClick={() => checkLogin1()}>
+              <p>會員專區</p>
+            </li>
+            <li onClick={() => navigate("/contactUs")}>
+              <p>聯絡我們</p>
+            </li>
+            <li onClick={() => checkLogin2()}>
+              <p>購物車</p>
+            </li>
+          </ul>
+        </BarContainer>
+      </Header>
       <Outlet />
     </AppContainer>
   );

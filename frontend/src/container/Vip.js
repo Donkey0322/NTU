@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Vip from "../components/Vip";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useWeb } from "./hooks/useWeb";
@@ -53,6 +53,7 @@ const VipInfo = () => {
     phone_number: value.phone_number,
     birthday: value.birthday,
   });
+  const [init, setInit] = useState(false);
   const handleInputChange = (event) => {
     // console.log(event.target.value);
     const { name, value } = event.target;
@@ -71,6 +72,25 @@ const VipInfo = () => {
       alert("有問題");
     }
   };
+
+  useEffect(() => {
+    const handleInFo = async () => {
+      try {
+        const result = await CRUD(
+          "R",
+          "/customers"
+        )({ customer_id: cookies.customer_id });
+        console.log("GET INFO", result[0]);
+        setValue(result[0]);
+        setData(result[0]);
+        setEdit(false);
+      } catch (err) {
+        alert("有問題");
+      }
+    };
+    if (init) handleInFo();
+    setInit(true);
+  }, [init]);
 
   const INFO = {
     edit,
