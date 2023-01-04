@@ -16,7 +16,9 @@ const Myquery = (query) => {
 }
 
 router.get('/', async(req, res) => {
-    const customer_id = req.query;
+    console.log(req.query)
+    const {customer_id} = req.query;
+    console.log(customer_id)
     let query = `select basket_id, customers.customer_id, customers.customer_name, products.product_id, products.product_name, basket.quantity, products.price
                 from basket
                 left join customers on customers.customer_id = basket.customer_id

@@ -5,7 +5,7 @@ const router = express.Router();
 const CLIENT_URL = "http://localhost:3000/";
 
 router.get("/login/success", (req, res) => {
-    console.log(req.user[0].customer_name)
+    // console.log(req.user[0].customer_name)
   if (req.user) {
     res.status(200).json({
       success: true,
