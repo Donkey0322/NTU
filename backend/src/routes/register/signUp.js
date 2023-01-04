@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken";
-import db from "../sql.js";
+import db from "../../sql.js";
 import express from "express";
 import moment from "moment";
 import bcrypt from "bcrypt";
@@ -75,7 +75,7 @@ router.post("/", async (req, res) => {
   errors = check.checkPassword(password, errors);
   if (errors.mail || errors.password) {
     console.log(errors);
-    res.status(400).json({ errors });
+    res.status(400).json({ result: {errors} });
   } else {
     const passwordHash = bcrypt.hashSync(password, 10);
     const query = `insert into customers (mail, password) 

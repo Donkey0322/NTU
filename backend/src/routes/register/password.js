@@ -1,9 +1,7 @@
-import db from "../sql.js";
+import db from "../../sql.js";
 import express from 'express';
 
 import bcrypt from "bcrypt";
-// app.set("view engine", "ejs");
-// app.use(express.urlencoded({ extended: false }));
 
 import jwt from "jsonwebtoken";
 import nodemailer from "nodemailer";
@@ -91,7 +89,7 @@ router.post("/forgot-password", async (req, res) => {
     if (result.length < 1 ) {
       return res.status(400).json({ errors: "User Not Exists!!" });
     }else if(password.length < 8){
-        return res.status(400).json({ errors: "Minimum password length is 8 characters" });
+      return res.status(400).json({ errors: "Minimum password length is 8 characters" });
     }
     const secret = JWT_SECRET + result[0].password;
     try {
