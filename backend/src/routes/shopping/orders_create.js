@@ -32,8 +32,21 @@ router.post('/', async (req, res) => {
   let query = `select * from basket where basket_id in (?)`;
   const basket_items = await Myquery(query, basket_id);
   const order_code = getRandomName();
-  query = `INSERT INTO orders (order_code, order_date, deliver_date, deliver_method, deliver_location, customer, order_status, notes)
-            VALUES("${order_code}", "${moment(order_date).utc().format("YYYY-MM-DD")}", ${deliver_date}, "${deliver_method}", "${deliver_location}", ${customer}, "${order_status}", ${notes})`;
+  if(deliver_date){
+    if(notes){
+      query = `INSERT INTO orders (order_code, order_date, deliver_date, deliver_method, deliver_location, customer, order_status, notes)
+                VALUES("${order_code}", "${moment(order_date).utc().format("YYYY-MM-DD")}", "${moment(deliver_date).utc().format("YYYY-MM-DD")}", "${deliver_method}", "${deliver_location}", ${customer}, "${order_status}", "${notes}")`;
+    }
+    query = `INSERT INTO orders (order_code, order_date, deliver_date, deliver_method, deliver_location, customer, order_status, notes)
+                VALUES("${order_code}", "${moment(order_date).utc().format("YYYY-MM-DD")}", "${moment(deliver_date).utc().format("YYYY-MM-DD")}", "${deliver_method}", "${deliver_location}", ${customer}, "${order_status}", ${notes})`;
+  }else{
+    if(notes){
+      query = `INSERT INTO orders (order_code, order_date, deliver_date, deliver_method, deliver_location, customer, order_status, notes)
+                VALUES("${order_code}", "${moment(order_date).utc().format("YYYY-MM-DD")}", ${deliver_date}, "${deliver_method}", "${deliver_location}", ${customer}, "${order_status}", "${notes}")`;
+    }
+    query = `INSERT INTO orders (order_code, order_date, deliver_date, deliver_method, deliver_location, customer, order_status, notes)
+                VALUES("${order_code}", "${moment(order_date).utc().format("YYYY-MM-DD")}", ${deliver_date}, "${deliver_method}", "${deliver_location}", ${customer}, "${order_status}", ${notes})`;
+  }
   await Myquery(query);
   query = `select order_id from orders
            order by order_id desc
