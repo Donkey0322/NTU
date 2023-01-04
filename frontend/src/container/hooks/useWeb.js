@@ -14,7 +14,7 @@ const WebContext = createContext({
   path: "",
   category: {},
   customer_id: "",
-  login: false,
+  login: true,
   cartNumber: 0,
   CRUD: () => {}, //axios api
 });
@@ -88,7 +88,7 @@ const WebProvider = (props) => {
             console.log(value);
             const {
               data: { result },
-            } = await instance.get(`${path}`, value);
+            } = await instance.get(`${path}`, { params: value });
             if (typeof result !== "undefined") {
               console.log(result);
               return result;

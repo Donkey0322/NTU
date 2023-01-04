@@ -13,7 +13,7 @@ const Filter = ({ data, submit, setProducts }) => {
       primary: "熱門商品",
     },
     {
-      section: "calene",
+      section: "canele",
       src: require("../../icons/canele.png"),
       primary: "可麗露",
     },
