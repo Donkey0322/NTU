@@ -20,7 +20,7 @@ const items = [
   {
     name: "訂單查詢",
     icon: <ShoppingBag />,
-    to: "/vipinfo/order",
+    to: "/order",
   },
   {
     name: "登出",
