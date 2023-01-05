@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { useNavigate, Outlet } from "react-router-dom";
 import Logo from "../components/Logo";
 import { useWeb } from "./hooks/useWeb";
+import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 
 const AppContainer = styled.div`
   width: 80%;
@@ -18,7 +19,7 @@ const AppContainer = styled.div`
 const BarContainer = styled.div`
   width: 100%;
   height: 10vmin;
-  min-height:80px;
+  min-height: 80px;
   /* margin-bottom: 5%; */
   color: white;
   display: flex;
@@ -28,7 +29,7 @@ const BarContainer = styled.div`
   font-weight: 900;
   ul.big {
     width: 100%;
-    height: 50%; 
+    height: 50%;
     align-items: center;
     justify-content: center;
     background-color: RosyBrown;
@@ -67,12 +68,29 @@ const Header = styled.div`
   position: sticky;
   top: -10px;
   z-index: 100;
-  height: 20vmin; 
+  height: 20vmin;
+`;
+
+const Num = styled.div`
+  width: 2vmin;
+  height: 2vmin;
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  top: -0;
+  left: -1vmin;
+  background-color: gray;
+  border-radius: 50%;
+  font-size: calc(1vmin / 2);
+  div {
+    color: white;
+  }
 `;
 
 const AppFrame = () => {
   const navigate = useNavigate();
-  const { CRUD, login, cookies } = useWeb();
+  const { CRUD, login, cookies, cartNumber } = useWeb();
   const checkLogin1 = async () => {
     try {
       if (login) {
@@ -114,8 +132,18 @@ const AppFrame = () => {
             <li onClick={() => navigate("/contactUs")}>
               <p>聯絡我們</p>
             </li>
-            <li onClick={() => checkLogin2()}>
-              <p>購物車</p>
+            <li onClick={() => checkLogin2()} style={{ position: "relative" }}>
+              {cartNumber && <Num>{cartNumber}</Num>}
+              <p
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  columnGap: "1vmin",
+                }}
+              >
+                <ShoppingCartOutlinedIcon />
+                購物車
+              </p>
             </li>
           </ul>
         </BarContainer>

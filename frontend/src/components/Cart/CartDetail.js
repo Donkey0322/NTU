@@ -68,7 +68,10 @@ const CartDetail = ({
           />
         </FormControl>
 
-        <IconButton aria-label="delete" onClick={handleDeleteCart}>
+        <IconButton
+          aria-label="delete"
+          onClick={() => handleDeleteCart(basket_id)}
+        >
           <HighlightOffOutlinedIcon />
         </IconButton>
       </RightContainer>

@@ -21,7 +21,6 @@ const Checkout = () => {
   const [time, setTime] = useState(dayjs());
 
   const handleInputChange = (event) => {
-    console.log(event);
     const { name, value } = event.target;
     setData((prev) => ({
       ...prev,

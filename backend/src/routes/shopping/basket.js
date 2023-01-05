@@ -15,8 +15,8 @@ const Myquery = (query) => {
   });
 };
 
-let query = (customer_id) => { 
-    return `select basket_id,
+let query = (customer_id) => {
+  return `select basket_id,
                    customers.customer_id, 
                    customers.customer_name, 
                    products.product_id,
@@ -36,20 +36,20 @@ let query = (customer_id) => {
                     inner join products p on basket.product_id = p.product_id
                     inner join images i on p.product_id = i.product_id) tmp_tbl
                 on tmp_tbl.product_name = products.product_name
-             where customers.customer_id = ${customer_id}`
-}
+             where customers.customer_id = ${customer_id}`;
+};
 
-router.get('/', async(req, res) => {
-  console.log(res.locals)
-    const {customer_id} = req.query;
-    let get = query(customer_id)
-    const result = await Myquery(get);
-    res.status(200).send({result})
-})
+router.get("/", async (req, res) => {
+  console.log(res.locals);
+  const { customer_id } = req.query;
+  let get = query(customer_id);
+  const result = await Myquery(get);
+  res.status(200).send({ result });
+});
 
-router.post('/', async(req, res) => {
-    const {customer_id, product_id, quantity} = req.body;
-    let insert = `INSERT INTO basket (customer_id, product_id, quantity)
+router.post("/", async (req, res) => {
+  const { customer_id, product_id, quantity } = req.body;
+  let insert = `INSERT INTO basket (customer_id, product_id, quantity)
              VALUES(${customer_id}, ${product_id}, ${quantity})`;
     await Myquery(insert);
     let update = query(customer_id)
@@ -63,21 +63,18 @@ router.post('/', async(req, res) => {
 
 
 router.delete("/", async (req, res) => {
-  const { basket_id } = req.body;
-  let query = `delete from basket
+  const { basket_id } = req.query;
+  let query1 = `delete from basket
     where basket_id = ${basket_id}`;
 
-    let query2 = `select customer_id from basket where basket_id = ${basket_id}`
-    const customer = await Myquery(query2);
-    const customer_id = customer[0].customer_id;
-    await Myquery(query);
-    let return_query = query(customer_id);
-    const result = await Myquery(return_query)
-    res.status(200).send({result})
-})
-
-
-
+  let query2 = `select customer_id from basket where basket_id = ${basket_id}`;
+  const customer = await Myquery(query2);
+  const customer_id = customer[0].customer_id;
+  await Myquery(query1);
+  let return_query = query(customer_id);
+  const result = await Myquery(return_query);
+  res.status(200).send({ result });
+});
 
 router.put("/", async (req, res) => {
   console.log(req.body);
@@ -86,8 +83,7 @@ router.put("/", async (req, res) => {
                     quantity = ${quantity}
                     where basket_id = ${basket_id}`;
   await Myquery(query);
-  res.status(200).send()
-})
-
+  res.status(200).send();
+});
 
 export default router;
