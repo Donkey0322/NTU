@@ -103,7 +103,7 @@ const AppFrame = () => {
         navigate("/signin");
       }
     } catch (err) {
-      alert("有問題");
+      console.log("有問題");
     }
   };
   const checkLogin2 = () => {

@@ -54,7 +54,7 @@ const Checkout = () => {
       setSend(true);
       await CRUD("C", "/orders_create")({ ...data, order_date: new Date() });
     } catch (err) {
-      alert("有問題");
+      console.log("有問題");
     }
   };
   return (

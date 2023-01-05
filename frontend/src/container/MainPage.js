@@ -1,11 +1,92 @@
 import React, { useEffect, useState, useRef } from "react";
+import styled from "styled-components";
 import Autoslider from "../components/Autoslider";
+import { useWeb } from "./hooks/useWeb";
+
+const ProductsContainer = styled.div`
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2vmin 2%;
+  div.product {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: grab;
+    .price {
+      color: darkgray;
+    }
+    .label {
+      font-size: large;
+      max-width: 25vmin;
+      text-align: center;
+      /* font-size: ; */
+      font-weight: 500;
+    }
+    &:hover {
+      > div {
+        background-color: white;
+        transition: all 0.3s ease;
+        opacity: 0.7;
+      }
+      img {
+        transform: scale(1.25);
+      }
+
+      .price {
+        transition: all 0.3s ease;
+        color: black;
+      }
+    }
+  }
+  ${({ style }) => ({ ...style })}
+`;
+const ProductImgContainer = styled.div`
+  overflow: hidden;
+  width: 28vmin;
+  height: 28vmin;
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: all 0.3s ease;
+  }
+`;
+
+function shuffleArray(array) {
+  for (var i = array.length - 1; i > 0; i--) {
+    // Generate random number
+    var j = Math.floor(Math.random() * (i + 1));
+    var temp = array[i];
+    array[i] = array[j];
+    array[j] = temp;
+  }
+
+  return array;
+}
 
 const MainPage = () => {
   const [style, setStyle] = useState({});
   const [sliderWidth, setSliderWidth] = useState(0);
   const [count, setCount] = useState(1);
   const [items, setItems] = useState(4);
+  const [products, setProducts] = useState(null);
+  const { CRUD } = useWeb();
+
+  useEffect(() => {
+    const Render = async () => {
+      try {
+        const result = await CRUD(
+          "R",
+          "/products"
+        )({ section: "all", method: null });
+        setProducts(result);
+      } catch (err) {
+        console.log("有問題");
+      }
+    };
+    Render();
+  }, []);
 
   const ref = useRef(null);
   useEffect(() => {
@@ -46,12 +127,35 @@ const MainPage = () => {
   });
 
   return (
-    <Autoslider
-      style={style}
-      ref={ref}
-      prevSlide={prevSlide}
-      nextSlide={nextSlide}
-    />
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        rowGap: "2vmin",
+        width: "120vmin",
+      }}
+    >
+      <Autoslider
+        style={style}
+        ref={ref}
+        prevSlide={prevSlide}
+        nextSlide={nextSlide}
+      />
+      <ProductsContainer style={style && style}>
+        {products &&
+          shuffleArray(products).map(
+            (i, index) =>
+              index < 4 && (
+                <div className="product" key={index}>
+                  <ProductImgContainer>
+                    <img src={require("../" + i.img[0] + ".png")} alt="" />
+                  </ProductImgContainer>
+                </div>
+              )
+          )}
+      </ProductsContainer>
+    </div>
   );
 };
 export default MainPage;
