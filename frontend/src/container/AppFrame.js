@@ -133,7 +133,7 @@ const AppFrame = () => {
               <p>聯絡我們</p>
             </li>
             <li onClick={() => checkLogin2()} style={{ position: "relative" }}>
-              {cartNumber && (
+              {cartNumber > 0 && (
                 <Num>
                   <p>{cartNumber}</p>
                 </Num>
