@@ -40,16 +40,16 @@ const Filter = ({ data, submit, setProducts }) => {
         // maxWidth: "150px",
         bgcolor: "background.paper",
         position: "sticky",
-        top: "calc(calc(max(120px, 32vmin) * 0.75) + 10vmin + 40px)",
+        top: "calc(calc(max(120px, 1vmin) * 0.75) + 10vmin + 40px)"
       }}
       component="nav"
       aria-label="secondary mailbox folders"
     >
       {filter.map((f, index) => (
-        <ListItem disablePadding key={index}>
+        <ListItem disablePadding key={index} >
           <ListItemButton onClick={() => submit(f.section)}>
             <img className="icon" src={f.src} alt="" />
-            <ListItemText primary={f.primary} />
+            <ListItemText primary={f.primary} sx={{fontWeight: 900}}/>
           </ListItemButton>
         </ListItem>
       ))}
