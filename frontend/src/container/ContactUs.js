@@ -19,7 +19,7 @@ const BoxContainer = styled.div`
   justify-content: Center;
   width: 100%;
   margin-top: 30vmin;
-
+  align-items: center;
   div.box {
     display: flex;
     justify-content: Center;
@@ -37,6 +37,7 @@ const ContactUs = () => {
 
   return (
     <BoxContainer>
+      <p style ={{fontSize :20 , fontWeight: 900, marginBottom: "3%"}}>如有任何問題，請透過IG或信箱聯絡我們。</p>
       <div className="box">
         <div>
           <IconButton href="https://instagram.com/gros_patisserie?igshid=YmMyMTA2M2Y=" color = "secondary">

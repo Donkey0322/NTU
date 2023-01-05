@@ -19,6 +19,9 @@ const VipInfo = () => {
   };
   const toMain = () => {
     removeCookie("customer_id", { path: "/" });
+    removeCookie("jwt");
+    removeCookie("session");
+    removeCookie("session/sig");
     setLogin(false);
     navigate("/");
   };
