@@ -46,19 +46,22 @@ const UpperContainer = styled.div`
 const Information = styled(Box)`
   display: flex;
   position: relative;
+  padding: 2%;
   width: calc(100% - 50vmin);
   flex-direction: column;
-  row-gap: 3vmin;
-  margin-left: 2vmin;
+  margin-top: 5%;
+  row-gap: 5vmin;
+  margin-left: 15vmin;
 `;
 const ImageContainer = styled.div`
   display: flex;
   flex-direction: column;
   row-gap: 2vmin;
   width: 50vmin;
+  padding: 2%;
   .img {
-    width: 50vmin;
-    height: 50vmin;
+    width: 60vmin;
+    height: 60vmin;
     background-size: cover;
     background-position-x: center;
     background-position-y: center;
@@ -118,9 +121,9 @@ const ProductIndividual = ({
         </PreviewContainer>
       </ImageContainer>
       <Information>
-        <Typography variant="h5">{item.product_name}</Typography>
-        <p style={{ color: "darkgray" }}>售價：{item.price}$</p>
-        <p style={{ width: "min(50%, 50vmin)" }}>{item.description}</p>
+        <Typography variant="h5" sx={{ fontWeight: 'bold' }}>{item.product_name}</Typography>
+        <p style={{ color: "RosyBrown", fontSize: "3vmin"}}>售價：{item.price}$</p>
+        <p style={{ width: "min(70%, 70vmin)", fontSize: "2.5vmin", backgroundColor: "LavenderBlush", padding: "5%", borderRadius: "20px", color: "IndianRed" }}>{item.description}</p>
 
         <PureInput
           required={true}

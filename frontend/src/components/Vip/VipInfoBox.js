@@ -17,7 +17,7 @@ const PureInput = ({
       sx={{ width: "min(30%, 30vmin)" }}
       variant={variant && variant}
     >
-      <InputLabel htmlFor={label}>{label}</InputLabel>
+      <InputLabel htmlFor={label} >{label}</InputLabel>
       {inputType === "outlined" ? (
         <OutlinedInput
           name={name}
@@ -26,6 +26,7 @@ const PureInput = ({
           value={value}
           onChange={onChange}
           defaultValue={value}
+          sx={{  width: '35ch' }}
           color={error && error[name] ? "error" : "primary"}
         />
       ) : inputType === "standard" ? (
@@ -35,6 +36,7 @@ const PureInput = ({
           autoComplete={autoComplete && autoComplete}
           label={label}
           onChange={onChange}
+          sx={{  width: '35ch' }}
           value={value}
           color={error && error[name] ? "error" : "primary"}
         />
@@ -43,8 +45,8 @@ const PureInput = ({
   );
 };
 const Container = styled.div`
-  margin-top: 3vmin;
-  margin-left: 3vmin;
+  margin-top: 5vmin;
+  margin-left: 60vmin;
 `;
 
 const VipInfoBox = ({
@@ -59,7 +61,9 @@ const VipInfoBox = ({
 }) => {
   return (
     <Container>
-      <p>{title}</p>
+      <p style={{width: "min(15%, 15vmin)", height: "min(10%, 10vmin)", padding: "0.5% 0%",
+      fontSize: "2.5vmin", backgroundColor: "LavenderBlush",borderRadius: "20px",
+       color: "IndianRed", textAlign: "center"}}>{title}</p>
       <PureInput
         required={true}
         label={label}
