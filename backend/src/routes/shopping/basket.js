@@ -51,16 +51,17 @@ router.post("/", async (req, res) => {
   const { customer_id, product_id, quantity } = req.body;
   let insert = `INSERT INTO basket (customer_id, product_id, quantity)
              VALUES(${customer_id}, ${product_id}, ${quantity})`;
-    await Myquery(insert);
-    let update = query(customer_id)
-    update = update + ` order by basket.basket_id desc 
+  await Myquery(insert);
+  let update = query(customer_id);
+  update =
+    update +
+    ` order by basket.basket_id desc 
                         limit 1`;
-    console.log(update)
-    const result = await Myquery(update)
-    console.log(update)
-    res.status(200).send({result}); 
-})
-
+  console.log(update);
+  const result = await Myquery(update);
+  console.log(update);
+  res.status(200).send({ result });
+});
 
 router.delete("/", async (req, res) => {
   const { basket_id } = req.query;
