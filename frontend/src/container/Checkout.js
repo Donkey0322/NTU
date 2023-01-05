@@ -40,6 +40,13 @@ const Checkout = () => {
       [name]: value,
     }));
     if (name === "deliver_date") setTime(value);
+    if (name === "deliver_method") {
+      setData((prev) => ({
+        ...prev,
+        deliver_date: null,
+        deliver_location: null,
+      }));
+    }
   };
 
   const handleCheckoutSubmit = async () => {
