@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Vip from "../components/Vip";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, Outlet } from "react-router-dom";
 import { useWeb } from "./hooks/useWeb";
 import dayjs from "dayjs";
 
@@ -8,7 +8,7 @@ const VipInfo = () => {
   //sideBar
   const location = useLocation();
   const currentPath = location.pathname;
-  const { cookies, removeCookie, setLogin, CRUD } = useWeb();
+  const { cookies, removeCookie, setLogin, CRUD, setCartNumber } = useWeb();
   // console.log(Link);
   const navigate = useNavigate();
   const [open, setOpen] = React.useState(false);
@@ -24,6 +24,7 @@ const VipInfo = () => {
     removeCookie("session", { path: "/" });
     removeCookie("jwt", { path: "/" });
     setLogin(false);
+    setCartNumber(0);
     navigate("/");
   };
   const handleGetInfo = async () => {
