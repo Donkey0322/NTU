@@ -63,7 +63,7 @@ const PureInput = ({
 };
 const Container = styled.div`
   margin-top: 5vmin;
-  margin-left: 60vmin;
+  margin-left: 35% ;
 `;
 
 const VipInfoBox = ({
@@ -78,20 +78,9 @@ const VipInfoBox = ({
 }) => {
   return (
     <Container>
-      <p
-        style={{
-          width: "min(15%, 15vmin)",
-          height: "min(10%, 10vmin)",
-          padding: "0.5% 0%",
-          fontSize: "2.5vmin",
-          backgroundColor: "LavenderBlush",
-          borderRadius: "20px",
-          color: "IndianRed",
-          textAlign: "center",
-        }}
-      >
-        {title}
-      </p>
+      <p style={{width: "min(15%, 15vmin)", height: "min(10%, 10vmin)", padding: "0.5% 0%",
+      fontSize: "2vmin", backgroundColor: "LavenderBlush",borderRadius: "20px",
+       color: "IndianRed", textAlign: "center"}}>{title}</p>
       <PureInput
         required={true}
         label={label}
