@@ -5,7 +5,11 @@ import {
   OutlinedInput,
   Select,
   Input,
+  TextField,
 } from "@mui/material";
+import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+
 import styled from "styled-components";
 
 const PureInput = ({
@@ -23,10 +27,10 @@ const PureInput = ({
   return (
     <FormControl
       sx={{ width: "min(30%, 30vmin)" }}
-      variant={variant && variant}
-      required={Boolean(required)}
+      variant={variant && variant !== "date" && variant}
+      // required={Boolean(required)}
     >
-      <InputLabel htmlFor={label}>{label}</InputLabel>
+      {inputType !== "date" && <InputLabel htmlFor={label}>{label}</InputLabel>}
       {inputType === "outlined" ? (
         <OutlinedInput
           name={name}
@@ -57,7 +61,18 @@ const PureInput = ({
             </MenuItem>
           ))}
         </Select>
-      ) : null}
+      ) : (
+        <LocalizationProvider dateAdapter={AdapterDayjs}>
+          <DatePicker
+            // eslint-disable-next-line react/jsx-props-no-spreading
+            renderInput={(props) => <TextField {...props} name="date" />}
+            value={value ? value : ""}
+            label={label}
+            name={name}
+            onChange={(e) => onChange({ target: { name, value: e } })}
+          />
+        </LocalizationProvider>
+      )}
     </FormControl>
   );
 };

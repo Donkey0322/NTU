@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Checkout_Board from "../components/Checkout";
 import { useWeb } from "./hooks/useWeb";
 import { useLocation } from "react-router-dom";
+import dayjs from "dayjs";
 
 const Checkout = () => {
   const {
@@ -17,14 +18,16 @@ const Checkout = () => {
     basket_id,
   });
   const [send, setSend] = useState(false);
+  const [time, setTime] = useState(dayjs());
 
   const handleInputChange = (event) => {
-    // console.log(event.target.value);
+    console.log(event);
     const { name, value } = event.target;
     setData((prev) => ({
       ...prev,
       [name]: value,
     }));
+    if (name === "deliver_date") setTime(value);
   };
 
   const handleCheckoutSubmit = async () => {
@@ -42,6 +45,7 @@ const Checkout = () => {
       sum={sum}
       handleInputChange={handleInputChange}
       handleCheckoutSubmit={handleCheckoutSubmit}
+      time={time}
     />
   );
 };

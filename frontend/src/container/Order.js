@@ -48,11 +48,9 @@ function Order() {
         </TableHead>
         <TableBody>
           {order.length > 0 &&
-            order
-              //   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map((tuple, index) => (
-                <Row key={index} item={tuple} id={index} />
-              ))}
+            order.map((tuple, index) => (
+              <Row key={index} item={tuple} id={index} />
+            ))}
         </TableBody>
         {/* <TableFooter>
           <TableRow>

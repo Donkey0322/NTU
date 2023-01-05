@@ -10,25 +10,14 @@ import Box from "@mui/material/Box";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableHead from "@mui/material/TableHead";
-// import dayjs from "../../utils/day";
-// import ItemFormModal from "../ItemFormModal";
+import dayjs from "../utils/day";
 import Chip from "@mui/joy/Chip";
 
 function Row({ item, id }) {
   const [open, setOpen] = useState(false);
-  const [modalOpen, setModalOpen] = useState(false);
-
   const onCollapse = () => {
     setOpen((open) => !open);
   };
-
-  const onEdit = () => {
-    setModalOpen(true);
-  };
-
-  //   const handleDelete = () => {
-  //     Query(item.origin ? item.origin[indexName] : item[indexName]);
-  //   };
 
   return (
     <>
@@ -58,14 +47,12 @@ function Row({ item, id }) {
                     </Chip>
                   )
                 ) : column.includes("day") || column.includes("date") ? (
-                  1
-                ) : //   dayjs(
-                //     item.origin ? item.origin[column] : item[column]
-                //   ).calendar()
-                column.includes("id") ? (
-                  1
-                ) : //   id + page * rowsPerPage + 1
-                item.origin ? (
+                  item.origin[column] ? (
+                    dayjs(item.origin[column]).calendar()
+                  ) : null
+                ) : column.includes("id") ? (
+                  id
+                ) : item.origin ? (
                   item.origin[column]
                 ) : (
                   item[column]
@@ -73,40 +60,6 @@ function Row({ item, id }) {
               </Typography>
             </TableCell>
           ))}
-
-        {/* 
-        <TableCell onClick={onCollapse} sx={{ cursor: "pointer" }}>
-          <Typography>{item.date && dayjs(item.date).calendar()}</Typography>
-        </TableCell>
-        <TableCell
-          data-cy="item-name"
-          onClick={onCollapse}
-          sx={{ cursor: "pointer" }}
-        >
-          <Typography>{item.name}</Typography>
-        </TableCell>
-        <TableCell data-cy="item-amount" align="right">
-          <Typography>{item.amount && `$${item.amount}`}</Typography>
-        </TableCell>
-        <TableCell
-          data-cy="item-category"
-          onClick={onCollapse}
-          sx={{ cursor: "pointer" }}
-        >
-          <Typography>{item.category?.toLowerCase()}</Typography>
-        </TableCell> */}
-        <TableCell align="right" data-cy="item-edit">
-          {
-            <IconButton onClick={onEdit} data-cy="update-item">
-              <EditIcon />
-            </IconButton>
-          }
-          {
-            <IconButton onClick={null} data-cy="delete-item">
-              <DeleteIcon />
-            </IconButton>
-          }
-        </TableCell>
       </TableRow>
       {item.detail && (
         <TableRow>
