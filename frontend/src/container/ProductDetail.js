@@ -9,19 +9,25 @@ const ProductDetail = () => {
   const [quantity, setQuantity] = useState(0);
 
   const navigate = useNavigate();
-  const { CRUD, login, cookies } = useWeb();
+  const { CRUD, login, cookies, setCartNumber } = useWeb();
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = async () => {
     if (!login) setOpen(true);
     else {
       try {
-        if (quantity != 0) return;
+        if (quantity === 0) return;
         else {
+          setCartNumber((prev) => prev + 1);
           await CRUD(
             "C",
             "/basket"
-          )({ customer_id: cookies.customer_id, product_id: item.product_id, quantity });
+          )({
+            customer_id: cookies.customer_id,
+            product_id: item.product_id,
+            quantity: Number(quantity),
+          });
+          setQuantity(0);
         }
       } catch (err) {
         console.log(err);
