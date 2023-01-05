@@ -16,6 +16,7 @@ const BoxContainer = styled.div`
 
 const FormContainer = styled.div`
   width: 100%;
+  margin-top: 5vmin;
 `;
 
 const DownContainer = styled.div`
@@ -88,6 +89,10 @@ const meetForm = [
 ];
 
 const Checkout = ({
+  toMain,
+  toVip,
+  checked,
+  handleChange,
   send,
   data,
   handleInputChange,
@@ -95,6 +100,7 @@ const Checkout = ({
   sum,
   time,
 }) => {
+  
   if (send === true)
     return (
       <BoxContainer>
@@ -104,8 +110,8 @@ const Checkout = ({
           確認款項後會立即出貨，請至會員專區查看訂單狀況。
         </p>
         <div>
-          <Button variant="contained">至會員專區</Button>
-          <Button variant="contained">返回主頁</Button>
+          <Button variant="contained" onClick={toVip}>至會員專區</Button>
+          <Button variant="contained" onClick={toMain}>返回主頁</Button>
         </div>
       </BoxContainer>
     );
@@ -162,12 +168,12 @@ const Checkout = ({
         </Paper>
         <DownContainer>
           <FormControlLabel
-            control={<Checkbox />}
+            control={<Checkbox   checked={checked}  onChange={handleChange}/>}
             label="我同意訂單一旦送出，未經賣家同意不得取消訂單"
           />
           <div>
             <p>總價 NT$ {sum}</p>
-            <Button variant="contained" onClick={handleCheckoutSubmit}>
+            <Button variant="contained" onClick={handleCheckoutSubmit} disabled={!checked}>
               送出訂單
             </Button>
           </div>

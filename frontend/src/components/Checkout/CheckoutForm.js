@@ -33,6 +33,7 @@ const PureInput = ({
       {inputType !== "date" && <InputLabel htmlFor={label}>{label}</InputLabel>}
       {inputType === "outlined" ? (
         <OutlinedInput
+          required
           name={name}
           autoComplete={autoComplete && autoComplete}
           label={label}
@@ -41,6 +42,7 @@ const PureInput = ({
         />
       ) : inputType === "standard" ? (
         <Input
+          required
           name={name}
           autoComplete={autoComplete && autoComplete}
           label={label}
@@ -81,6 +83,7 @@ const Container = styled.div`
   align-items: center;
   margin-left: 2vmin;
   margin-right: 2vmin;
+  margin-bottom: 2vmin;
   min-height: 5vmin;
   justify-content: space-between;
 `;

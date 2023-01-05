@@ -2,14 +2,14 @@ import styled from "styled-components";
 import { forwardRef } from "react";
 import { Button, IconButton } from "@mui/material";
 import { KeyboardArrowLeft, KeyboardArrowRight } from "@mui/icons-material";
-const SlideWidth = "100vmin";
+const SlideWidth = "120vmin";
 
 const AutoSlide = styled.div`
   position: relative;
   width: ${SlideWidth};
   overflow: hidden;
   box-shadow: 0 0 30px black;
-  margin-top: 1vmin;
+  margin-top: 5vmin;
   &:hover {
     label {
       opacity: 0.5;
