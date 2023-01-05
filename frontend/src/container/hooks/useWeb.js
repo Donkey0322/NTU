@@ -11,7 +11,7 @@ const WebContext = createContext({
 const WebProvider = (props) => {
   const [cookies, setCookie, removeCookie] = useCookies(["customer_id"]);
   const [login, setLogin] = useState(cookies.customer_id ? true : false);
-  const [cartNumber, setCartNumber] = useState();
+  const [cartNumber, setCartNumber] = useState(0);
 
   const CRUD =
     (type, path) =>
