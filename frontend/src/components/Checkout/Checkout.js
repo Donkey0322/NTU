@@ -88,6 +88,14 @@ const meetForm = [
   },
 ];
 
+const checkSubmit = (data, checked) => {
+  const banSubmit = !checked || typeof data.customer_name == 'undefined' || 
+                    typeof data.cellphone_number == 'undefined' || typeof data.payBy == 'undefined' ||
+                    typeof data.deliver_method == 'undefined'|| typeof data.deliver_location== 'undefined' ||
+                    typeof data.deliver_method == 'undefined' ?  true : data.deliver_method == '面交' ? typeof data.deliver_method == 'undefined' : false;
+  return banSubmit
+}
+
 const Checkout = ({
   toMain,
   toVip,
@@ -117,6 +125,19 @@ const Checkout = ({
     );
   else
     return (
+      // console.log('check', !checked),
+      // console.log('name', typeof data.customer_name == 'undefined'),
+      // console.log('number', typeof data.cellphone_number == 'undefined'),
+      // console.log('pay', typeof data.payBy == 'undefined'),
+      // console.log('method', typeof data.deliver_method == 'undefined'),
+      // console.log('location', typeof data.deliver_location== 'undefined'),
+      // console.log('time', typeof data.deliver_method == 'undefined' ?  true : data.deliver_method == '面交' ? false : data.deliver_method == 'undefined'),
+      // console.log(!checked || typeof data.customer_name == 'undefined' || 
+      // typeof data.cellphone_number == 'undefined' || typeof data.payBy == 'undefined' ||
+      // typeof data.deliver_method == 'undefined'|| typeof data.deliver_location== 'undefined' ||
+      // typeof data.deliver_method == 'undefined' ?  true : data.deliver_method == '面交' ? typeof data.deliver_method == 'undefined' : false),
+      // console.log(data.phone_number),
+      // console.log(data),
       <FormContainer>
         <Paper
           sx={{ display: "flex", flexDirection: "column", rowGap: "3vmin" }}
@@ -173,7 +194,8 @@ const Checkout = ({
           />
           <div>
             <p>總價 NT$ {sum}</p>
-            <Button variant="contained" onClick={handleCheckoutSubmit} disabled={!checked}>
+            <Button variant="contained" onClick={handleCheckoutSubmit} 
+            disabled={checkSubmit(data, checked)}>
               送出訂單
             </Button>
           </div>
