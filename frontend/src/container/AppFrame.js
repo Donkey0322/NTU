@@ -71,7 +71,7 @@ const Header = styled.div`
   height: 20vmin;
 `;
 
-const Num = styled.p`
+const Num = styled.div`
   width: 2vmin;
   height: 2vmin;
   position: absolute;
@@ -83,7 +83,7 @@ const Num = styled.p`
   background-color: gray;
   border-radius: 50%;
   font-size: calc(1vmin / 2);
-  p {
+  div {
     color: white;
   }
 `;
@@ -132,18 +132,15 @@ const AppFrame = () => {
             <li onClick={() => navigate("/contactUs")}>
               <p>聯絡我們</p>
             </li>
-            <li onClick={() => checkLogin2()}>
+            <li onClick={() => checkLogin2()} style={{ position: "relative" }}>
+              {cartNumber && <Num>{cartNumber}</Num>}
               <p
                 style={{
                   display: "flex",
                   alignItems: "center",
                   columnGap: "1vmin",
-                  position: "relative",
                 }}
               >
-                <Num>
-                  <p>{cartNumber}</p>
-                </Num>
                 <ShoppingCartOutlinedIcon />
                 購物車
               </p>

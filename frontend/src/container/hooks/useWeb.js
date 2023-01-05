@@ -11,7 +11,7 @@ const WebContext = createContext({
 const WebProvider = (props) => {
   const [cookies, setCookie, removeCookie] = useCookies(["customer_id"]);
   const [login, setLogin] = useState(cookies.customer_id ? true : false);
-  const [cartNumber, setCartNumber] = useState();
+  const [cartNumber, setCartNumber] = useState(0);
 
   const CRUD =
     (type, path) =>
@@ -73,10 +73,11 @@ const WebProvider = (props) => {
           }
           break;
         case "D":
+          console.log(value);
           try {
             const {
               data: { result },
-            } = await instance.delete(`${path}`, { params: { id: value } });
+            } = await instance.delete(`${path}`, { params: value });
             if (typeof result !== "undefined") {
               return result;
             }
