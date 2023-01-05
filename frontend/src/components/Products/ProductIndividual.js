@@ -19,7 +19,7 @@ import {
   DialogTitle,
 } from "@mui/material";
 
-const PureInput = ({ label, autoComplete, required, onChange }) => {
+const PureInput = ({ label, autoComplete, required, onChange, value }) => {
   return (
     <FormControl
       sx={{ width: "min(30%, 30vmin)" }}
@@ -32,6 +32,7 @@ const PureInput = ({ label, autoComplete, required, onChange }) => {
         autoComplete={autoComplete && autoComplete}
         label={label}
         type="number"
+        value={value}
         onChange={onChange}
       />
     </FormControl>
@@ -87,6 +88,7 @@ const SmallImgContainer = styled.div`
 
 const ProductIndividual = ({
   item,
+  quantity,
   open,
   handleClickOpen,
   handleClose,
@@ -142,6 +144,7 @@ const ProductIndividual = ({
             required={true}
             label="購買數量"
             onChange={handleQuantityChange}
+            value={quantity}
           />
           <Button
             variant="contained"
