@@ -54,13 +54,15 @@ var check = new CheckCustomer();
 
 router.post("/", async (req, res) => {
   console.log(req.body);
-  const { data: {mail, password} } = req.body;
+  const {
+    data: { mail, password },
+  } = req.body;
   let errors = { mail: "", password: "" };
   errors = await check.checkEmail(mail, errors);
   errors = await check.checkPassword(mail, password, errors);
   if (errors.mail || errors.password) {
     console.log(errors);
-    res.status(400).json({ result: {errors} });
+    res.status(400).json({ result: { errors } });
   } else {
     console.log("logIn succeed");
     const query_in = `select * from customers where mail = "${mail}"`;

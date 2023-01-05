@@ -67,7 +67,7 @@ var check = new CheckCustomer();
 // }
 
 router.post("/", async (req, res) => {
-    console.log(req.body.data)
+  console.log(req.body.data);
   const { mail, password } = req.body.data;
   let errors = { mail: "", password: "" };
   errors = check.checkEmailValidation(mail, errors);
@@ -75,7 +75,7 @@ router.post("/", async (req, res) => {
   errors = check.checkPassword(password, errors);
   if (errors.mail || errors.password) {
     console.log(errors);
-    res.status(400).json({ result: {errors} });
+    res.status(400).json({ result: { errors } });
   } else {
     const passwordHash = bcrypt.hashSync(password, 10);
     const query = `insert into customers (mail, password) 
@@ -84,7 +84,7 @@ router.post("/", async (req, res) => {
     const query_in = `select * from customers where mail = "${mail}"`;
     const result = await Myquery(query_in);
     const token = createToken(result[0].customer_id);
-    console.log(token)
+    console.log(token);
     res.cookie("jwt", token, { httpOnly: true, maxAge: maxAge * 1000 });
     res.status(200).json({ result });
   }
