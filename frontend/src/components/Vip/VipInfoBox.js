@@ -1,4 +1,13 @@
-import { InputLabel, FormControl, OutlinedInput, Input } from "@mui/material";
+import {
+  InputLabel,
+  FormControl,
+  OutlinedInput,
+  Input,
+  TextField,
+} from "@mui/material";
+import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+
 import styled from "styled-components";
 
 const PureInput = ({
@@ -9,15 +18,14 @@ const PureInput = ({
   error,
   variant,
   inputType,
-  select,
   value,
 }) => {
   return (
     <FormControl
-      sx={{ width: "min(30%, 30vmin)" }}
-      variant={variant && variant}
+      sx={{ minWidth: "min(30%, 30vmin)" }}
+      disabled={name === "mail"}
     >
-      <InputLabel htmlFor={label} >{label}</InputLabel>
+      {inputType !== "date" && <InputLabel htmlFor={label}>{label}</InputLabel>}
       {inputType === "outlined" ? (
         <OutlinedInput
           name={name}
@@ -25,28 +33,37 @@ const PureInput = ({
           label={label}
           value={value}
           onChange={onChange}
-          defaultValue={value}
-          sx={{  width: '35ch' }}
+          sx={{ width: "35ch" }}
           color={error && error[name] ? "error" : "primary"}
         />
       ) : inputType === "standard" ? (
         <Input
           name={name}
-          defaultValue={value}
           autoComplete={autoComplete && autoComplete}
           label={label}
           onChange={onChange}
-          sx={{  width: '35ch' }}
+          sx={{ width: "35ch" }}
           value={value}
           color={error && error[name] ? "error" : "primary"}
         />
-      ) : null}
+      ) : (
+        <LocalizationProvider dateAdapter={AdapterDayjs}>
+          <DatePicker
+            // eslint-disable-next-line react/jsx-props-no-spreading
+            renderInput={(props) => <TextField {...props} name="date" />}
+            value={value ? value : ""}
+            label={label}
+            name={name}
+            onChange={(e) => onChange({ target: { name, value: e } })}
+          />
+        </LocalizationProvider>
+      )}
     </FormControl>
   );
 };
 const Container = styled.div`
   margin-top: 5vmin;
-  margin-left: 35% ;
+  margin-left: 35%;
 `;
 
 const VipInfoBox = ({
@@ -61,9 +78,20 @@ const VipInfoBox = ({
 }) => {
   return (
     <Container>
-      <p style={{width: "min(15%, 15vmin)", height: "min(10%, 10vmin)", padding: "0.5% 0%",
-      fontSize: "2vmin", backgroundColor: "LavenderBlush",borderRadius: "20px",
-       color: "IndianRed", textAlign: "center"}}>{title}</p>
+      <p
+        style={{
+          width: "min(15%, 15vmin)",
+          height: "min(10%, 10vmin)",
+          padding: "0.5% 0%",
+          fontSize: "2vmin",
+          backgroundColor: "LavenderBlush",
+          borderRadius: "20px",
+          color: "IndianRed",
+          textAlign: "center",
+        }}
+      >
+        {title}
+      </p>
       <PureInput
         required={true}
         label={label}

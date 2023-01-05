@@ -89,12 +89,20 @@ const meetForm = [
 ];
 
 const checkSubmit = (data, checked) => {
-  const banSubmit = !checked || typeof data.customer_name == 'undefined' || 
-                    typeof data.cellphone_number == 'undefined' || typeof data.payBy == 'undefined' ||
-                    typeof data.deliver_method == 'undefined'|| typeof data.deliver_location== 'undefined' ||
-                    typeof data.deliver_method == 'undefined' ?  true : data.deliver_method == '面交' ? typeof data.deliver_method == 'undefined' : false;
-  return banSubmit
-}
+  const banSubmit =
+    !checked ||
+    !data.customer_name ||
+    !data.cellphone_number ||
+    !data.payBy ||
+    !data.deliver_method ||
+    !data.deliver_location ||
+    !data.deliver_method
+      ? true
+      : data.deliver_method === "面交"
+      ? !data.deliver_method
+      : false;
+  return banSubmit;
+};
 
 const Checkout = ({
   toMain,
@@ -108,7 +116,6 @@ const Checkout = ({
   sum,
   time,
 }) => {
-  
   if (send === true)
     return (
       <BoxContainer>
@@ -118,8 +125,12 @@ const Checkout = ({
           確認款項後會立即出貨，請至會員專區查看訂單狀況。
         </p>
         <div>
-          <Button variant="contained" onClick={toVip}>至會員專區</Button>
-          <Button variant="contained" onClick={toMain}>返回主頁</Button>
+          <Button variant="contained" onClick={toVip}>
+            至會員專區
+          </Button>
+          <Button variant="contained" onClick={toMain}>
+            返回主頁
+          </Button>
         </div>
       </BoxContainer>
     );
@@ -132,7 +143,7 @@ const Checkout = ({
       // console.log('method', typeof data.deliver_method == 'undefined'),
       // console.log('location', typeof data.deliver_location== 'undefined'),
       // console.log('time', typeof data.deliver_method == 'undefined' ?  true : data.deliver_method == '面交' ? false : data.deliver_method == 'undefined'),
-      // console.log(!checked || typeof data.customer_name == 'undefined' || 
+      // console.log(!checked || typeof data.customer_name == 'undefined' ||
       // typeof data.cellphone_number == 'undefined' || typeof data.payBy == 'undefined' ||
       // typeof data.deliver_method == 'undefined'|| typeof data.deliver_location== 'undefined' ||
       // typeof data.deliver_method == 'undefined' ?  true : data.deliver_method == '面交' ? typeof data.deliver_method == 'undefined' : false),
@@ -189,13 +200,16 @@ const Checkout = ({
         </Paper>
         <DownContainer>
           <FormControlLabel
-            control={<Checkbox   checked={checked}  onChange={handleChange}/>}
+            control={<Checkbox checked={checked} onChange={handleChange} />}
             label="我同意訂單一旦送出，未經賣家同意不得取消訂單"
           />
           <div>
             <p>總價 NT$ {sum}</p>
-            <Button variant="contained" onClick={handleCheckoutSubmit} 
-            disabled={checkSubmit(data, checked)}>
+            <Button
+              variant="contained"
+              onClick={handleCheckoutSubmit}
+              disabled={checkSubmit(data, checked)}
+            >
               送出訂單
             </Button>
           </div>

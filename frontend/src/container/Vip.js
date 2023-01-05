@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Vip from "../components/Vip";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useWeb } from "./hooks/useWeb";
+import dayjs from "dayjs";
 
 const VipInfo = () => {
   //sideBar
@@ -19,9 +20,9 @@ const VipInfo = () => {
   };
   const toMain = () => {
     removeCookie("customer_id", { path: "/" });
-    removeCookie("jwt");
-    removeCookie("session");
-    removeCookie("session/sig");
+    removeCookie("session.sig", { path: "/" });
+    removeCookie("session", { path: "/" });
+    removeCookie("jwt", { path: "/" });
     setLogin(false);
     navigate("/");
   };
@@ -49,6 +50,7 @@ const VipInfo = () => {
   const [value, setValue] = useState(
     location.state && location.state.result[0] ? location.state.result[0] : null
   );
+  const [time, setTime] = useState(dayjs());
   const [data, setData] = useState({
     customer_id: cookies.customer_id,
     customer_name: value.customer_name,
@@ -58,12 +60,13 @@ const VipInfo = () => {
   });
   const [init, setInit] = useState(false);
   const handleInputChange = (event) => {
-    // console.log(event.target.value);
     const { name, value } = event.target;
+    if (name === "birthday") console.log(event.target.value.$d);
     setData((prev) => ({
       ...prev,
-      [name]: value,
+      [name]: name === "birthday" ? value.$d : value,
     }));
+    if (name === "birthday") setTime(value);
     setEdit(true);
   };
   const handleUpdateInfo = async () => {
@@ -87,6 +90,7 @@ const VipInfo = () => {
         setValue(result[0]);
         setData(result[0]);
         setEdit(false);
+        setTime(new Date(result[0].birthday));
       } catch (err) {
         alert("有問題");
       }
@@ -98,6 +102,7 @@ const VipInfo = () => {
   const INFO = {
     edit,
     data,
+    time,
     handleInputChange,
     handleUpdateInfo,
   };

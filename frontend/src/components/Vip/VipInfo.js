@@ -69,13 +69,13 @@ const info = [
   {
     title: "會員生日",
     name: "birthday",
-    inputType: "standard",
-    variant: "standard",
+    inputType: "date",
+    variant: "date",
   },
 ];
 
 const VipInfo = ({ SIDEBAR, INFO }) => {
-  const { edit, data, handleInputChange, handleUpdateInfo } = INFO;
+  const { edit, data, time, handleInputChange, handleUpdateInfo } = INFO;
 
   return (
     <WholeContainer>
@@ -92,7 +92,9 @@ const VipInfo = ({ SIDEBAR, INFO }) => {
               handleInputChange={handleInputChange}
               key={index}
               variant={f.variant}
-              value={data[f.name]}
+              value={
+                f.name === "birthday" ? time : data[f.name] && data[f.name]
+              }
             />
           ))}
           <div className="edit">

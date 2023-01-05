@@ -83,7 +83,7 @@ const Num = styled.div`
   background-color: gray;
   border-radius: 50%;
   font-size: calc(1vmin / 2);
-  div {
+  p {
     color: white;
   }
 `;
@@ -133,7 +133,11 @@ const AppFrame = () => {
               <p>聯絡我們</p>
             </li>
             <li onClick={() => checkLogin2()} style={{ position: "relative" }}>
-              {cartNumber && <Num>{cartNumber}</Num>}
+              {cartNumber && (
+                <Num>
+                  <p>{cartNumber}</p>
+                </Num>
+              )}
               <p
                 style={{
                   display: "flex",
