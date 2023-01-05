@@ -49,7 +49,7 @@ const Filter = ({ data, submit, setProducts }) => {
         <ListItem disablePadding key={index} >
           <ListItemButton onClick={() => submit(f.section)}>
             <img className="icon" src={f.src} alt="" />
-            <ListItemText primary={f.primary} sx={{fontWeight: 900}}/>
+            <ListItemText primary={f.primary}/>
           </ListItemButton>
         </ListItem>
       ))}

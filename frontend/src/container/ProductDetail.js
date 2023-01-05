@@ -16,7 +16,7 @@ const ProductDetail = () => {
     if (!login) setOpen(true);
     else {
       try {
-        if (quantity != 0) return;
+        if (quantity === 0) return;
         else {
           await CRUD(
             "C",
