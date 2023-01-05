@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import Autoslider from "../components/Autoslider";
 import { useWeb } from "./hooks/useWeb";
@@ -71,6 +72,7 @@ const MainPage = () => {
   const [count, setCount] = useState(1);
   const [items, setItems] = useState(4);
   const [products, setProducts] = useState(null);
+  const navigate = useNavigate();
   const { CRUD } = useWeb();
 
   useEffect(() => {
@@ -147,7 +149,11 @@ const MainPage = () => {
           shuffleArray(products).map(
             (i, index) =>
               index < 4 && (
-                <div className="product" key={index}>
+                <div
+                  className="product"
+                  key={index}
+                  onClick={() => navigate(`/products/${i.product_id}`)}
+                >
                   <ProductImgContainer>
                     <img src={require("../" + i.img[0] + ".png")} alt="" />
                   </ProductImgContainer>

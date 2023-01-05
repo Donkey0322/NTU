@@ -49,7 +49,7 @@ const Products = () => {
       setData({ ...data, section });
       setProducts(result);
     } catch (err) {
-      alert("有問題");
+      console.log("有問題");
     }
   };
 
