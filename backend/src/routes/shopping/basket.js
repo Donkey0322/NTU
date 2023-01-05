@@ -63,14 +63,14 @@ router.post("/", async (req, res) => {
 });
 
 router.delete("/", async (req, res) => {
-  const { basket_id } = req.body;
-  let query = `delete from basket
+  const { basket_id } = req.query;
+  let query1 = `delete from basket
     where basket_id = ${basket_id}`;
 
   let query2 = `select customer_id from basket where basket_id = ${basket_id}`;
   const customer = await Myquery(query2);
   const customer_id = customer[0].customer_id;
-  await Myquery(query);
+  await Myquery(query1);
   let return_query = query(customer_id);
   const result = await Myquery(return_query);
   res.status(200).send({ result });
