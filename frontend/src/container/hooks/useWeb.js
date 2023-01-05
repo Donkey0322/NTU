@@ -73,10 +73,11 @@ const WebProvider = (props) => {
           }
           break;
         case "D":
+          console.log(value);
           try {
             const {
               data: { result },
-            } = await instance.delete(`${path}`, { params: { id: value } });
+            } = await instance.delete(`${path}`, { params: value });
             if (typeof result !== "undefined") {
               return result;
             }

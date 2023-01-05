@@ -8,7 +8,7 @@ const ShoppingCart = () => {
   const [items, setItems] = useState(null);
   const [sum, setSum] = useState(0);
   const [basket_id, setBasketID] = useState([]);
-  const { CRUD, cookies } = useWeb();
+  const { CRUD, cookies, setCartNumber } = useWeb();
   const navigate = useNavigate();
   useEffect(() => {
     const Render = async () => {
@@ -30,8 +30,9 @@ const ShoppingCart = () => {
 
   const handleDeleteCart = async (basket_id) => {
     try {
-      const newItem = await CRUD("D", "/basket")(basket_id);
+      const newItem = await CRUD("D", "/basket")({ basket_id });
       setItems(newItem);
+      setCartNumber((prev) => prev - 1);
     } catch (err) {
       alert("有問題");
     }
