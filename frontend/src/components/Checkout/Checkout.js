@@ -83,8 +83,7 @@ const meetForm = [
     title: "面交時間",
     label: "面交時間",
     name: "deliver_date",
-    inputType: "select",
-    select: ["星期一晚上六點", "星期三晚上六點", "星期六晚上六點"],
+    inputType: "date",
   },
 ];
 
@@ -94,6 +93,7 @@ const Checkout = ({
   handleInputChange,
   handleCheckoutSubmit,
   sum,
+  time,
 }) => {
   if (send === true)
     return (
@@ -140,7 +140,11 @@ const Checkout = ({
                   key={index}
                   select={f.inputType === "select" && f.select}
                   variant={f.variant}
-                  value={data[f.name] && data[f.name]}
+                  value={
+                    f.name === "deliver_datedata"
+                      ? time
+                      : data[f.name] && data[f.name]
+                  }
                 />
               ))}
             </>
