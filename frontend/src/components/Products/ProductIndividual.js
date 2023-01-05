@@ -51,7 +51,12 @@ const Information = styled(Box)`
   flex-direction: column;
   margin-top: 5%;
   row-gap: 5vmin;
-  margin-left: 15vmin;
+  margin-left: 10vmin;
+  div {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+  }
 `;
 const ImageContainer = styled.div`
   display: flex;
@@ -60,8 +65,8 @@ const ImageContainer = styled.div`
   width: 50vmin;
   padding: 2%;
   .img {
-    width: 60vmin;
-    height: 60vmin;
+    width: 50vmin;
+    height: 50vmin;
     background-size: cover;
     background-position-x: center;
     background-position-y: center;
@@ -121,10 +126,10 @@ const ProductIndividual = ({
         </PreviewContainer>
       </ImageContainer>
       <Information>
-        <Typography variant="h5" sx={{ fontWeight: 'bold' }}>{item.product_name}</Typography>
-        <p style={{ color: "RosyBrown", fontSize: "3vmin"}}>售價：{item.price}$</p>
-        <p style={{ width: "min(70%, 70vmin)", fontSize: "2.5vmin", backgroundColor: "LavenderBlush", padding: "5%", borderRadius: "20px", color: "IndianRed" }}>{item.description}</p>
-
+        <Typography variant="h6" sx={{ fontWeight: 'bold' }}>{item.product_name}</Typography>
+        <p style={{ color: "RosyBrown", fontSize: "2vmin"}}>售價：{item.price}$</p>
+        <p style={{ width: "min(70%, 70vmin)", fontSize: "2vmin", backgroundColor: "LavenderBlush", padding: "3%", borderRadius: "20px", color: "IndianRed" }}>{item.description}</p>
+        <div>
         <PureInput
           required={true}
           label="購買數量"
@@ -135,7 +140,6 @@ const ProductIndividual = ({
           color="info"
           sx={{
             // width: "min(30%, 30vmin, 120px)",
-            position: "absolute",
             right: "1vmin",
           }}
           startIcon={<AddShoppingCart />}
@@ -143,6 +147,8 @@ const ProductIndividual = ({
         >
           加入購物車
         </Button>
+        </div>
+        
         <Dialog
           open={open}
           onClose={handleClose}

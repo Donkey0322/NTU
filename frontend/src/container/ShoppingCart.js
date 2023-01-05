@@ -30,7 +30,7 @@ const ShoppingCart = () => {
 
   const handleDeleteCart = async (basket_id) => {
     try {
-      const newItem = await CRUD("D", "/basket")(basket_id);
+      const newItem = await CRUD("D", "/basket")({basket_id});
       setItems(newItem);
     } catch (err) {
       alert("有問題");

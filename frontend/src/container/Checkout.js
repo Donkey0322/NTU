@@ -1,10 +1,19 @@
 import React, { useState } from "react";
 import Checkout_Board from "../components/Checkout";
 import { useWeb } from "./hooks/useWeb";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import dayjs from "dayjs";
 
 const Checkout = () => {
+  const navigate = useNavigate();
+  const toMain = () => {
+    setSend(false);
+    navigate("/");
+  };
+  const toVip = () => {
+    setSend(false);
+    navigate("/vipinfo");
+  };
   const {
     state: { basket_id, sum },
   } = useLocation();
@@ -19,7 +28,11 @@ const Checkout = () => {
   });
   const [send, setSend] = useState(false);
   const [time, setTime] = useState(dayjs());
+  const [checked, setChecked] = useState(false);
 
+  const handleChange = (event) => {
+    setChecked(event.target.checked);
+  };
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setData((prev) => ({
@@ -39,6 +52,10 @@ const Checkout = () => {
   };
   return (
     <Checkout_Board
+      toMain={toMain}
+      toVip={toVip}
+      checked={checked}
+      handleChange={handleChange}
       send={send}
       data={data}
       sum={sum}
