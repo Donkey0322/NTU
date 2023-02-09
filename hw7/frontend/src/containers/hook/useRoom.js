@@ -51,6 +51,10 @@ const useRoom = () => {
     return friend;
   };
 
+  useEffect(() => {
+    console.log("Hi");
+  }, [activeKey]);
+
   const removeChatBox = (targetKey) => {
     const index = chatBoxes.findIndex(({ key }) => key === activeKey);
     const newChatBoxes = chatBoxes.filter(({ key }) => key !== targetKey);
