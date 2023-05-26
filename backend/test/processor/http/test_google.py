@@ -9,13 +9,13 @@ class TestGoogleLogin(unittest.IsolatedAsyncioTestCase):
     def setUp(self) -> None:
         self.token = {
             'userinfo':{
-                'email': 'lichi10404@gmail.com'
+                'email': 'lichi@gmail.com'
             },
-            'access_token': 'FAKE_ACCESS_TOKEN',
-            'refresh_token':'FAKE_REFRESH_TOKEN'
+            'access_token': 'access_token',
+            'refresh_token':'refresh_token'
         }
-        query_string = 'state=sRCWEguBv3Pj19yEqzMMt9kg7UwjJ0&code=4%2F0AbUR2VPuytINU3Hd5Ey1hZm8xRCyhstkw9bQ8e0ZO6_jAj3dlmNwxIGFeAk8hf1RPYqwrQ&scope=email+profile+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fcalendar+openid+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.profile+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.email&authuser=1&prompt=consent'
-        query_string_denided = 'error=access_denied&state=bqA3HXNmHrk8wrkbiR0InAqLdjINGL'
+        query_string = 'query_string'
+        query_string_denided = 'error=access_denied'
         
         self.input_data = Request(scope={'type': 'http', 'path': '/', 'query_string': query_string.encode('utf-8')})
         
