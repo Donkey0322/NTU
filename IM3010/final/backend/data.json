@@ -1,0 +1,207 @@
+[
+  {
+    "Img": "https://media.vogue.com.tw/photos/60589c2f8f7f3bd1b893e656/2:3/w_2560%2Cc_limit/a.jpeg",
+    "answer": ["甄嬛"],
+    "choices": ["甄嬛", "甄壞", "甄好", "甄貴"],
+    "theme": ["後宮甄嬛傳"]
+  },
+  {
+    "Img": "https://imgur.dcard.tw/I0vMiNAh.jpg",
+    "answer": ["華妃 年世蘭"],
+    "choices": ["華妃 年世蘭", "華妃 年末蘭", "嬪妃 年世蘭", "華妃 年世梅"],
+    "theme": ["後宮甄嬛傳"]
+  },
+  {
+    "Img": "https://media.vogue.com.tw/photos/6274d0b1aeefbcb44cfe5ab6/4:3/w_1064,h_798,c_limit/%E7%94%84%E5%AC%9B%E5%82%B3%20%E5%AE%89%E9%99%B5%E5%AE%B92.jpg",
+    "answer": ["安陵容"],
+    "choices": ["安陵容", "安美容", "安心容", "安平容"],
+    "theme": ["後宮甄嬛傳"]
+  },
+  {
+    "Img": "https://p1.nanmuxuan.com/images/1b/74e1b9c6c2d2adbf.jpg",
+    "answer": ["夏冬春"],
+    "choices": ["夏春秋", "夏冬春", "夏秋冬", "春冬夏"],
+    "theme": ["後宮甄嬛傳"]
+  },
+  {
+    "Img": "https://images.chinatimes.com/newsphoto/2022-03-12/656/20220312002582.jpg",
+    "answer": ["沈眉莊"],
+    "choices": ["沈眉莊", "沈眉壯", "沉眉莊", "沈莊眉"],
+    "theme": ["後宮甄嬛傳"]
+  },
+  {
+    "Img": "https://p9.toutiaoimg.com/img/tos-cn-i-qvj2lq49k0/09a4b0a840e14f9a8df31dcfa06e23ae~tplv-obj:1080:735.image?from=post",
+    "answer": ["溫太醫"],
+    "choices": ["溫太醫", "李太醫", "林太醫", "許太醫"],
+    "theme": ["後宮甄嬛傳"]
+  },
+  {
+    "Img": "http://5b0988e595225.cdn.sohucs.com/images/20190626/87765098a4be484791b48ba1bfba2bb2.png",
+    "answer": ["雍正"],
+    "choices": ["雍正", "康熙", "乾隆", "道光"],
+    "theme": ["後宮甄嬛傳"]
+  },
+  {
+    "Img": "http://n.sinaimg.cn/sinakd20121/799/w1024h575/20220902/1524-6f689b02454ba69a2a41be05d567ec14.jpg",
+    "answer": ["松子"],
+    "choices": ["松子", "李子", "果子", "栗子"],
+    "theme": ["後宮甄嬛傳"]
+  },
+  {
+    "Img": "https://il.beauty321.com/gallery/albums_photo/14398-201910291821544056.jpg",
+    "answer": ["皇后 烏拉那拉 宜修"],
+    "choices": [
+      "皇后 烏拉那拉 宜修",
+      "皇后 葉赫那拉 宜修",
+      "皇后 愛新覺羅 宜修",
+      "皇后 葉赫那拉 修宜"
+    ],
+    "theme": ["後宮甄嬛傳"]
+  },
+  {
+    "Img": "https://a.ksd-i.com/a/2020-10-30/131299-882706.jpg",
+    "answer": ["Mino"],
+    "choices": ["Mino", "GD", "Bobby", "Zico"],
+    "theme": ["Kpop"]
+  },
+  {
+    "Img": "https://imgur.dcard.tw/6S5HnKwh.jpg",
+    "answer": ["鄭在玹"],
+    "choices": ["鄭在玹", "李馬克", "栗綺的豬豬寶貝", ""],
+    "theme": ["Kpop"]
+  },
+  {
+    "Img": "https://a.ksd-i.com/a/2019-05-21/116855-736544.jpg",
+    "answer": ["PSY"],
+    "choices": ["PSY", "PHY", "SPY", "SHE"],
+    "theme": ["Kpop"]
+  },
+  {
+    "Img": "https://epop.my/cms/wp-content/uploads/2021/09/IMG_2052.jpg",
+    "answer": ["潤娥"],
+    "choices": ["潤娥", "秀英", "泰妍", "Tiffany"],
+    "theme": ["Kpop"]
+  },
+  {
+    "Img": "https://pic.pimg.tw/rainbowh/1599007443-2736704413-g_wn.jpg",
+    "answer": ["銀赫"],
+    "choices": ["東海", "銀赫", "利特", "希澈"],
+    "theme": ["Kpop"]
+  },
+  {
+    "Img": "https://upload.wikimedia.org/wikipedia/commons/6/6f/Baekhyun_at_EXplOration_in_Taipei_in_28_September_2019.jpg",
+    "answer": ["邊伯賢"],
+    "choices": ["邊伯賢", "Kai", "Chen", "燦烈"],
+    "theme": ["Kpop"]
+  },
+  {
+    "Img": "https://cdn.hk01.com/di/media/images/dw/20210508/467771360895045632901745.jpeg/UP9kBP6tXjDQMK4VxZD_o-kfk7FvMWEPfHfg6Hx34Og?v=w1920",
+    "answer": ["Irene"],
+    "choices": ["Irene", "泰妍", "Itzy", "Ieren"],
+    "theme": ["Kpop"]
+  },
+  {
+    "Img": "https://bucket-img.tnlmedia.com/cabinet/files/consoles/2/teams/2/2022/6/AWZffn0UXtCuQNhHps7nTJMn0EHUZsdNXupVSNbd.jpg",
+    "answer": ["葉舒華"],
+    "choices": ["葉舒華", "周子瑜", "Minnie", "雨琪"],
+    "theme": ["Kpop"]
+  },
+
+  {
+    "Img": "https://hips.hearstapps.com/amv-prod-elletw.s3.amazonaws.com/free-article/GD.jpg?resize=480:*",
+    "answer": ["權志龍"],
+    "choices": ["G-Drogan", "太陽", "DG", "權志龍"],
+    "theme": ["Kpop"]
+  },
+  {
+    "Img": "https://cdn.hk01.com/di/media/images/dw/20200711/358688725162659840.jpeg/l2wW9NqBCT8r6MEcmwzSBGHLIsdj9mmaLM6YbSzOmG0?v=w1920",
+    "answer": ["Jennie"],
+    "choices": ["Jennie", "Jisoo", "Lisa", "Jenny"],
+    "theme": ["Kpop"]
+  },
+  {
+    "Img": "https://img.ltn.com.tw/Upload/style/page/2021/01/01/210101-15308-1-I8YOY.jpg",
+    "answer": ["周子瑜"],
+    "choices": ["周子瑜", "周瑜", "子魚", "志效"],
+    "theme": ["Kpop"]
+  },
+  {
+    "Img": "https://dff747922f.cbaul-cdnwnd.com/5de2e2a423c6fce5d62e7544f3a21e82/200000004-d9fb1d9fb3/1426344506-2213001468.jpg?ph=dff747922f",
+    "answer": "音樂之父 巴赫",
+    "choices": [
+      "音樂之父 巴赫",
+      "音樂之父 巴哈姆特",
+      "音樂之父 巴巴",
+      "音樂之父 巴菲特"
+    ],
+    "theme": ["爸爸媽媽"]
+  },
+  {
+    "Img": "https://web.ntnu.edu.tw/~498432269/hendel2.jpg",
+    "answer": "音樂之母 韓德爾",
+    "choices": [
+      "音樂之母 韓德爾",
+      "音樂之母 韓國瑜",
+      "音樂之母 韓勾Ａ金針菇",
+      "音樂之父 韓德爾"
+    ],
+    "theme": ["爸爸媽媽"]
+  },
+  {
+    "Img": "http://5b0988e595225.cdn.sohucs.com/images/20200215/a9d4515036a045f1b10e972b35d2fba3.jpeg",
+    "answer": "科學之父 伽利略",
+    "choices": [
+      "科學之父 伽利略",
+      "科學之母 伽利略",
+      "科學之父 牛頓",
+      "科學之母 牛頓"
+    ],
+    "theme": ["爸爸媽媽"]
+  },
+  {
+    "Img": "https://i0.wp.com/www.18hall.com/wp-content/uploads/2018/06/peter-drucker_32606.jpg?fit=1940%2C900&ssl=1",
+    "answer": "現代管理學之父 彼得杜拉克",
+    "choices": [
+      "現代管理學之父 彼得杜拉克",
+      "現代管理學之母 彼得杜拉克",
+      "現代管理學之父 彼得保羅",
+      "現代管理學之父 彼得兔"
+    ],
+    "theme": ["爸爸媽媽"]
+  },
+  {
+    "Img": "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/l1120167-%E7%B6%B2%E8%B7%AF-1567654540.jpg?crop=1.00xw:0.567xh;0,0.315xh&resize=640:*",
+    "answer": "鹿希派之父 吳宗憲",
+    "choices": [
+      "鹿希派之父 吳宗憲",
+      "吳珊如之父 吳宗憲",
+      "林柏昇之父 吳宗憲",
+      "吳宗憲之父 鹿希派"
+    ],
+    "theme": ["爸爸媽媽"]
+  },
+  {
+    "Img": "https://upload.wikimedia.org/wikipedia/commons/c/c7/Max_Planck_1933.jpg",
+    "answer": "量子力學之父 普朗克",
+    "choices": [
+      "量子力學之父 普朗克",
+      "量子力學之父 倫琴",
+      "量子力學之父 愛因斯坦",
+      "量子力學之父 拉塞福"
+    ],
+    "theme": ["爸爸媽媽"]
+  },
+  {
+    "Img": "https://news.agentm.tw/wp-content/uploads/16417483947701-750x422.jpg",
+    "answer": "眾神之父 奧丁",
+    "choices": [
+      "眾神之父 奧丁",
+      "眾神之父 宙斯",
+      "眾神之父 奧乙",
+      "眾神之父 奧丙"
+    ],
+    "theme": ["爸爸媽媽"]
+  }
+]
+
+    
