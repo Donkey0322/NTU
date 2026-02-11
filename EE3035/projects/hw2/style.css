@@ -1,0 +1,501 @@
+@-webkit-keyframes scaleUp {
+  from {
+    transform: scale(0);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+@keyframes scaleUp {
+  from {
+    transform: scale(0);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+@-webkit-keyframes scaleDown {
+  to {
+    transform: scale(0);
+  }
+}
+@keyframes scaleDown {
+  to {
+    transform: scale(0);
+  }
+}
+@-webkit-keyframes downPlay {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+@keyframes downPlay {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #202124;
+  background-size: cover;
+  background-position: center;
+  position: fixed;
+  font-family: "Noto Sans TC", sans-serif;
+  font-family: "Signika", sans-serif;
+  font-size: 2vh;
+  color: white;
+  margin: 0;
+  cursor: default;
+}
+body .material-symbols-outlined {
+  color: aliceblue;
+  font-variation-settings: "FILL" 0, "wght" 500, "GRAD" 200;
+  font-size: 1.25vw;
+}
+body .material-symbols-outlined.fill {
+  font-variation-settings: "FILL" 1;
+}
+
+.mainframe {
+  display: flex;
+  background-color: #202124;
+  position: relative;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  flex-wrap: wrap;
+  -moz-column-gap: 1.5%;
+       column-gap: 1.5%;
+}
+
+.master {
+  display: flex;
+  background-color: #202124;
+  position: relative;
+  justify-content: center;
+  align-items: center;
+  width: 65%;
+  height: 89%;
+  margin: 1% 0 0 1%;
+}
+.master .microphone {
+  top: 0%;
+  right: 0%;
+  position: absolute;
+}
+.master .close {
+  display: flex;
+  background-color: red;
+  position: relative;
+  justify-content: center;
+  align-items: center;
+  width: 2vw;
+  aspect-ratio: 1/1;
+  border-radius: 50%;
+  top: 0%;
+  left: 0%;
+  cursor: pointer;
+  position: absolute;
+}
+.master .master_head {
+  display: flex;
+  background-color: #202124;
+  position: relative;
+  justify-content: center;
+  align-items: center;
+  background-size: cover;
+  aspect-ratio: 1/1;
+  width: 20%;
+  border-radius: 50%;
+}
+.master .master_head img.master_head {
+  width: 100%;
+  aspect-ratio: 1/1;
+  border-radius: 50%;
+}
+.master .master_head .head_hover {
+  display: flex;
+  background-color: #3d4043;
+  position: relative;
+  justify-content: space-around;
+  align-items: center;
+  position: absolute;
+  width: 80%;
+  height: 35%;
+  border-radius: 50px;
+  opacity: 0;
+  z-index: 100;
+}
+.master .master_head .head_hover .material-symbols-outlined {
+  cursor: pointer;
+}
+.master .master_head .head_hover .material-symbols-outlined:hover {
+  text-shadow: 0px 0px 5px white;
+  opacity: 1;
+}
+.master .master_head .head_hover:hover {
+  opacity: 0.7;
+  transition: opacity 0.4s;
+  cursor: pointer;
+}
+.master:hover .head_hover {
+  opacity: 0.2;
+  transition: opacity 0.4s;
+}
+.master .master_name {
+  display: flex;
+  background-color: #202124;
+  position: relative;
+  justify-content: center;
+  align-items: center;
+  left: 0;
+  bottom: 0;
+  position: absolute;
+}
+.master .master_name .font {
+  margin-left: 1vw;
+}
+
+.others {
+  display: flex;
+  background-color: #202124;
+  position: relative;
+  justify-content: center;
+  align-items: center;
+  width: 30%;
+  height: 90%;
+  flex-wrap: wrap;
+  gap: 2.5% 5%;
+  align-content: center;
+  transition: offset-anchor 1s ease-in-out;
+  right: 0;
+}
+.others .member_background {
+  display: flex;
+  background-color: #3d4043;
+  position: relative;
+  justify-content: center;
+  align-items: center;
+  width: 45%;
+  height: 30%;
+  flex: 1 1 45%;
+  border-radius: 10px;
+  max-width: 67.5%;
+}
+.others .member_background .close {
+  display: flex;
+  background-color: red;
+  position: relative;
+  justify-content: center;
+  align-items: center;
+  width: 2vw;
+  aspect-ratio: 1/1;
+  border-radius: 50%;
+  top: 5%;
+  left: 5%;
+  cursor: pointer;
+  position: absolute;
+}
+.others .member_background .microphone_background {
+  display: flex;
+  background-color: #202124;
+  position: relative;
+  justify-content: center;
+  align-items: center;
+  width: 2vw;
+  aspect-ratio: 1/1;
+  border-radius: 50%;
+  top: 5%;
+  right: 5%;
+  position: absolute;
+}
+.others .member_background .other_head {
+  height: 50%;
+  border-radius: 50%;
+}
+.others .member_background:hover .head_hover {
+  opacity: 0.2;
+  transition: opacity 0.4s;
+}
+.others .member_background .head_hover {
+  display: flex;
+  background-color: #3d4043;
+  position: relative;
+  justify-content: space-around;
+  align-items: center;
+  position: absolute;
+  width: 80%;
+  height: 35%;
+  border-radius: 50px;
+  opacity: 0;
+}
+.others .member_background .head_hover .material-symbols-outlined {
+  cursor: pointer;
+}
+.others .member_background .head_hover .material-symbols-outlined:hover {
+  text-shadow: 0px 0px 5px white;
+  opacity: 1;
+}
+.others .member_background .head_hover:hover {
+  opacity: 0.8;
+  transition: opacity 0.4s;
+  cursor: pointer;
+}
+.others .member_background .other_name {
+  left: 0;
+  bottom: 0;
+  margin: 3% 5%;
+  position: absolute;
+  /* font-size: 1vw; */
+  font-family: "Signika", sans-serif;
+}
+
+.tool {
+  display: flex;
+  background-color: #202124;
+  position: relative;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 5%;
+  margin: 0 0.5% 0.5% 0.5%;
+}
+.tool .time {
+  position: absolute;
+  left: 1%;
+}
+.tool .icon {
+  display: flex;
+  background-color: #202124;
+  position: relative;
+  justify-content: space-around;
+  align-items: center;
+  width: 25vw;
+}
+.tool .icon > * {
+  width: 2.5vw;
+  aspect-ratio: 1/1;
+}
+.tool .icon .microphone {
+  display: flex;
+  background-color: #202124;
+  position: relative;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  position: relative;
+}
+.tool .icon .microphone input[type=checkbox] {
+  display: none;
+  margin: 0;
+  width: 0;
+}
+.tool .icon .microphone input[type=checkbox] + label {
+  display: flex;
+  background-color: #3d4043;
+  position: relative;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  transition: content 1s, background-color 0.3s;
+  cursor: pointer;
+  position: absolute;
+}
+.tool .icon .microphone input[type=checkbox] + label div {
+  width: 50%;
+  height: 50%;
+  position: absolute;
+  background-image: url(./Image/microphone_on.svg);
+  background-size: cover;
+}
+.tool .icon .microphone input[type=checkbox]:checked + label {
+  background: red;
+}
+.tool .icon .microphone input[type=checkbox]:checked + label div {
+  background-image: url(./Image/microphone_off.svg);
+  background-size: cover;
+}
+.tool .icon .microphone input[type=checkbox]:hover ~ .on {
+  opacity: 1;
+  transition: opacity 0.3s;
+}
+.tool .icon .microphone input[type=checkbox]:checked:hover ~ .off {
+  opacity: 1;
+  transition: opacity 0.3s;
+}
+.tool .icon .microphone .information {
+  font-size: smaller;
+  text-align: center;
+  bottom: 100%;
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+  margin: 1.5vh;
+  padding: 0.5vh 0.5vw;
+  border-radius: 5px;
+  position: absolute;
+  background: #3d4043;
+  opacity: 0;
+  transition-duration: 0.3s;
+}
+.tool .icon .icon_background {
+  display: flex;
+  background-color: #3d4043;
+  position: relative;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  cursor: pointer;
+}
+.tool .icon .icon_background.red {
+  display: flex;
+  background-color: red;
+  position: relative;
+  justify-content: center;
+  align-items: center;
+}
+.tool .icon .icon_background.blue {
+  display: flex;
+  background-color: rgb(0, 136, 255);
+  position: relative;
+  justify-content: center;
+  align-items: center;
+}
+.tool .icon .icon_background.blue .material-symbols-outlined {
+  font-size: 2vw;
+}
+.tool .icon .icon_background#last {
+  width: 3.5vw;
+  height: 2.5vw;
+  border-radius: 50px;
+}
+.tool .icon .icon_background .information {
+  font-size: smaller;
+  text-align: center;
+  bottom: 100%;
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+  margin: 1.5vh;
+  padding: 0.5vh 0.5vw;
+  border-radius: 5px;
+  position: absolute;
+  background: #3d4043;
+  opacity: 0;
+}
+.tool .icon .icon_background:hover .information {
+  opacity: 1;
+  transition: opacity 0.3s;
+}
+.tool .setting {
+  display: flex;
+  background-color: #202124;
+  position: relative;
+  justify-content: space-around;
+  align-items: baseline;
+  width: 13vw;
+  position: absolute;
+  right: 2%;
+}
+.tool .setting .setting_background {
+  display: flex;
+  background-color: #202124;
+  position: relative;
+  justify-content: center;
+  align-items: center;
+}
+.tool .setting .setting_background.group .notify-bubble {
+  position: absolute;
+  text-align: center;
+  top: -2vh;
+  right: -0.5vw;
+  width: 1vw;
+  height: 1vw;
+  background-color: #3d4043;
+  color: white;
+  font-size: 0.2vw;
+  border-radius: 50%;
+}
+.tool .setting .setting_background .material-symbols-outlined {
+  cursor: pointer;
+  border-radius: 50%;
+  z-index: 2;
+}
+.tool .setting .setting_background .material-symbols-outlined + .symbol_background {
+  background-color: #3d4043;
+  width: 2vw;
+  aspect-ratio: 1/1;
+  border-radius: 50%;
+  position: absolute;
+  opacity: 0;
+  z-index: 0;
+}
+.tool .setting .setting_background .material-symbols-outlined:hover ~ .information, .tool .setting .setting_background .material-symbols-outlined:hover ~ .symbol_background {
+  opacity: 1;
+  transition: opacity 0.3s;
+}
+.tool .setting .setting_background .information {
+  font-size: smaller;
+  text-align: center;
+  bottom: 100%;
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+  margin: 1.5vh;
+  padding: 0.5vh 0.5vw;
+  border-radius: 5px;
+  position: absolute;
+  background: #3d4043;
+  opacity: 0;
+}
+
+@media screen and (max-width: 420px) {
+  .master {
+    width: 90%;
+    height: 80%;
+    margin: 0;
+    margin-top: 10px;
+  }
+  .others {
+    display: none;
+  }
+  .tool {
+    width: 100%;
+    height: 15%;
+  }
+  .tool .time,
+.tool .setting {
+    display: none;
+  }
+  .tool .icon {
+    width: 100vw;
+  }
+  .tool .icon .icon_background,
+.tool .icon .microphone {
+    width: 10vw;
+    aspect-ratio: 1/1;
+  }
+  .tool .icon .icon_background#last,
+.tool .icon .microphone#last {
+    width: 10vw;
+    height: 7vw;
+  }
+}
+.icon_background.red.close.self {
+  display: none;
+}/*# sourceMappingURL=style.css.map */

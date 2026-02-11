@@ -1,0 +1,169 @@
+@-webkit-keyframes scaleUp {
+  from {
+    transform: scale(0.75);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+@keyframes scaleUp {
+  from {
+    transform: scale(0.75);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+body {
+  background-color: #202124;
+  background-size: cover;
+  background-position: center;
+  position: fixed;
+  font-size: 2vh;
+  color: white;
+  margin: 0;
+}
+
+.startMenu {
+  display: flex;
+  background-color: #202124;
+  position: relative;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+}
+.startMenu button {
+  width: 10vw;
+  height: 10vw;
+  border-radius: 50%;
+  font-size: 1.5vw;
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+.startMenu button:hover {
+  transform: scale(1.25);
+}
+
+.gameMode {
+  display: flex;
+  background-color: #202124;
+  position: relative;
+  justify-content: row;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+}
+
+.playAppear {
+  display: flex;
+  background-color: #202124;
+  position: relative;
+  justify-content: center;
+  align-items: center;
+  width: 80vw;
+  height: 100vh;
+  margin: 0;
+}
+.playAppear .status {
+  position: absolute;
+  top: 15vh;
+  font-size: 5vh;
+  transition: all 0.3s ease;
+}
+.playAppear input {
+  width: 80%;
+  height: 20%;
+  text-align: center;
+  font-size: 1.25vw;
+  border-radius: 25px;
+  background-color: rgb(217, 206, 206);
+}
+.playAppear button {
+  position: absolute;
+  bottom: 15vh;
+  background-color: red;
+  width: 4vw;
+  height: 4vw;
+  min-width: 50px;
+  min-height: 50px;
+  border-radius: 50%;
+  font-size: 1vw;
+  color: blanchedalmond;
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+.playAppear button:hover {
+  transform: scale(1.4);
+}
+
+.robotAppear {
+  display: flex;
+  background-color: #f7f2d5;
+  position: relative;
+  justify-content: center;
+  align-items: center;
+  width: 20vw;
+  height: 100vh;
+  margin: 0;
+}
+.robotAppear p {
+  color: white;
+  text-align: center;
+  font-size: 5vw;
+  position: absolute;
+  font-family: "Courier New", Courier, monospace;
+  font-weight: 700;
+  top: 15vh;
+  background-color: grey;
+  border-radius: 50%;
+}
+.robotAppear img {
+  position: absolute;
+  width: 15vw;
+  bottom: 5vh;
+}
+
+.winningMode {
+  display: flex;
+  background-color: #202124;
+  position: relative;
+  justify-content: center;
+  align-items: center;
+  width: 80vw;
+  height: 100vh;
+  margin: 0;
+}
+.winningMode p {
+  width: 100%;
+  height: 20%;
+  text-align: center;
+  color: gold;
+  font-size: 4vw;
+  font-weight: 700;
+  font-family: "Courier New", Courier, monospace;
+  display: block;
+}
+.winningMode button {
+  position: absolute;
+  bottom: 15vh;
+  display: block;
+  background-color: darkorange;
+  border-color: blueviolet;
+  width: 4vw;
+  height: 4vw;
+  min-width: 50px;
+  min-height: 50px;
+  border-radius: 50%;
+  font-size: 1vw;
+  color: blanchedalmond;
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+.winningMode button:hover {
+  transform: scale(1.4);
+}/*# sourceMappingURL=App.css.map */
